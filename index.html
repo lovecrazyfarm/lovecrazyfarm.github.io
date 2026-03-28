@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>疯狂农场作物价格计算器</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'farm-gold': '#f3b33d',
+                        'farm-brown': '#c97e2a',
+                        'farm-cream': '#fffaf0',
+                        'farm-leaf': '#2b3b1c',
+                        'farm-wheat': '#f6e2b5',
+                        'farm-dark': '#2d2b20',
+                        'farm-orange': '#e68a2e',
+                        'farm-sky': '#e8f4fc',
+                        'farm-lavender': '#e6e6fa'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .scroll-content::-webkit-scrollbar { width: 5px; }
+        .scroll-content::-webkit-scrollbar-track { background: #e0e8f0; border-radius: 3px; }
+        .scroll-content::-webkit-scrollbar-thumb { background: #8aacc9; border-radius: 3px; }
+
+        .tag-transition { transition: all 0.2s ease; }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes meteor {
+            0% {
+                transform: translateX(0) translateY(0) rotate(135deg);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(300px) translateY(300px) rotate(135deg);
+                opacity: 0;
+            }
+        }
+        
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(255,240,180,0.9), rgba(255,200,100,0.6), rgba(255,255,255,0));
+            transform: rotate(135deg);
+            animation: meteor 1.6s linear infinite;
+            opacity: 0;
+            filter: blur(0.5px);
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .text-shadow-black {
+            text-shadow: -0.5px -0.5px 0 #000000, 0.5px -0.5px 0 #000000, -0.5px 0.5px 0 #000000, 0.5px 0.5px 0 #000000;
+        }
+        
+        .content-bg {
+            background: #fefef7;
+        }
+        
+        body {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        /* 横向输入组样式 */
+        .horizontal-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 0.8;
+            min-width: 130px;
+        }
+        .horizontal-input-group label {
+            white-space: nowrap;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 0;
+        }
+        .horizontal-input-group input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.45rem 0.7rem;
+            font-size: 0.8rem;
+        }
+        
+        .time-input-group {
+            flex: 1.2;
+            min-width: 200px;
+        }
+        
+        @media (max-width: 768px) {
+            .horizontal-input-group {
+                flex: 1;
+                min-width: 100%;
+            }
+            .time-input-group {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-6">
+
+<div x-data="farmCalculator()" x-init="init()" class="max-w-[950px] w-full mx-auto relative z-10">
+    <div class="rounded-[68px] shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)] overflow-hidden">
+        <div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-5 px-7 text-center border-b border-white/20">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="meteor" style="top: 5%; left: 10%; animation-delay: 0s;"></div>
+                <div class="meteor" style="top: 8%; left: 25%; animation-delay: 0.4s;"></div>
+                <div class="meteor" style="top: 12%; left: 40%; animation-delay: 0.8s;"></div>
+                <div class="meteor" style="top: 15%; left: 55%; animation-delay: 1.2s;"></div>
+                <div class="meteor" style="top: 18%; left: 70%; animation-delay: 1.6s;"></div>
+                <div class="star" style="width: 1.5px; height: 1.5px; top: 10%; left: 8%;"></div>
+                <div class="star" style="width: 2px; height: 2px; top: 20%; left: 85%;"></div>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)] relative z-10">
+                疯狂农场作物价格计算器
+            </h1>
+            <p class="text-indigo-200 bg-white/10 inline-block px-4 py-1 rounded-full mt-2 text-sm font-semibold backdrop-blur-sm relative z-10">
+                ✨ 开源 · 免费 · 易用 ✨
+            </p>
+        </div>
+        
+        <div class="p-6 md:p-8 content-bg">
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button @click="openModal('changelog')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">更新日志</button>
+                <button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">免责声明</button>
+                <button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">联系作者</button>
+            </div>
+            
+            <div class="mb-6 pb-4 border-b border-blue-200">
+                <div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">📂版本</div>
+                <div class="flex flex-wrap gap-3">
+                    <template x-for="cat in categories" :key="cat.id">
+                        <button @click="selectCategory(cat.id)" :class="selectedCategory === cat.id ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all hover:scale-105" x-text="cat.name"></button>
+                    </template>
+                </div>
+            </div>
+            
+            <div class="mb-6 pb-4 border-b border-blue-200">
+                <div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-between">
+                    <span>🌱作物</span>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <template x-for="crop in filteredCrops" :key="crop.id">
+                        <button @click="selectCrop(crop)" :class="selectedCropId === crop.id ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all hover:scale-105 text-shadow-black" x-text="crop.name" :style="selectedCropId !== crop.id && crop.fillColor ? `background: ${crop.fillColor}; color: white;` : ''"></button>
+                    </template>
+                    <div x-show="filteredCrops.length === 0" class="w-full text-center py-6 text-indigo-400 text-sm">无可选作物</div>
+                </div>
+            </div>
+
+            <div x-show="selectedCropId !== null" x-transition.duration.200ms class="bg-white/80 backdrop-blur-sm rounded-[48px] p-4 mb-6 shadow-lg">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="horizontal-input-group">
+                        <label>重量</label>
+                        <input type="text" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur" class="flex-1 px-2.5 py-1.5 rounded-full border border-blue-200 bg-white text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')" :placeholder="weightPlaceholder">
+                    </div>
+                    <div class="horizontal-input-group">
+                        <label>百分比</label>
+                        <input type="text" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur" class="flex-1 px-2.5 py-1.5 rounded-full border border-blue-200 bg-white text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')" :placeholder="percentPlaceholder">
+                    </div>
+
+                    <div class="time-input-group">
+                        <label class="text-xs font-semibold text-indigo-500 block mb-1">以每<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur" class="inline-block w-14 px-2 py-1 mx-1 rounded-full border border-blue-200 bg-white text-sm text-center outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')">秒 1% 的速率，<span x-html="maturityTimeDisplay" class="font-medium text-indigo-600"></span> 完成生长</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="selectedCropId !== null" x-transition.duration.200ms class="mb-6 pb-4 border-b border-blue-200">
+                <div id="unselectedTagsContainer" class="space-y-4"></div>
+            </div>
+
+			<div x-show="selectedCropId !== null && selectedTags.length > 0" x-transition.duration.200ms class="mb-6">
+				<div class="text-xs font-semibold uppercase tracking-wider text-emerald-600 mb-3 flex items-center gap-2">
+					<span>已选</span>
+					<span class="text-emerald-700 font-bold text-sm" x-text="selectedTags.length"></span>
+					<span>个突变</span>
+					<span class="text-xs font-normal text-gray-400">(点击取消)</span>
+				</div>
+				<div class="flex flex-wrap gap-2">
+					<template x-for="tag in selectedTags" :key="tag.id">
+						<div @click="toggleTag(tag.id)" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md tag-transition" :style="`background: ${tag.fillColor}; border: 2px solid #F59E0B; color: white; text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;`"><span x-text="tag.name"></span></div>
+					</template>
+				</div>
+			</div>
+        </div>
+
+        <div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-5 px-7 text-center border-t border-white/20">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="meteor" style="top: 5%; left: 15%; animation-delay: 0.1s;"></div>
+                <div class="meteor" style="top: 10%; left: 30%; animation-delay: 0.5s;"></div>
+                <div class="meteor" style="top: 15%; left: 45%; animation-delay: 0.9s;"></div>
+                <div class="meteor" style="top: 20%; left: 60%; animation-delay: 1.3s;"></div>
+                <div class="star" style="width: 1.5px; height: 1.5px; top: 8%; left: 20%;"></div>
+                <div class="star" style="width: 2px; height: 2px; top: 18%; left: 70%;"></div>
+            </div>
+            <div class="relative z-10">
+                <div x-show="selectedCropId !== null" class="text-indigo-200 text-sm mb-2">
+                    <span x-text="currentCrop?.name || ''" class="font-semibold text-white"></span>
+                    <span x-show="selectedCropId !== null && weightInput"> · <span x-text="weightInput || '0'"></span> kg</span>
+                </div>
+                <div class="text-3xl font-extrabold text-white" x-text="formattedPrice"></div>
+            </div>
+            <div class="text-center text-xs text-indigo-300/70 mt-2 relative z-10">
+                lovecrazyfarm.github.io
+            </div>
+        </div>
+    </div>
+
+	<div x-show="modalOpen" style="display: none;"  @click.away="modalOpen = false" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm" x-transition.opacity.duration.200ms>
+		<div class="bg-white rounded-2xl max-w-[350px] w-[85%] shadow-xl max-h-[80vh] flex flex-col" @click.stop>
+			<div class="flex justify-between items-center px-4 py-3 border-b border-blue-100 flex-shrink-0">
+				<span class="font-semibold text-indigo-600" x-text="modalTitle"></span>
+				<button @click="modalOpen = false" class="text-indigo-400 hover:text-indigo-600 text-2xl leading-none">&times;</button>
+			</div>
+			<div class="p-4 text-sm text-indigo-700 leading-relaxed overflow-y-auto flex-1" x-html="modalContent"></div>
+		</div>
+	</div>
+</div>
+
+<script>
+// 颜色常量库
+const FC = {
+    LIUGUANG: { color: 'linear-gradient(135deg, #1A2980, #FF69B4, #26D0CE, #00B4DB)', priority: 1 },
+    SHUIJING: { color: 'linear-gradient(225deg, #FDC830, #F37335, #F15F79)', priority: 2 },
+    CIHUA: { color: '#b25bd7', priority: 3 },
+    JIN: { color: '#3b95de', priority: 4 },
+    LUOLEI: { color: '#178128', priority: 5 },
+    MIWU: { color: '#7293b0', priority: 6 },
+    YGC: { color: 'linear-gradient(to bottom, #E8F0F8, #CFDCE8, #B6C6D6, #9AABBF)', priority: 1 },
+    YDC: { color: 'linear-gradient(to bottom, #D8F0D2, #B0D9A8, #8FC08A, #6AA66B)', priority: 2 },
+    YHT: { color: 'linear-gradient(to bottom, #B8E1FC, #8FC9F0, #6BB0DA, #4A8FC0)', priority: 3 },
+    YM: { color: 'linear-gradient(to bottom, #E5D0FF, #D6BAF2, #C5A0E5, #B285D9, #9F6ACC, #8C4FB5)', priority: 4 },
+    YHS: { color: 'linear-gradient(to bottom, #FFD4A3, #F9A26C, #E2712E, #B8420C)', priority: 5 },
+    HYH: { color: 'linear-gradient(to bottom, #C6E6FF, #A5ADFF, #BBA5FF, #D2A9FF, #B386FF)', priority: 6 },
+};
+
+// 标签库
+const tagLibrary = {
+	// 部分数据来自:https://www.bilibili.com/opus/1170360012470484992
+    'xingkong0': { id: 'xingkong0', name: '星空', times: 40, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
+    'liuguang0': { id: 'liuguang0', name: '流光', times: 30, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
+    'shuijing0': { id: 'shuijing0', name: '水晶', times: 20, level: 0, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
+    'jin0': { id: 'jin0', name: '金', times: 10, level: 0, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
+    'yin0': { id: 'yin0', name: '银', times: 3, level: 0, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], syndel: [] },
+    'shupian1': { id: 'shupian1', name: '薯片', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
+    'lianti1': { id: 'lianti1', name: '连体', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
+    'fangxing1': { id: 'fangxing1', name: '方形', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
+    'tanghulu1': { id: 'tanghulu1', name: '糖葫芦', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
+    'xiangjiaohou1': { id: 'xiangjiaohou1', name: '香蕉猴', times: 2, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
+    'wangshengye1': { id: 'wangshengye1', name: '万圣夜', times: 2, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
+    'huanghuashe1': { id: 'huanghuashe1', name: '黄瓜蛇', times: 2.5, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
+    'xiaorikui1': { id: 'xiaorikui1', name: '笑日葵', times: 10, level: 1, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
+    'chaoshi2': { id: 'chaoshi2', name: '潮湿', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'zhanli2': { id: 'zhanli2', name: '颤栗', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'shengji2': { id: 'shengji2', name: '生机', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'miwu2': { id: 'miwu2', name: '迷雾', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'fuxue2': { id: 'fuxue2', name: '覆雪', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'shachen2': { id: 'shachen2', name: '沙尘', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'jieshuang2': { id: 'jieshuang2', name: '结霜', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'zhuore2': { id: 'zhuore2', name: '灼热', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
+    'luolei2': { id: 'luolei2', name: '落雷', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], syndel: [] },
+    'yunshi2': { id: 'yunshi2', name: '陨石', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], syndel: [] },
+    'taiyangyaoban2': { id: 'taiyangyaoban2', name: '太阳耀斑', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
+    'caihong2': { id: 'caihong2', name: '彩虹', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
+    'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
+    'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
+    'rishi2': { id: 'rishi2', name: '日蚀', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
+    'liangjingjing2': { id: 'liangjingjing2', name: '亮晶晶', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
+    'nihong2': { id: 'nihong2', name: '霓虹', times: 18, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
+    'bingdong2': { id: 'bingdong2', name: '冰冻', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'jieshuang2'], syndel: ['jieshuang2'] },
+    'taohua2': { id: 'taohua2', name: '陶化', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'shachen2'], syndel: ['shachen2'] },
+    'cihua2': { id: 'cihua2', name: '瓷化', times: 8, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: ['taohua2', 'zhuore2'], syndel: ['taohua2', 'zhuore2'] },
+    'liuhuo2': { id: 'liuhuo2', name: '流火', times: 15, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: ['taiyangyaoban2', 'zhuore2'], syndel: ['taiyangyaoban2', 'zhuore2', 'cihua2'] }
+};
+
+// 标签组
+const tagGroups = {
+    'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2'] },
+    'group_yueqiu': { tags: ['xingkong0', 'yunshi2', 'anwu2', 'taiyangyaoban2', 'rishi2', 'liuhuo2'] },
+    'group_tudou': { tags: ['shupian1'] },
+    'group_huanggua': { tags: ['huanghuashe1'] },
+    'group_xigua': { tags: ['fangxing1'] },
+    'group_pingguo': { tags: ['tanghulu1'] },
+    'group_xiangjiao': { tags: ['xiangjiaohou1'] },
+    'group_nangua': { tags: ['wangshengye1'] },
+    'group_caomei': { tags: ['lianti1'] },
+    'group_xiangrikui': { tags: ['xiaorikui1'] }
+};
+
+const exclusiveGroups = [{ id: 'exclusive_L0', tags: ['xingkong0', 'liuguang0', 'shuijing0', 'jin0', 'yin0'] }];
+
+// 作物数据
+const itemsData = [
+    { id: 'item_yueguangcao', name: '月光草', basePrice: 330.8416, maxWeight: 3.4, growthSpeed: 111, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+    { id: 'item_yuerangdou', name: '月壤豆', basePrice: 1351.187, maxWeight: 3.4, growthSpeed: 180, categories: ['cat_guowang', 'cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+    { id: 'item_yuedengcao', name: '月灯草', basePrice: 1503.785, maxWeight: 5.1, growthSpeed: 205, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+    { id: 'item_yuefanqie', name: '月番茄', basePrice: 662.4846, maxWeight: 10.2, growthSpeed: 111, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+    { id: 'item_yuehuanguo', name: '月环果', basePrice: 321.9977, maxWeight: 20.4, growthSpeed: 58, categories: ['cat_yueqiu', 'cat_guowang'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_yinhuitai', name: '银灰苔', basePrice: 3045.368, maxWeight: 5.1, growthSpeed: 280, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_yuemei', name: '月莓', basePrice: 3920.926, maxWeight: 8.5, growthSpeed: 375, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_xingyecai', name: '星叶菜', basePrice: 3973.084, maxWeight: 10.2, growthSpeed: 416, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_yueheguo', name: '月核果', basePrice: 3387.512, maxWeight: 17, growthSpeed: 460, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+    { id: 'item_yeguangteng', name: '液光藤', basePrice: 3512.968, maxWeight: 20.4, growthSpeed: 520, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+    { id: 'item_huanyuehua', name: '幻月花', basePrice: 8368.833, maxWeight: 23.8, growthSpeed: 1142.5, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_xingkongmeigui', name: '星空玫瑰', basePrice: 33134.09, maxWeight: 10.2, growthSpeed: 2966.6, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_yuetu', name: '月兔', basePrice: 11138.44, maxWeight: 23.8, growthSpeed: 0.9, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 3.0, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_yueyingmei', name: '月影梅', basePrice: 0, maxWeight: 3.4, growthSpeed: 0.6, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_tudou', name: '土豆', basePrice: 26.3026, maxWeight: 11.9, growthSpeed: 28.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_tudou'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+    { id: 'item_xianggu', name: '香菇', basePrice: 687.682, maxWeight: 3.4, growthSpeed: 133, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+    { id: 'item_fanqie', name: '番茄', basePrice: 66.2398, maxWeight: 10.2, growthSpeed: 33.33, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+    { id: 'item_bosiju', name: '波斯菊', basePrice: 43.5424, maxWeight: 34, growthSpeed: 17, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+    { id: 'item_dadou', name: '大豆', basePrice: 2579.0104, maxWeight: 3.4, growthSpeed: 275, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+    { id: 'item_zhuzi', name: '竹子', basePrice: 12.2462, maxWeight: 136, growthSpeed: 7.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+    { id: 'item_huanggua', name: '黄瓜', basePrice: 215.0425, maxWeight: 13.6, growthSpeed: 50, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_huanggua'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+    { id: 'item_xigua', name: '西瓜', basePrice: 10.7111, maxWeight: 170, growthSpeed: 6, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xigua'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_li', name: '梨', basePrice: 484.155, maxWeight: 13.6, growthSpeed: 75, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_juzi', name: '橘子', basePrice: 537.9143, maxWeight: 13.6, growthSpeed: 75, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_yumi', name: '玉米', basePrice: 103.5216, maxWeight: 40.8, growthSpeed: 27.78, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_baicai', name: '白菜', basePrice: 579.7213, maxWeight: 10.2, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_qianniuhua', name: '牵牛花', basePrice: 2108.1851, maxWeight: 5.1, growthSpeed: 200, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_mainhua', name: '棉花', basePrice: 2578.4733, maxWeight: 5.2, growthSpeed: 200, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+    { id: 'item_pingguo', name: '苹果', basePrice: 188.7409, maxWeight: 37.4, growthSpeed: 40.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_pingguo'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_shiliu', name: '石榴', basePrice: 527.5836, maxWeight: 20, growthSpeed: 83.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_xiangjiao', name: '香蕉', basePrice: 2484.6553, maxWeight: 10.2, growthSpeed: 280, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangjiao'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_chelizi', name: '车厘子', basePrice: 1657.661, maxWeight: 10.5, growthSpeed: 166, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_yezi', name: '椰子', basePrice: 145.9826, maxWeight: 40.8, growthSpeed: 32.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_nangua', name: '南瓜', basePrice: 12.9595, maxWeight: 204, growthSpeed: 6.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_nangua'], fillColor: FC.YM.color, priority: FC.YM.priority },
+    { id: 'item_caomei', name: '草莓', basePrice: 8702.3915, maxWeight: 8.5, growthSpeed: 888, categories: ['cat_guowang', 'cat_putong'], tagGroups: ['group_basic', 'group_caomei'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+    { id: 'item_mihoutao', name: '猕猴桃', basePrice: 2147.9813, maxWeight: 13.6, growthSpeed: 278, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+    { id: 'item_lizhi', name: '荔枝', basePrice: 790.1983, maxWeight: 23.8, growthSpeed: 135, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+    { id: 'item_liulian', name: '榴莲', basePrice: 202.944, maxWeight: 61.2, growthSpeed: 55.55, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+    { id: 'item_xiangrikui', name: '向日葵', basePrice: 370.3206, maxWeight: 51, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangrikui'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_songguo', name: '松果', basePrice: 4614.5318, maxWeight: 17, growthSpeed: 570, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_dawangju', name: '大王菊', basePrice: 24833.3587, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_putao', name: '葡萄', basePrice: 24836.8915, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_jingqigu', name: '惊奇菇', basePrice: 49659, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_pantao', name: '蟠桃', basePrice: 8780.9359, maxWeight: 20.4, growthSpeed: 1333.33, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_xianrenzhangxiang', name: '仙人掌象', basePrice: 9525.0487, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_moguichaotianjiao', name: '魔鬼朝天椒', basePrice: 33143.6022, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority }
+];
+
+const categories = [
+    { id: 'cat_guowang', name: '🔥果王争霸赛3.23-3.29' },
+    { id: 'cat_yueqiu', name: '🌖月球作物' },
+    { id: 'cat_putong', name: '🥔普通作物' }
+];
+
+// ==================== Alpine.js 组件 ====================
+function farmCalculator() {
+    return {
+        categories: categories,
+        selectedCategory: 'cat_guowang',
+        selectedCropId: null,
+        currentCrop: null,
+        weightInput: '',
+        percentInput: '',
+        timeInput: '',
+        checkedTags: new Map(),
+        modalOpen: false,
+        modalTitle: '',
+        modalContent: '',
+        focusMode: false,
+
+        get minWeight() {
+            if (!this.currentCrop) return 0;
+            return this.currentCrop.maxWeight / 34;
+        },
+        
+        getAllTags() {
+            if (!this.currentCrop) return [];
+            const tagIds = this.getUniqueTagIds(this.currentCrop);
+            return tagIds.map(id => tagLibrary[id]).filter(t => t);
+        },
+        
+        get selectedTags() {
+            const allTags = this.getAllTags();
+            const selected = allTags.filter(tag => this.checkedTags.get(tag.id) === true);
+            return selected.sort((a, b) => {
+                if (a.priority !== b.priority) return a.priority - b.priority;
+                return b.times - a.times;
+            });
+        },
+        
+        get unselectedTagsByLevel() {
+            const allTags = this.getAllTags();
+            const unselected = allTags.filter(tag => this.checkedTags.get(tag.id) !== true);
+            const sortFn = (a, b) => {
+                if (a.priority !== b.priority) return a.priority - b.priority;
+                return b.times - a.times;
+            };
+            const level0 = unselected.filter(t => t.level === 0).sort(sortFn);
+            const level1 = unselected.filter(t => t.level === 1).sort(sortFn);
+            const level2 = unselected.filter(t => t.level === 2).sort(sortFn);
+            return { level0, level1, level2 };
+        },
+        
+        get filteredCrops() {
+            let crops = itemsData.filter(c => c.categories.includes(this.selectedCategory));
+            if (this.focusMode && this.selectedCropId) {
+                crops = crops.filter(c => c.id === this.selectedCropId);
+            }
+            return crops.sort((a, b) => (a.priority || 999) - (b.priority || 999));
+        },
+        
+        get formattedPrice() {
+            const total = this.computeTotalValue();
+            if (total >= 100000000) return (total / 100000000).toFixed(2) + '亿';
+            if (total >= 10000) return (total / 10000).toFixed(2) + '万';
+            return total.toFixed(0);
+        },
+        
+        get maturityTimeDisplay() {
+            if (!this.currentCrop) return '';
+            const totalSeconds = this.calculateGrowthTimeFromCurrentWeight();
+            if (totalSeconds === null) return '';
+            return this.formatTime(totalSeconds);
+        },
+        
+        get weightPlaceholder() {
+            if (!this.currentCrop) return '';
+            const minW = this.minWeight.toFixed(2);
+            const maxW = this.currentCrop.maxWeight.toFixed(2);
+            return `${minW} ~ ${maxW} kg`;
+        },
+
+        get percentPlaceholder() {
+            if (!this.currentCrop) return '';
+            const minP = Math.ceil(((this.minWeight / this.currentCrop.maxWeight) * 100));
+            return `${minP}% ~ 100%`;
+        },
+        
+        calculateGrowthTimeFromCurrentWeight() {
+            if (!this.currentCrop) return null;
+            let weight = parseFloat(this.weightInput);
+            if (isNaN(weight) || weight <= 0) return 0;
+            return weight * this.currentCrop.growthSpeed;
+        },
+
+        formatTime(seconds) {
+            if (seconds < 60) {
+                return `${seconds.toFixed(1)} 秒`;
+            } else if (seconds < 3600) {
+                const minutes = Math.floor(seconds / 60);
+                return `${minutes} 分钟`;
+            } else {
+                const hours = Math.floor(seconds / 3600);
+                const remainMinutes = Math.floor((seconds % 3600) / 60);
+                if (remainMinutes === 0) {
+                    return `${hours} 小时`;
+                }
+                return `${hours} 小时 ${remainMinutes} 分钟`;
+            }
+        },
+        
+        init() {
+            this.renderUnselectedTags();
+        },
+        
+        selectCategory(catId) {
+            this.selectedCategory = catId;
+            this.selectedCropId = null;
+            this.currentCrop = null;
+            this.focusMode = false;
+            this.clearAllInputs();
+            this.checkedTags.clear();
+            this.renderUnselectedTags();
+        },
+        
+        selectCrop(crop) {
+            if (this.selectedCropId === crop.id) {
+                this.selectedCropId = null;
+                this.currentCrop = null;
+                this.focusMode = false;
+                this.clearAllInputs();
+                this.checkedTags.clear();
+            } else {
+                this.selectedCropId = crop.id;
+                this.currentCrop = crop;
+                this.focusMode = true;
+                this.clearAllInputs();
+                this.initCheckedTags();
+            }
+            this.renderUnselectedTags();
+        },
+        
+        clearAllInputs() {
+            this.weightInput = '';
+            this.percentInput = '';
+            this.timeInput = '';
+        },
+        
+        initCheckedTags() {
+            this.checkedTags.clear();
+            if (!this.currentCrop) return;
+            const tags = this.getUniqueTagIds(this.currentCrop);
+            tags.forEach(tid => this.checkedTags.set(tid, false));
+        },
+        
+        getUniqueTagIds(item) {
+            if (!item || !item.tagGroups) return [];
+            const tagIdSet = new Set();
+            for (const groupKey of item.tagGroups) {
+                const group = tagGroups[groupKey];
+                if (group && group.tags) {
+                    group.tags.forEach(tid => tagIdSet.add(tid));
+                }
+            }
+            return Array.from(tagIdSet);
+        },
+        
+        updateFromWeight() {
+            if (!this.currentCrop) return;
+            let val = parseFloat(this.weightInput);
+            if (isNaN(val)) return;
+            
+            const minW = this.minWeight;
+            const maxW = this.currentCrop.maxWeight;
+            
+            if (val < minW || val > maxW) return;
+            
+            this.percentInput = ((val / maxW) * 100).toFixed(1);
+            this.updateTimeFromWeight(val);
+        },
+        
+        updateFromPercent() {
+            if (!this.currentCrop) return;
+            let pct = parseFloat(this.percentInput);
+            if (isNaN(pct)) return;
+            
+            const minP = (this.minWeight / this.currentCrop.maxWeight) * 100;
+            if (pct < minP || pct > 100) return;
+            
+            const weight = (pct / 100) * this.currentCrop.maxWeight;
+            this.weightInput = weight.toFixed(2);
+            this.updateTimeFromWeight(weight);
+        },
+
+        updateFromTime() {
+            if (!this.currentCrop) return;
+            let time = parseFloat(this.timeInput);
+            if (isNaN(time)) return;
+
+            const weight = (time * 100) / this.currentCrop.growthSpeed;
+            const minW = this.minWeight;
+            const maxW = this.currentCrop.maxWeight;
+            
+            if (weight >= minW && weight <= maxW) {
+                this.updateFromWeightInput(weight);
+            }
+        },
+        
+        updateFromWeightInput(weight) {
+            const maxW = this.currentCrop.maxWeight;
+            this.weightInput = weight.toFixed(2);
+            this.percentInput = ((weight / maxW) * 100).toFixed(1);
+        },
+        
+        updateTimeFromWeight(weight) {
+            const time = (weight * this.currentCrop.growthSpeed) / 100;
+            this.timeInput = time.toFixed(2);
+        },
+
+        handleWeightBlur() {
+            if (!this.currentCrop) return;
+            let val = parseFloat(this.weightInput);
+            if (isNaN(val)) return;
+            
+            const maxW = this.currentCrop.maxWeight;
+            const minW = this.minWeight;
+            
+            if (val > maxW) {
+                this.weightInput = maxW.toFixed(2);
+                this.updateFromWeight();
+            } else if (val < minW) {
+                this.weightInput = minW.toFixed(2);
+                this.updateFromWeight();
+            }
+        },
+
+        handlePercentBlur() {
+            if (!this.currentCrop) return;
+            let pct = parseFloat(this.percentInput);
+            if (isNaN(pct)) return;
+            
+            const minP = (this.minWeight / this.currentCrop.maxWeight) * 100;
+            
+            if (pct < minP) {
+                this.percentInput = Math.ceil(minP);
+                this.updateFromPercent();
+            } else if (pct > 100) {
+                this.percentInput = 100;
+                this.updateFromPercent();
+            }
+        },
+
+        handleTimeBlur() {
+            if (!this.currentCrop) return;
+            let time = parseFloat(this.timeInput);
+            if (isNaN(time)) {
+                this.timeInput = '';
+                return;
+            }
+            
+            this.timeInput = time.toFixed(2);
+            
+            if (time < 0) {
+                time = 0;
+                this.timeInput = '0';
+            }
+            
+            const weight = (time * 100) / this.currentCrop.growthSpeed;
+            const minW = this.minWeight;
+            const maxW = this.currentCrop.maxWeight;
+            
+            if (weight < minW) {
+                const minTime = (minW * this.currentCrop.growthSpeed) / 100;
+                this.timeInput = minTime.toFixed(2);
+                time = minTime;
+            } else if (weight > maxW) {
+                const maxTime = (maxW * this.currentCrop.growthSpeed) / 100;
+                this.timeInput = maxTime.toFixed(2);
+                time = maxTime;
+            }
+
+            const finalWeight = (time * 100) / this.currentCrop.growthSpeed;
+            this.updateFromWeightInput(finalWeight);
+        },
+        
+        computeTotalValue() {
+            if (!this.currentCrop) return 0;
+            let weight = parseFloat(this.weightInput);
+            if (isNaN(weight) || weight <= 0) return 0;
+            let base = this.currentCrop.basePrice;
+            let weightPower = Math.pow(weight, 1.5);
+            let level0Multi = 1.0, level1Multi = 1.0, sumLevel2 = 0.0;
+            const tags = this.getUniqueTagIds(this.currentCrop);
+            for (let tagId of tags) {
+                if (this.checkedTags.get(tagId) === true) {
+                    const tag = tagLibrary[tagId];
+                    if (tag) {
+                        if (tag.level === 0) level0Multi *= tag.times;
+                        else if (tag.level === 1) level1Multi *= tag.times;
+                        else if (tag.level === 2) sumLevel2 += tag.times;
+                    }
+                }
+            }
+            return base * weightPower * level0Multi * level1Multi * (1 + sumLevel2);
+        },
+        
+        toggleTag(tagId) {
+            const isChecked = this.checkedTags.get(tagId) === true;
+            const newMap = new Map(this.checkedTags);
+            
+            if (!isChecked) {
+                newMap.set(tagId, true);
+                
+                for (const group of exclusiveGroups) {
+                    if (group.tags.includes(tagId)) {
+                        group.tags.forEach(otherId => {
+                            if (otherId !== tagId && newMap.get(otherId) === true) {
+                                newMap.set(otherId, false);
+                            }
+                        });
+                    }
+                }
+                
+                const parentComposites = [];
+                for (const [compositeId, def] of Object.entries(tagLibrary)) {
+                    if (def.synthesis && def.synthesis.includes(tagId) && newMap.get(compositeId) === true) {
+                        parentComposites.push(compositeId);
+                    }
+                }
+                for (const parentId of parentComposites) {
+                    newMap.set(parentId, false);
+                }
+                
+                let changed = true;
+                let loop = 0;
+                while (changed && loop++ < 10) {
+                    changed = false;
+                    for (const [compositeId, def] of Object.entries(tagLibrary)) {
+                        if (def.synthesis && def.synthesis.length > 0) {
+                            const allChildrenChecked = def.synthesis.every(child => newMap.get(child) === true);
+                            if (allChildrenChecked && newMap.get(compositeId) !== true) {
+                                newMap.set(compositeId, true);
+                                def.syndel.forEach(sub => newMap.set(sub, false));
+                                changed = true;
+                            }
+                        }
+                    }
+                }
+                
+                for (const [compositeId, def] of Object.entries(tagLibrary)) {
+                    if (def.syndel && def.syndel.length > 0 && newMap.get(compositeId) === true) {
+                        for (let sub of def.syndel) {
+                            if (newMap.get(sub) === true) {
+                                newMap.set(sub, false);
+                            }
+                        }
+                    }
+                }
+                
+            } else {
+                newMap.set(tagId, false);
+                
+                for (const [compositeId, def] of Object.entries(tagLibrary)) {
+                    if (def.synthesis && def.synthesis.includes(tagId)) {
+                        if (newMap.get(compositeId) === true) {
+                            const stillAllChecked = def.synthesis.every(child => newMap.get(child) === true);
+                            if (!stillAllChecked) {
+                                newMap.set(compositeId, false);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            this.checkedTags = newMap;
+            this.renderUnselectedTags();
+        },
+        
+        renderUnselectedTags() {
+            const container = document.getElementById('unselectedTagsContainer');
+            if (!this.currentCrop) {
+                container.innerHTML = '<div class="text-indigo-400 text-sm py-4 text-center">未选择作物</div>';
+                return;
+            }
+            
+            const { level0, level1, level2 } = this.unselectedTagsByLevel;
+            
+            const renderGroup = (tags, title) => {
+                if (tags.length === 0) return '';
+                let html = `<div class="mb-4"><div class="text-xs font-semibold text-indigo-500 mb-2 pl-1 border-l-3 border-indigo-300">${title}</div><div class="flex flex-wrap gap-2">`;
+                for (let tag of tags) {
+                    html += `<div @click="toggleTag('${tag.id}')" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md" style="background: ${tag.fillColor}; border: 2px solid transparent; color: white; text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;">${tag.name}</div>`;
+                }
+                html += `</div></div>`;
+                return html;
+            };
+            
+            let html = renderGroup(level0, '基础突变');
+            html += renderGroup(level1, '专属突变');
+            html += renderGroup(level2, '常规突变');
+            container.innerHTML = html || '<div class="text-indigo-400 text-sm py-4 text-center">暂无可用突变</div>';
+            
+            this.$nextTick(() => {
+                container.querySelectorAll('[x-on\\:click]').forEach(el => {
+                    const handler = el.getAttribute('x-on:click');
+                    el.removeAttribute('x-on:click');
+                    el.setAttribute('@click', handler);
+                });
+            });
+        },
+        
+        openModal(type) {
+            const modals = {
+                changelog: { 
+                    title: '更新日志', 
+                    lines: [
+                        '部分作物计算功能尚不完善，后续版本将逐步补充:',
+                        '• 月兔、红包树的生长速度计算',
+						'• 月影梅的价格和生长速度计算',
+                    ],
+                    get content(){ return this.lines.join('<br>'); }
+                },
+                disclaimer: { 
+                    title: '免责声明', 
+                    lines: [
+						'<br>本工具为个人爱好者开发的免费辅助工具，与网易游戏《蛋仔派对》官方无任何关联、授权或认可。',
+						'<br>',
+						'【计算结果仅供参考】',
+						'• 计算结果基于公开游戏机制整理，不保证与游戏内实际效果完全一致。 游戏版本更新、隐藏机制等因素均可能导致实际效果与计算结果存在差异，请以游戏内实际表现为准。',
+						'• 本工具按“现状”提供，不对准确性、完整性、及时性作任何保证。',
+						'<br>',
+						'【数据来源】',
+						'• 本工具部分数据参考自社区平台博主的公开内容（具体参考链接详见本声明末尾），在此基础上进行整理、计算与适配调整。 如您是数据来源的权利人，认为使用方式不妥，请联系反馈。',
+						'<br>',
+						'【服务与责任】',
+                        '• 本工具不承诺永久可用，开发者保留随时修改、暂停或终止服务的权利。',
+						'• 本工具无需注册登录，不收集任何个人信息。',
+						'• 在法律允许的最大范围内，开发者不对因使用或无法使用本工具所导致的任何直接或间接损失（包括但不限于交易损失、价格误判等）承担责任。',
+						'<br>',
+						'【用户同意】',
+						'• 使用本工具即视为您已阅读、理解并同意本声明的全部内容。',
+						'<br>',
+						'参考链接:',
+						'https://www.bilibili.com/opus/1170360012470484992',
+						'<br>',
+                    ],
+                    get content() { return this.lines.join('<br>'); }
+                },
+                support: { title: '联系作者', content: '微信: lovecrazyfarm<br>邮箱: lovecrazyfarm@163.com' }
+            };
+            const modal = modals[type];
+            if (modal) {
+                this.modalTitle = modal.title;
+                this.modalContent = modal.content;
+                this.modalOpen = true;
+            }
+        }
+    }
+}
+</script>
+</body>
+</html>

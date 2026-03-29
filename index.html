@@ -329,10 +329,11 @@ const itemsData = [
     { id: 'item_yeguangteng', name: '液光藤', basePrice: 3512.968, maxWeight: 20.4, growthSpeed: 520, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
     { id: 'item_huanyuehua', name: '幻月花', basePrice: 8368.833, maxWeight: 23.8, growthSpeed: 1142.5, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
     { id: 'item_xingkongmeigui', name: '星空玫瑰', basePrice: 33134.09, maxWeight: 10.2, growthSpeed: 2966.6, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-    { id: 'item_yuetu', name: '月兔', basePrice: 11138.44, maxWeight: 23.8, growthSpeed: 0.9, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-    { id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 3.0, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-    { id: 'item_yueyingmei', name: '月影梅', basePrice: 0, maxWeight: 3.4, growthSpeed: 0.6, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-    { id: 'item_tudou', name: '土豆', basePrice: 26.3026, maxWeight: 11.9, growthSpeed: 28.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_tudou'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+    { id: 'item_yuetu', name: '月兔', basePrice: 11138.44, maxWeight: 23.8, growthSpeed: 1523, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 5125, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    { id: 'item_yueyingmei', name: '月影梅', basePrice: 75418, maxWeight: 3.4, growthSpeed: 4022.5, categories: ['cat_yueqiu'], tagGroups: ['group_basic', 'group_yueqiu'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+    
+	{ id: 'item_tudou', name: '土豆', basePrice: 26.3026, maxWeight: 11.9, growthSpeed: 28.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_tudou'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
     { id: 'item_xianggu', name: '香菇', basePrice: 687.682, maxWeight: 3.4, growthSpeed: 133, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
     { id: 'item_fanqie', name: '番茄', basePrice: 66.2398, maxWeight: 10.2, growthSpeed: 33.33, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
     { id: 'item_bosiju', name: '波斯菊', basePrice: 43.5424, maxWeight: 34, growthSpeed: 17, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
@@ -784,9 +785,8 @@ function farmCalculator() {
                 changelog: { 
                     title: '更新日志', 
                     lines: [
-                        '部分作物计算功能尚不完善，后续版本将逐步补充:',
-                        '• 月兔、红包树的生长速度计算',
-						'• 月影梅的价格和生长速度计算',
+                        '2026-03-29',
+                        '• 完善月兔、红包果、月影梅的计算功能',
                     ],
                     get content(){ return this.lines.join('<br>'); }
                 },

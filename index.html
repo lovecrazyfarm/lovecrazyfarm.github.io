@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>疯狂农场作物价格计算器</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
     <script>
         tailwind.config = {
             theme: {
@@ -151,7 +149,13 @@
                 <button @click="openModal('changelog')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">更新日志</button>
                 <button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">免责声明</button>
                 <button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">联系作者</button>
-            </div>
+				<div class="text-center flex items-center justify-center gap-2 py-3">
+					<img src="beian.png" class="w-4 h-4">
+					<span class="text-xs text-black">桂ICP备2026005605号</span>
+				</div>
+			</div>
+			
+			
             
             <div class="mb-6 pb-4 border-b border-blue-200">
                 <div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">📂版本</div>
@@ -226,10 +230,9 @@
                 </div>
                 <div class="text-3xl font-extrabold text-white" x-text="formattedPrice"></div>
             </div>
-            <div class="text-center text-xs text-indigo-300/70 mt-2 relative z-10">
-                lovecrazyfarm.github.io
-            </div>
         </div>
+		
+		
     </div>
 
 	<div x-show="modalOpen" style="display: none;"  @click.away="modalOpen = false" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm" x-transition.opacity.duration.200ms>

@@ -190,7 +190,7 @@
                     </div>
 
                     <div class="time-input-group">
-                        <label class="text-xs font-semibold text-indigo-500 block mb-1">以每<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur" class="inline-block w-14 px-2 py-1 mx-1 rounded-full border border-blue-200 bg-white text-sm text-center outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')">秒 1% 的速率，<span x-html="maturityTimeDisplay" class="font-medium text-indigo-600"></span> 完成生长</label>
+                        <label class="text-xs font-semibold text-indigo-500 block mb-1">无加速时，以每<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur" class="inline-block w-14 px-2 py-1 mx-1 rounded-full border border-blue-200 bg-white text-sm text-center outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')">秒 1% 的速率，<span x-html="maturityTimeDisplay" class="font-medium text-indigo-600"></span> 完成生长</label>
                     </div>
                 </div>
             </div>

@@ -304,6 +304,7 @@ const tagLibrary = {
     'taiyangyaoban2': { id: 'taiyangyaoban2', name: '太阳耀斑', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
     'caihong2': { id: 'caihong2', name: '彩虹', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
     'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
+    'hajimi2': { id: 'hajimi2', name: '哈基咪', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
     'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
     'rishi2': { id: 'rishi2', name: '日蚀', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
     'liangjingjing2': { id: 'liangjingjing2', name: '亮晶晶', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
@@ -316,7 +317,7 @@ const tagLibrary = {
 
 // 标签组
 const tagGroups = {
-    'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2'] },
+    'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2', 'hajimi2'] },
     'group_yueqiu': { tags: ['xingkong0', 'yunshi2', 'anwu2', 'taiyangyaoban2', 'rishi2', 'liuhuo2'] },
     'group_tudou': { tags: ['shupian1'] },
     'group_huanggua': { tags: ['huanghuashe1'] },
@@ -800,6 +801,8 @@ function farmCalculator() {
                 changelog: { 
                     title: '更新日志', 
                     lines: [
+						'2026-04-05',
+						'• 添加了哈基咪突变',
 						'2026-03-30',
 						'• 更新果王争霸赛',
                         '2026-03-29',

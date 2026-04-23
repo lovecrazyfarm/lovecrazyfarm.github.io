@@ -774,8 +774,16 @@ function farmCalculator() {
                 if (tags.length === 0) return '';
                 let html = `<div class="mb-4"><div class="text-xs font-semibold text-indigo-500 mb-2 pl-1 border-l-3 border-indigo-300">${title}</div><div class="flex flex-wrap gap-2">`;
                 for (let tag of tags) {
-                    html += `<div @click="toggleTag('${tag.id}')" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md" style="background: ${tag.fillColor}; border: 2px solid transparent; color: white; text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;">${tag.name}</div>`;
-                }
+					html += `<div @click="toggleTag('${tag.id}')" 
+					class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md" 
+					style="
+						background: ${tag.fillColor}; 
+						background-clip: padding-box;
+						border: 2px solid rgba(255,255,255,0.3);
+						color: white; 
+						text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+					">${tag.name}</div>`;
+				}
                 html += `</div></div>`;
                 return html;
             };

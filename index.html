@@ -422,7 +422,6 @@ function farmCalculator() {
 			const allTags = this.getAllTags();
 			const selected = allTags.filter(tag => this.checkedTags.get(tag.id) === true);
 			return selected.sort((a, b) => {
-				if (a.level !== b.level) return a.level - b.level;
 				if (a.priority !== b.priority) return a.priority - b.priority;
 				return b.times - a.times;
 			});

@@ -448,7 +448,7 @@ function farmCalculator() {
 			if (this.focusMode && this.selectedCropId) {
 				crops = crops.filter(c => c.id === this.selectedCropId);
 			}
-			return crops.sort((a, b) => (a.priority || 999) - (b.priority || 999));
+			return crops.sort((b, a) => (a.priority || 999) - (b.priority || 999));
 		},
 
 

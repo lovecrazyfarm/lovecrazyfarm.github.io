@@ -277,6 +277,7 @@ const tagLibrary = {
 	'yicai2': { id: 'yicai2', name: '异彩', times: 1.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
 	'huancai2': { id: 'huancai2', name: '幻彩', times: 3, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
 	'hupo2': { id: 'hupo2', name: '琥珀', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
+	'chengzuan2': { id: 'chengzuan2', name: '橙钻', times: 18, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
 	'shupian1': { id: 'shupian1', name: '薯片', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
 	'lianti1': { id: 'lianti1', name: '连体', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
 	'fangxing1': { id: 'fangxing1', name: '方形', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
@@ -318,7 +319,7 @@ const tagLibrary = {
 
 // 标签组
 const tagGroups = {
-	'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2', 'guzhang2', 'hajimi2', 'jinbi2', 'xinghuan2', 'youhun2', 'jinghunye2', 'xueyue2','jiguang2', 'yicai2', 'huancai2', 'hupo2'] },
+	'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2', 'guzhang2', 'hajimi2', 'jinbi2', 'xinghuan2', 'youhun2', 'jinghunye2', 'xueyue2','jiguang2', 'yicai2', 'huancai2', 'hupo2', 'chengzuan2'] },
 	'group_yueqiu': { tags: ['xingkong0', 'yunshi2', 'anwu2', 'taiyangyaoban2', 'rishi2', 'liuhuo2'] },
 	'group_tudou': { tags: ['shupian1'] },
 	'group_huanggua': { tags: ['huanghuashe1'] },
@@ -854,6 +855,8 @@ function farmCalculator() {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'2026-06-01',
+						'• 添加橙钻突变',
 						'2026-05-31',
 						'• 添加异彩、幻彩、琥珀突变',
 						'• 添加龙眼、柿子、芦荟作物',

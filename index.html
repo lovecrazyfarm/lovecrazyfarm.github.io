@@ -477,7 +477,7 @@ function farmCalculator() {
 		get maturityTimeDisplay() {
 			if (!this.currentCrop) return '';
 			if (this.currentCrop.growthSpeed == 0) {
-				return '(!未做此作物的处理!)';
+				return '(!未做此果实的成熟进度处理!)';
 			}
 			// 获取有效重量（不超过最大值）
 			let weight = parseFloat(this.weightInput);

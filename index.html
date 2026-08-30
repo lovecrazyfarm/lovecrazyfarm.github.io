@@ -6,6 +6,7 @@
 	<title>疯狂农场作物价格计算器 - 蛋仔派对疯狂农场作物价格计算工具</title>
 	<meta name="description" content="完全免费的疯狂农场作物价格计算器. 支持作物重量, 重量占比, 突变, 果实生长耗时, 价格等计算.">
 
+	<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://unpkg.com/alpinejs" defer></script>
 	<script>
@@ -123,6 +124,29 @@
 				min-width: 100%;
 			}
 		}
+
+		.floating-enter-active {
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		.floating-enter-from {
+			opacity: 0;
+			transform: translateY(-20px);
+		}
+		.floating-enter-to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		.floating-leave-active {
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		.floating-leave-from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		.floating-leave-to {
+			opacity: 0;
+			transform: translateY(-20px);
+		}
 	</style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-6">
@@ -139,12 +163,37 @@
 				<div class="star" style="width: 1.5px; height: 1.5px; top: 10%; left: 8%;"></div>
 				<div class="star" style="width: 2px; height: 2px; top: 20%; left: 85%;"></div>
 			</div>
-			<h2 class="text-2xl md:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)] relative z-10">
-				疯狂农场作物价格计算器
+			
+			<h2 class="text-nowrap drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)] relative z-10" 
+					style="font-family: 'DotGothic16', sans-serif; 
+								-webkit-font-smoothing: none; 
+								-moz-osx-font-smoothing: grayscale; 
+								letter-spacing: 0.5px; 
+								line-height: 1.2;
+								background: linear-gradient(to bottom, 
+										#dd1111,
+										#ee5511,
+										#ee9911,
+										#ddcc11,
+										#88dd22,
+										#44dd44,
+										#22cc66,
+										#22bb99,
+										#2299cc,
+										#2266dd,
+										#6633dd,
+										#aa22dd);
+								-webkit-background-clip: text;
+								-webkit-text-fill-color: transparent;
+								background-clip: text;
+								text-shadow: none;
+								filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+								font-size: clamp(1.4rem, 6vw, 2.8rem);
+								font-weight: bold;
+								width: 100%;
+								max-width: 100%;">
+					疯狂农场作物价格计算器
 			</h2>
-			<p class="text-indigo-200 bg-white/1 inline-block px-4 py-1 rounded-full mt-2 text-sm font-semibold backdrop-blur-sm relative z-10">
-				开源 · 免费 · 易用
-			</p>
 		</div>
 		
 		<div class="p-6 md:p-8 content-bg">
@@ -176,7 +225,9 @@
 				</div>
 			</div>
 
-			<div x-show="selectedCropId !== null" x-transition.duration.200ms class="backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
+
+			<!--<div x-show="selectedCropId !== null" x-transition.duration.200ms class="backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">-->
+			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
 				<div class="pt-0 px-4 pb-2 text-center">
 					<div class="text-lg font-bold text-gray-800" x-text="currentCrop?.name || '未选择作物'"></div>
 					<div class="text-3xl font-extrabold mt-1 text-indigo-600" x-text="formattedPrice"></div>
@@ -197,6 +248,30 @@
 					</div>
 				</div>
 			</div>
+
+
+			<div x-show="selectedCropId !== null && isPriceFloating" 
+					x-transition:enter.duration.400ms.opacity.scale
+					x-transition:leave.duration.300ms.opacity.scale
+					@click="scrollToPriceCard()"
+					class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-xl border-b-2 border-indigo-300"
+					style="display: none;">
+				<div class="max-w-[950px] mx-auto px-4 py-2.5">
+					<div class="flex items-center justify-between">
+						<span class="text-sm font-bold text-gray-700" x-text="currentCrop?.name || ''"></span>
+						<span x-show="selectedTags.length > 0" class="text-xs text-gray-500">
+							<span x-text="selectedTags.length"></span> 个突变
+						</span>
+						<span class="text-xs text-gray-500" x-show="weightInput">
+							<span x-text="displayWeight || '0'"></span>kg
+						</span>
+					</div>
+					<div class="text-center mt-0.5">
+						<span class="text-2xl font-extrabold text-indigo-600" x-text="formattedPrice"></span>
+					</div>
+				</div>
+			</div>
+			
 
 			<div x-show="selectedCropId !== null" x-transition.duration.200ms class="backdrop-blur-sm rounded-[48px] p-4 mb-6 ">
 				<div class="flex flex-wrap gap-4 items-center">
@@ -220,7 +295,9 @@
 			</div>
 		</div>
 
-		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center">
+
+		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-[68px]">
+		
 			<div class="absolute inset-0 overflow-hidden pointer-events-none">
 				<div class="meteor" style="top: 5%; left: 15%; animation-delay: 0.1s;"></div>
 				<div class="meteor" style="top: 10%; left: 30%; animation-delay: 0.5s;"></div>
@@ -229,12 +306,12 @@
 				<div class="star" style="width: 1.5px; height: 1.5px; top: 8%; left: 20%;"></div>
 				<div class="star" style="width: 2px; height: 2px; top: 18%; left: 70%;"></div>
 			</div>
-			<div class="relative z-10 flex items-center justify-center gap-4">
-				<div class="flex items-center gap-1">
-					<img src="beian.png" class="h-3.5 w-auto"/>
-					<a href="https://beian.mps.gov.cn/#/query/webSearch?code=45022602000049" rel="noreferrer" target="_blank" class="text-xs text-white/80 hover:text-white transition-colors">桂公网安备45022602000049号</a>
-				</div>
-				<a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" class="text-xs text-white/80 hover:text-white transition-colors">桂ICP备2026005605号</a>
+			<div class="relative z-10 flex items-center justify-center gap-2 sm:gap-4 text-nowrap overflow-hidden">
+					<div class="flex items-center gap-1 flex-shrink-0">
+							<img src="beian.png" class="h-3 w-auto sm:h-3.5 flex-shrink-0"/>
+							<a href="https://beian.mps.gov.cn/#/query/webSearch?code=45022602000049" rel="noreferrer" target="_blank" class="text-[0.5rem] sm:text-xs text-white/80 hover:text-white transition-colors text-nowrap flex-shrink-0">桂公网安备45022602000049号</a>
+					</div>
+					<a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" class="text-[0.5rem] sm:text-xs text-white/80 hover:text-white transition-colors text-nowrap flex-shrink-0">桂ICP备2026005605号</a>
 			</div>
 		</div>
 	</div>
@@ -419,6 +496,9 @@ function farmCalculator() {
 		modalTitle: '',
 		modalContent: '',
 		focusMode: false,
+		isPriceFloating: false,
+		observer: null,
+		_isScrollingBack: false,
 
 
 		get minWeight() {
@@ -533,6 +613,60 @@ function farmCalculator() {
 
 		init() {
 			this.renderUnselectedTags();
+			this.setupIntersectionObserver();
+		},
+		
+		
+		scrollToPriceCard() {
+			const placeholder = document.getElementById('priceCardPlaceholder');
+			if (!placeholder) return;
+			
+			this._isScrollingBack = true;
+			this.isPriceFloating = false;
+			
+			placeholder.scrollIntoView({ 
+				behavior: 'smooth', 
+				block: 'start',
+				inline: 'nearest'
+			});
+			
+			setTimeout(() => {
+				this._isScrollingBack = false;
+				requestAnimationFrame(() => {
+					const rect = placeholder.getBoundingClientRect();
+					this.isPriceFloating = rect.top < 0 || rect.bottom < 0;
+				});
+			}, 800);
+		},
+		
+		
+		setupIntersectionObserver() {
+			this.$nextTick(() => {
+				const placeholder = document.getElementById('priceCardPlaceholder');
+				if (!placeholder) return;
+				
+				if (this._scrollHandler) {
+					window.removeEventListener('scroll', this._scrollHandler);
+				}
+				
+				let ticking = false;
+				
+				this._scrollHandler = () => {
+					if (this._isScrollingBack) return;
+					
+					if (!ticking) {
+						ticking = true;
+						requestAnimationFrame(() => {
+							const rect = placeholder.getBoundingClientRect();
+							this.isPriceFloating = rect.top < 0 || rect.bottom < 0;
+							ticking = false;
+						});
+					}
+				};
+				
+				window.addEventListener('scroll', this._scrollHandler);
+				this._scrollHandler();
+			});
 		},
 
 
@@ -560,7 +694,11 @@ function farmCalculator() {
 				this.focusMode = true;
 				this.clearAllInputs();
 				this.initCheckedTags();
+				this.$nextTick(() => {
+					this.setupIntersectionObserver();
+				});
 			}
+			this.isPriceFloating = false;
 			this.renderUnselectedTags();
 		},
 
@@ -569,6 +707,7 @@ function farmCalculator() {
 			this.weightInput = '';
 			this.percentInput = '';
 			this.timeInput = '';
+			this.isPriceFloating = false;
 		},
 
 
@@ -817,6 +956,9 @@ function farmCalculator() {
 			
 			this.checkedTags = newMap;
 			this.renderUnselectedTags();
+			this.$nextTick(() => {
+				this.setupIntersectionObserver();
+			});
 		},
 
 
@@ -867,6 +1009,9 @@ function farmCalculator() {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'2026-08-31',
+						'• 去掉多余的"开源 · 免费 · 易用"副标题, 但这六个字还会贯彻到每一个版本的迭代中',
+						'• 添加显示价格的浮动卡片, 当下滑超出显示价格区域时会在顶部有相关信息的卡片, 优化移动端体验 ("Alex"提供的想法)', 
 						'2026-08-16',
 						'• 现在所有作物的果实生长预计耗时都可正常使用了(此前部分作物未作处理)',
 						'2026-08-12',

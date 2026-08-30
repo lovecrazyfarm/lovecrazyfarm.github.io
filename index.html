@@ -309,10 +309,9 @@
 				<div id="unselectedTagsContainer" class="space-y-4"></div>
 			</div>
 		</div>
+	</div>
 
-
-		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-[68px]">
-		
+		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-[68px] w-full max-w-full">
 			<div class="absolute inset-0 overflow-hidden pointer-events-none">
 				<div class="meteor" style="top: 5%; left: 15%; animation-delay: 0.1s;"></div>
 				<div class="meteor" style="top: 10%; left: 30%; animation-delay: 0.5s;"></div>
@@ -329,7 +328,6 @@
 					<a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" class="text-[0.5rem] sm:text-xs text-white/80 hover:text-white transition-colors text-nowrap flex-shrink-0">桂ICP备2026005605号</a>
 			</div>
 		</div>
-	</div>
 
 	<div x-show="modalOpen" style="display: none;"  @click.away="modalOpen = false" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm" x-transition.opacity.duration.200ms>
 		<div class="bg-white rounded-2xl max-w-[350px] w-[85%] shadow-xl max-h-[80vh] flex flex-col" @click.stop>

@@ -147,6 +147,19 @@
 			opacity: 0;
 			transform: translateY(-20px);
 		}
+		
+		.price-up-effect {
+				color: #fbbf24;
+		}
+		.price-down-effect {
+				color: #f87171;
+		}
+		.price-normal {
+				color: #6366f1;
+		}
+		.price-transition {
+				transition: all 0.15s ease;
+		}
 	</style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-6">
@@ -266,8 +279,10 @@
 							<span x-text="displayWeight || '0'"></span>kg
 						</span>
 					</div>
-					<div class="text-center mt-0.5">
+					<div class="text-center mt-0.5 flex items-center justify-center gap-0">
 						<span class="text-2xl font-extrabold text-indigo-600" x-text="formattedPrice"></span>
+						<span x-show="priceChange === 'up'" class="text-base font-bold text-emerald-500 ml-0.5">▲</span>
+						<span x-show="priceChange === 'down'" class="text-base font-bold text-rose-500 ml-0.5">▼</span>
 					</div>
 				</div>
 			</div>
@@ -499,6 +514,9 @@ function farmCalculator() {
 		isPriceFloating: false,
 		observer: null,
 		_isScrollingBack: false,
+		priceChange: 'none',
+		lastPrice: 0,
+		_clearTimer: null,
 
 
 		get minWeight() {
@@ -640,6 +658,26 @@ function farmCalculator() {
 		},
 		
 		
+		recordPriceChange() {
+			const currentPrice = this.computeTotalValue();
+			if (this.lastPrice === 0) {
+				this.priceChange = 'none';
+			} else if (currentPrice > this.lastPrice) {
+				this.priceChange = 'up';
+			} else if (currentPrice < this.lastPrice) {
+				this.priceChange = 'down';
+			} else {
+				this.priceChange = 'none';
+			}
+			this.lastPrice = currentPrice;
+			
+			clearTimeout(this._clearTimer);
+			this._clearTimer = setTimeout(() => {
+				this.priceChange = 'none';
+			}, 1000);
+		},
+		
+		
 		setupIntersectionObserver() {
 			this.$nextTick(() => {
 				const placeholder = document.getElementById('priceCardPlaceholder');
@@ -688,12 +726,16 @@ function farmCalculator() {
 				this.focusMode = false;
 				this.clearAllInputs();
 				this.checkedTags.clear();
+				this.lastPrice = 0;
+				this.priceChange = 'none';
 			} else {
 				this.selectedCropId = crop.id;
 				this.currentCrop = crop;
 				this.focusMode = true;
 				this.clearAllInputs();
 				this.initCheckedTags();
+				this.lastPrice = 0;
+				this.priceChange = 'none';
 				this.$nextTick(() => {
 					this.setupIntersectionObserver();
 				});
@@ -744,6 +786,7 @@ function farmCalculator() {
 			
 			this.percentInput = ((val / maxW) * 100).toFixed(1);
 			this.updateTimeFromWeight(val);
+			this.recordPriceChange();
 		},
 
 
@@ -780,6 +823,7 @@ function farmCalculator() {
 			const maxW = this.currentCrop.maxWeight;
 			this.weightInput = weight.toFixed(2);
 			this.percentInput = ((weight / maxW) * 100).toFixed(1);
+			this.recordPriceChange();
 		},
 
 
@@ -956,6 +1000,7 @@ function farmCalculator() {
 			
 			this.checkedTags = newMap;
 			this.renderUnselectedTags();
+			this.recordPriceChange();
 			this.$nextTick(() => {
 				this.setupIntersectionObserver();
 			});

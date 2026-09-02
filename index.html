@@ -6,7 +6,8 @@
 	<title>疯狂农场作物价格计算器 - 蛋仔派对疯狂农场作物价格计算工具</title>
 	<meta name="description" content="完全免费的疯狂农场作物价格计算器. 支持作物重量, 重量占比, 突变, 果实生长耗时, 价格等计算.">
 
-	<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍇</text></svg>">
+
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://unpkg.com/alpinejs" defer></script>
 	<script>
@@ -178,8 +179,8 @@
 			</div>
 			
 			<h2 class="text-nowrap drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)] relative z-10" 
-					style="font-family: 'DotGothic16', sans-serif; 
-								-webkit-font-smoothing: none; 
+					style="font-family: sans-serif; 
+								-webkit-font-smoothing: antialiased; 
 								-moz-osx-font-smoothing: grayscale; 
 								letter-spacing: 0.5px; 
 								line-height: 1.2;
@@ -205,16 +206,17 @@
 								font-weight: bold;
 								width: 100%;
 								max-width: 100%;">
-					疯狂农场作物价格计算器
+				疯狂农场作物价格计算器
 			</h2>
 		</div>
 		
 		<div class="p-6 md:p-8 content-bg">
 			<div class="flex flex-wrap gap-2 mb-4">
 				<button @click="openModal('changelog')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">更新日志</button>
+				<button @click="openModal('faq')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">常见问题</button>
 				<button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">免责声明</button>
 				<button @click="openModal('contact')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">联系作者</button>
-				<button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">支持一下 ❤</button>
+				<button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">支持一下❤</button>
 			</div>
 
 			<div class="mb-6 pb-4 border-b border-blue-200">
@@ -239,7 +241,6 @@
 			</div>
 
 
-			<!--<div x-show="selectedCropId !== null" x-transition.duration.200ms class="backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">-->
 			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
 				<div class="pt-0 px-4 pb-2 text-center">
 					<div class="text-lg font-bold text-gray-800" x-text="currentCrop?.name || '未选择作物'"></div>
@@ -255,9 +256,9 @@
 						</template>
 					</div>
 					<div class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2 flex items-center justify-center gap-2">
-						<span class="text-gray-700">突变（共</span>
+						<span class="text-gray-700">(共</span>
 						<span class="text-gray-700 font-bold text-sm" x-text="selectedTags.length"></span>
-						<span class="text-xs font-normal text-gray-700">个，点击取消）</span>
+						<span class="text-xs font-normal text-gray-700">个突变，点击取消)</span>
 					</div>
 				</div>
 			</div>
@@ -411,7 +412,7 @@ const tagLibrary = {
 
 // 标签组
 const tagGroups = {
-	'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2', 'guzhang2', 'hajimi2', 'jinbi2', 'xinghuan2', 'youhun2', 'jinghunye2', 'xueyue2','jiguang2', 'yicai2', 'huancai2', 'hupo2', 'chengzuan2','yunshi2', 'xingkong0', 'rishi2',  'anwu2', 'caichen2', 'taiyangyaoban2', 'liuhuo2'] },
+	'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2', 'yicai2', 'huancai2', 'hupo2', 'chengzuan2','yunshi2', 'xingkong0', 'rishi2', 'anwu2', 'taiyangyaoban2', 'liuhuo2'] },
 	'group_tudou': { tags: ['shupian1'] },
 	'group_huanggua': { tags: ['huanghuashe1'] },
 	'group_xigua': { tags: ['fangxing1'] },
@@ -419,7 +420,19 @@ const tagGroups = {
 	'group_xiangjiao': { tags: ['xiangjiaohou1'] },
 	'group_nangua': { tags: ['wangshengye1'] },
 	'group_caomei': { tags: ['lianti1'] },
-	'group_xiangrikui': { tags: ['xiaorikui1'] }
+	'group_xiangrikui': { tags: ['xiaorikui1'] },
+	
+	'group_activity': { tags: [
+		'xinghuan2',
+		'caichen2',
+		'guzhang2',
+		'hajimi2',
+		'jinbi2',
+		'youhun2',
+		'jinghunye2',
+		'xueyue2',
+		'jiguang2',
+	] },
 };
 
 const exclusiveGroups = [
@@ -429,68 +442,68 @@ const exclusiveGroups = [
 
 // 作物数据
 const itemsData = [
-	{ id: 'item_yueguangcao', name: '月光草', basePrice: 330.8416, maxWeight: 3.4, growthSpeed: 111, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
-	{ id: 'item_yuerangdou', name: '月壤豆', basePrice: 1351.187, maxWeight: 3.4, growthSpeed: 180, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
-	{ id: 'item_yuedengcao', name: '月灯草', basePrice: 1503.785, maxWeight: 5.1, growthSpeed: 205, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
-	{ id: 'item_yuefanqie', name: '月番茄', basePrice: 662.4846, maxWeight: 10.2, growthSpeed: 111, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
-	{ id: 'item_yuehuanguo', name: '月环果', basePrice: 321.9977, maxWeight: 20.4, growthSpeed: 58, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_yinhuitai', name: '银灰苔', basePrice: 3045.368, maxWeight: 5.1, growthSpeed: 280, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_yuemei', name: '月莓', basePrice: 3920.926, maxWeight: 8.5, growthSpeed: 375, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_xingyecai', name: '星叶菜', basePrice: 3973.084, maxWeight: 10.2, growthSpeed: 416, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_yueheguo', name: '月核果', basePrice: 3387.512, maxWeight: 17, growthSpeed: 460, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_yeguangteng', name: '液光藤', basePrice: 3512.968, maxWeight: 20.4, growthSpeed: 520, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_huanyuehua', name: '幻月花', basePrice: 8368.833, maxWeight: 23.8, growthSpeed: 1142.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_xingkongmeigui', name: '星空玫瑰', basePrice: 33134.09, maxWeight: 10.2, growthSpeed: 2966.6, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_yuetu', name: '月兔', basePrice: 11138.44, maxWeight: 23.8, growthSpeed: 1523, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 5125, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_yueyingmei', name: '月影梅', basePrice: 75418, maxWeight: 3.4, growthSpeed: 4022.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_bianhua', name: '彼岸花', basePrice: 49876.54, maxWeight: 10.2, growthSpeed: 2908.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_yuechanchu', name: '月蟾蜍', basePrice: 9759.5, maxWeight: 34, growthSpeed: 978.9, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yueguangcao', name: '月光草', basePrice: 330.8416, maxWeight: 3.4, growthSpeed: 111, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+	{ id: 'item_yuerangdou', name: '月壤豆', basePrice: 1351.187, maxWeight: 3.4, growthSpeed: 180, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+	{ id: 'item_yuedengcao', name: '月灯草', basePrice: 1503.785, maxWeight: 5.1, growthSpeed: 205, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+	{ id: 'item_yuefanqie', name: '月番茄', basePrice: 662.4846, maxWeight: 10.2, growthSpeed: 111, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+	{ id: 'item_yuehuanguo', name: '月环果', basePrice: 321.9977, maxWeight: 20.4, growthSpeed: 58, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_yinhuitai', name: '银灰苔', basePrice: 3045.368, maxWeight: 5.1, growthSpeed: 280, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_yuemei', name: '月莓', basePrice: 3920.926, maxWeight: 8.5, growthSpeed: 375, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_xingyecai', name: '星叶菜', basePrice: 3973.084, maxWeight: 10.2, growthSpeed: 416, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_yueheguo', name: '月核果', basePrice: 3387.512, maxWeight: 17, growthSpeed: 460, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_yeguangteng', name: '液光藤', basePrice: 3512.968, maxWeight: 20.4, growthSpeed: 520, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_huanyuehua', name: '幻月花', basePrice: 8368.833, maxWeight: 23.8, growthSpeed: 1142.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_xingkongmeigui', name: '星空玫瑰', basePrice: 33134.09, maxWeight: 10.2, growthSpeed: 2966.6, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yuetu', name: '月兔', basePrice: 11138.44, maxWeight: 23.8, growthSpeed: 1523, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 5125, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yueyingmei', name: '月影梅', basePrice: 75418, maxWeight: 3.4, growthSpeed: 4022.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_bianhua', name: '彼岸花', basePrice: 49876.54, maxWeight: 10.2, growthSpeed: 2908.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yuechanchu', name: '月蟾蜍', basePrice: 9759.5, maxWeight: 34, growthSpeed: 978.9, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 
-	{ id: 'item_tudou', name: '土豆', basePrice: 26.3026, maxWeight: 11.9, growthSpeed: 28.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_tudou'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
-	{ id: 'item_xianggu', name: '香菇', basePrice: 687.682, maxWeight: 3.4, growthSpeed: 133, categories: ['cat_putong'], tagGroups: ['group_basic', ], fillColor: FC.YGC.color, priority: FC.YGC.priority },
-	{ id: 'item_fanqie', name: '番茄', basePrice: 66.2398, maxWeight: 10.2, growthSpeed: 33.33, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
-	{ id: 'item_bosiju', name: '波斯菊', basePrice: 43.5424, maxWeight: 34, growthSpeed: 17, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
-	{ id: 'item_dadou', name: '大豆', basePrice: 2579.0104, maxWeight: 3.4, growthSpeed: 275, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
-	{ id: 'item_zhuzi', name: '竹子', basePrice: 12.2462, maxWeight: 136, growthSpeed: 7.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
-	{ id: 'item_huanggua', name: '黄瓜', basePrice: 215.0425, maxWeight: 13.6, growthSpeed: 50, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_huanggua'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
-	{ id: 'item_xigua', name: '西瓜', basePrice: 10.7111, maxWeight: 170, growthSpeed: 6, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xigua'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_li', name: '梨', basePrice: 484.155, maxWeight: 13.6, growthSpeed: 75, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_juzi', name: '橘子', basePrice: 537.9143, maxWeight: 13.6, growthSpeed: 75, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_yumi', name: '玉米', basePrice: 103.5216, maxWeight: 40.8, growthSpeed: 27.78, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_baicai', name: '白菜', basePrice: 579.7213, maxWeight: 10.2, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_qianniuhua', name: '牵牛花', basePrice: 2108.1851, maxWeight: 5.1, growthSpeed: 200, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_mainhua', name: '棉花', basePrice: 2578.4733, maxWeight: 5.2, growthSpeed: 200, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_pingguo', name: '苹果', basePrice: 188.7409, maxWeight: 37.4, growthSpeed: 40.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_pingguo'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_shiliu', name: '石榴', basePrice: 527.5836, maxWeight: 20, growthSpeed: 83.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_xiangjiao', name: '香蕉', basePrice: 2484.6553, maxWeight: 10.2, growthSpeed: 280, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangjiao'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_chelizi', name: '车厘子', basePrice: 1657.661, maxWeight: 10.5, growthSpeed: 166, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_yezi', name: '椰子', basePrice: 145.9826, maxWeight: 40.8, growthSpeed: 32.5, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_nangua', name: '南瓜', basePrice: 12.9595, maxWeight: 204, growthSpeed: 6.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_nangua'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_caomei', name: '草莓', basePrice: 8702.3915, maxWeight: 8.5, growthSpeed: 888, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_caomei'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_mihoutao', name: '猕猴桃', basePrice: 2147.9813, maxWeight: 13.6, growthSpeed: 278, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_lizhi', name: '荔枝', basePrice: 790.1983, maxWeight: 23.8, growthSpeed: 135, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_liulian', name: '榴莲', basePrice: 202.944, maxWeight: 61.2, growthSpeed: 55.55, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_xiangrikui', name: '向日葵', basePrice: 370.3206, maxWeight: 51, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangrikui'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_songguo', name: '松果', basePrice: 4614.5318, maxWeight: 17, growthSpeed: 570, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_dawangju', name: '大王菊', basePrice: 24833.3587, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_putao', name: '葡萄', basePrice: 24836.8915, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_jingqigu', name: '惊奇菇', basePrice: 49659, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_pantao', name: '蟠桃', basePrice: 8780.9359, maxWeight: 20.4, growthSpeed: 1333.33, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_xianrenzhangxiang', name: '仙人掌象', basePrice: 9525.0487, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_moguichaotianjiao', name: '魔鬼朝天椒', basePrice: 33143.6022, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_tudou', name: '土豆', basePrice: 26.3026, maxWeight: 11.9, growthSpeed: 28.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_tudou', 'group_activity'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+	{ id: 'item_xianggu', name: '香菇', basePrice: 687.682, maxWeight: 3.4, growthSpeed: 133, categories: ['cat_putong'], tagGroups: ['group_basic', , 'group_activity'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+	{ id: 'item_fanqie', name: '番茄', basePrice: 66.2398, maxWeight: 10.2, growthSpeed: 33.33, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+	{ id: 'item_bosiju', name: '波斯菊', basePrice: 43.5424, maxWeight: 34, growthSpeed: 17, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YGC.color, priority: FC.YGC.priority },
+	{ id: 'item_dadou', name: '大豆', basePrice: 2579.0104, maxWeight: 3.4, growthSpeed: 275, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+	{ id: 'item_zhuzi', name: '竹子', basePrice: 12.2462, maxWeight: 136, growthSpeed: 7.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+	{ id: 'item_huanggua', name: '黄瓜', basePrice: 215.0425, maxWeight: 13.6, growthSpeed: 50, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_huanggua', 'group_activity'], fillColor: FC.YDC.color, priority: FC.YDC.priority },
+	{ id: 'item_xigua', name: '西瓜', basePrice: 10.7111, maxWeight: 170, growthSpeed: 6, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xigua', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_li', name: '梨', basePrice: 484.155, maxWeight: 13.6, growthSpeed: 75, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_juzi', name: '橘子', basePrice: 537.9143, maxWeight: 13.6, growthSpeed: 75, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_yumi', name: '玉米', basePrice: 103.5216, maxWeight: 40.8, growthSpeed: 27.78, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_baicai', name: '白菜', basePrice: 579.7213, maxWeight: 10.2, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_qianniuhua', name: '牵牛花', basePrice: 2108.1851, maxWeight: 5.1, growthSpeed: 200, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_mainhua', name: '棉花', basePrice: 2578.4733, maxWeight: 5.2, growthSpeed: 200, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_pingguo', name: '苹果', basePrice: 188.7409, maxWeight: 37.4, growthSpeed: 40.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_pingguo', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_shiliu', name: '石榴', basePrice: 527.5836, maxWeight: 20, growthSpeed: 83.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_xiangjiao', name: '香蕉', basePrice: 2484.6553, maxWeight: 10.2, growthSpeed: 280, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangjiao', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_chelizi', name: '车厘子', basePrice: 1657.661, maxWeight: 10.5, growthSpeed: 166, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_yezi', name: '椰子', basePrice: 145.9826, maxWeight: 40.8, growthSpeed: 32.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_nangua', name: '南瓜', basePrice: 12.9595, maxWeight: 204, growthSpeed: 6.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_nangua', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_caomei', name: '草莓', basePrice: 8702.3915, maxWeight: 8.5, growthSpeed: 888, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_caomei', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_mihoutao', name: '猕猴桃', basePrice: 2147.9813, maxWeight: 13.6, growthSpeed: 278, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_lizhi', name: '荔枝', basePrice: 790.1983, maxWeight: 23.8, growthSpeed: 135, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_liulian', name: '榴莲', basePrice: 202.944, maxWeight: 61.2, growthSpeed: 55.55, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_xiangrikui', name: '向日葵', basePrice: 370.3206, maxWeight: 51, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangrikui', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_songguo', name: '松果', basePrice: 4614.5318, maxWeight: 17, growthSpeed: 570, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_dawangju', name: '大王菊', basePrice: 24833.3587, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_putao', name: '葡萄', basePrice: 24836.8915, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_jingqigu', name: '惊奇菇', basePrice: 49659, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_pantao', name: '蟠桃', basePrice: 8780.9359, maxWeight: 20.4, growthSpeed: 1333.33, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_xianrenzhangxiang', name: '仙人掌象', basePrice: 9525.0487, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_moguichaotianjiao', name: '魔鬼朝天椒', basePrice: 33143.6022, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 
-	{ id: 'item_longyan', name: '龙眼', basePrice: 4319.81, maxWeight: 8.5, growthSpeed: 438.7755, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_shizi', name: '柿子', basePrice: 236.5, maxWeight: 37.4, growthSpeed: 45.5122, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YM.color, priority: FC.YM.priority },
-	{ id: 'item_luhui', name: '芦荟', basePrice: 55439, maxWeight: 10.2, growthSpeed: 2169.8, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10987.6, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_lanmei', name: '蓝莓',  basePrice: 113.4475, maxWeight: 40.8,  growthSpeed: 27.9928, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_huasheng', name: '花生',  basePrice: 2858.96, maxWeight: 5.1,  growthSpeed: 207.1111, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
-	{ id: 'item_youzi', name: '柚子', basePrice: 225.22, maxWeight: 61.2,  growthSpeed: 67.34, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_bocai', name: '菠菜', basePrice: 3880.3, maxWeight: 23.8,  growthSpeed: 495.7627, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
-	{ id: 'item_matilian', name: '马蹄莲', basePrice: 5081.2, maxWeight: 17, growthSpeed: 645.6105, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_linglanyouyou', name: '铃兰幽幽', basePrice: 12059.4, maxWeight: 23.8, growthSpeed: 1549.1803, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_tiaowudeshidaila', name: '跳舞的柿黛拉', basePrice: 7297.6, maxWeight: 45.2, growthSpeed: 990.7, categories: ['cat_putong'], tagGroups: ['group_basic'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_longyan', name: '龙眼', basePrice: 4319.81, maxWeight: 8.5, growthSpeed: 438.7755, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_shizi', name: '柿子', basePrice: 236.5, maxWeight: 37.4, growthSpeed: 45.5122, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	{ id: 'item_luhui', name: '芦荟', basePrice: 55439, maxWeight: 10.2, growthSpeed: 2169.8, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10987.6, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_lanmei', name: '蓝莓',  basePrice: 113.4475, maxWeight: 40.8,  growthSpeed: 27.9928, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_huasheng', name: '花生',  basePrice: 2858.96, maxWeight: 5.1,  growthSpeed: 207.1111, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHT.color, priority: FC.YHT.priority },
+	{ id: 'item_youzi', name: '柚子', basePrice: 225.22, maxWeight: 61.2,  growthSpeed: 67.34, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_bocai', name: '菠菜', basePrice: 3880.3, maxWeight: 23.8,  growthSpeed: 495.7627, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_matilian', name: '马蹄莲', basePrice: 5081.2, maxWeight: 17, growthSpeed: 645.6105, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_linglanyouyou', name: '铃兰幽幽', basePrice: 12059.4, maxWeight: 23.8, growthSpeed: 1549.1803, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_tiaowudeshidaila', name: '跳舞的柿黛拉', basePrice: 7297.6, maxWeight: 45.2, growthSpeed: 990.7, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 ];
 
 const categories = [
@@ -545,12 +558,15 @@ function farmCalculator() {
 
 		get unselectedTagsByLevel() {
 			const allTags = this.getAllTags();
+			const allLevel0 = allTags.filter(t => t.level === 0);
 			const unselected = allTags.filter(tag => this.checkedTags.get(tag.id) !== true);
 			const sortFn = (a, b) => {
 				if (a.priority !== b.priority) return a.priority - b.priority;
 				return b.times - a.times;
 			};
-			const level0 = unselected.filter(t => t.level === 0).sort(sortFn);
+			const unselectedLevel0 = unselected.filter(t => t.level === 0).sort(sortFn);
+			
+			const level0 = unselectedLevel0.length === allLevel0.length ? unselectedLevel0 : [];
 			const level1 = unselected.filter(t => t.level === 1).sort(sortFn);
 			const level2 = unselected.filter(t => t.level === 2).sort(sortFn);
 			return { level0, level1, level2 };
@@ -1007,7 +1023,7 @@ function farmCalculator() {
 			});
 		},
 
-
+		
 		renderUnselectedTags() {
 			const container = document.getElementById('unselectedTagsContainer');
 			if (!this.currentCrop) {
@@ -1017,9 +1033,25 @@ function farmCalculator() {
 			
 			const { level0, level1, level2 } = this.unselectedTagsByLevel;
 			
-			const renderGroup = (tags, title) => {
+			// 获取活动突变
+			const activityTagIds = tagGroups['group_activity']?.tags || [];
+			
+			// 从 level2 中分离出活动突变
+			const activityTags = level2.filter(tag => activityTagIds.includes(tag.id));
+			const normalLevel2 = level2.filter(tag => !activityTagIds.includes(tag.id));
+			
+			const renderGroup = (tags, title, showQuickSelect = false) => {
 				if (tags.length === 0) return '';
-				let html = `<div class="mb-4"><div class="text-xs font-semibold text-indigo-500 mb-2 pl-1 border-l-3 border-indigo-300">${title}</div><div class="flex flex-wrap gap-2">`;
+				
+				let titleHtml = `<div class="text-xs font-semibold text-indigo-500 mb-2 pl-1 border-l-3 border-indigo-300 flex items-center gap-2 flex-wrap">`;
+				titleHtml += `<span>${title}</span>`;
+				if (showQuickSelect) {
+					titleHtml += `<button @click="quickSelectLevel2()" class="px-2 py-0.5 text-xs bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-colors">一键优选</button>`;
+				}
+				titleHtml += `</div>`;
+				
+				let html = titleHtml;
+				html += `<div class="flex flex-wrap gap-2">`;
 				for (let tag of tags) {
 					html += `<div @click="toggleTag('${tag.id}')" 
 					class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md" 
@@ -1031,13 +1063,17 @@ function farmCalculator() {
 						text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
 					">${tag.name}</div>`;
 				}
-				html += `</div></div>`;
+				html += `</div>`;
 				return html;
 			};
 			
-			let html = renderGroup(level0, '基础突变');
-			html += renderGroup(level1, '专属突变');
-			html += renderGroup(level2, '常规突变');
+			let html  = renderGroup(level0, '基础突变', false);
+			html     += renderGroup(level1, '专属突变', false);
+			html     += renderGroup(normalLevel2, '常规突变', true);
+			if (activityTags.length > 0) {
+				html += renderGroup(activityTags, '活动突变', false);
+			}
+			
 			container.innerHTML = html || '<div class="text-indigo-400 text-sm py-4 text-center">暂无可用突变</div>';
 			
 			this.$nextTick(() => {
@@ -1048,16 +1084,98 @@ function farmCalculator() {
 				});
 			});
 		},
-
+		
+		
+		quickSelectLevel2() {
+			const allTags = this.getAllTags();
+			const level2Tags = allTags.filter(t => t.level === 2);
+		
+			const activityTagIds = tagGroups['group_activity']?.tags || [];
+			
+			// 先清空所有常规突变
+			level2Tags.forEach(tag => {
+				this.checkedTags.set(tag.id, false);
+			});
+			
+			// 1. 获取所有常规突变的 ID（排除活动突变）
+			const allLevel2Ids = level2Tags
+				.filter(tag => !activityTagIds.includes(tag.id))
+				.map(tag => tag.id);
+			
+			// 2. 全部选中（仅非活动突变）
+			allLevel2Ids.forEach(id => {
+				this.checkedTags.set(id, true);
+			});
+			
+			// 3. 处理互斥组：每个互斥组只保留倍数最高的
+			for (const group of exclusiveGroups) {
+				const groupTags = group.tags.filter(id => {
+					const tag = tagLibrary[id];
+					return tag && tag.level === 2;
+				});
+				
+				if (groupTags.length === 0) continue;
+				
+				let bestId = null;
+				let bestTimes = -1;
+				
+				for (const id of groupTags) {
+					if (activityTagIds.includes(id)) continue;
+					const times = tagLibrary[id]?.times || 0;
+					if (times > bestTimes) {
+						bestTimes = times;
+						bestId = id;
+					}
+				}
+				
+				if (bestId === null) continue;
+				
+				for (const id of groupTags) {
+					if (id !== bestId) {
+						this.checkedTags.set(id, false);
+					}
+				}
+			}
+			
+			// ========== 4. 处理合成关系 ==========
+			// 如果有合成突变被选中，取消其子突变
+			let changed = true;
+			let loop = 0;
+			while (changed && loop++ < 10) {
+				changed = false;
+				for (const [compositeId, def] of Object.entries(tagLibrary)) {
+					if (def.synthesis && def.synthesis.length > 0) {
+						// 如果合成突变被选中
+						if (this.checkedTags.get(compositeId) === true) {
+							// 取消其子突变
+							for (const childId of def.synthesis) {
+								if (this.checkedTags.get(childId) === true) {
+									this.checkedTags.set(childId, false);
+									changed = true;
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			this.renderUnselectedTags();
+			this.recordPriceChange();
+		},
+		
 
 		openModal(type) {
 			const modals = {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'2026-09-03',
+						'• 添加"一键优选", 快速选择常用的突变("awa"提供的想法)',
+						'• 现在当基础突变被选时隐藏其选择栏, 以防后续误触("awa"提供的想法)',
+						'• 添加"常见问题"',
 						'2026-08-31',
+						'• 添加显示价格的浮动卡片, 当下滑超出显示价格区域时会在顶部有相关信息的卡片, 优化移动端体验 ("Alex"提供的想法)',
 						'• 去掉多余的"开源 · 免费 · 易用"副标题, 但这六个字还会贯彻到每一个版本的迭代中',
-						'• 添加显示价格的浮动卡片, 当下滑超出显示价格区域时会在顶部有相关信息的卡片, 优化移动端体验 ("Alex"提供的想法)', 
 						'2026-08-16',
 						'• 现在所有作物的果实生长预计耗时都可正常使用了(此前部分作物未作处理)',
 						'2026-08-12',
@@ -1101,6 +1219,33 @@ function farmCalculator() {
 					],
 					get content(){ return this.lines.join('<br>'); }
 				},
+				
+				faq: {
+					title: '常见问题',
+					lines: [
+						'Q1: "≤ 9.29"版本是什么意思?',
+						'A : 是结束于本年9月29日的版本.',
+						'',
+						'Q2: 如何从计算页面返回到选作物页面?',
+						'A : 点击你想要选的版本.',
+						'',
+						'Q3: "无加速时..."是什么功能?',
+						'A : 估算果实成熟时间, 也可由此得到大致的重量、百分比.',
+						'',
+						'Q4: 如何估算果实成熟时间?',
+						'A : 用秒表计时作物+1%进度的秒数, 然后回到本工具的对应框输入秒数.',
+						'&nbsp;&nbsp;注意, "无加速时"指的是在秒表计时过程中, 作物不能受到任何加速效果.',
+						'&nbsp;&nbsp;加速效果: ',
+						'&nbsp;&nbsp;&nbsp;&nbsp;1.刷新了加速生长效果天气(对应的天气说明有"提高作物生长速度...");',
+						'&nbsp;&nbsp;&nbsp;&nbsp;2.对作物放了洒水器;',
+						'&nbsp;&nbsp;&nbsp;&nbsp;3.作物被果精灵释放了"果实加速".',
+						'',
+						'Q5: 估算果实成熟的时间接近吗?',
+						'A : 时间是以全程无加速效果估算的, 实际情况并不如此, 所以估算的只是成熟所需的最大时间, 但由此得到的重量和百分比是接近的.',
+					],
+					get content() { return this.lines.join('<br>'); }
+				},
+				
 				disclaimer: {
 					title: '免责声明', 
 					lines: [
@@ -1117,7 +1262,7 @@ function farmCalculator() {
 						'• 本工具按“现状”提供，不对准确性、完整性、及时性作任何保证。',
 						'<br>',
 						'【赞赏说明】',
-						'• 本工具所有功能完全免费。页面内的“支持一下 ❤”或“赞赏”入口，是出于用户自愿原则的感谢渠道，绝非为使用本工具而必须支付的费用。',
+						'• 本工具所有功能完全免费。页面内的“支持一下❤”或“赞赏”入口，是出于用户自愿原则的感谢渠道，绝非为使用本工具而必须支付的费用。',
 						'• 任何赞赏行为均视为用户对开发者个人努力的认可与鼓励，不代表购买任何服务、特权或对计算准确性的承诺。',
 						'• 未成年人请在监护人知情并同意的情况下进行相关操作。',
 						'<br>',
@@ -1145,7 +1290,7 @@ function farmCalculator() {
 					content: '微信: lovecrazyfarm<br>邮箱: lovecrazyfarm@163.com<br>',
 					},
 				support: {
-					title: '支持一下 ❤ (微信赞赏)',
+					title: '支持一下❤ (微信赞赏)',
 					content: '<div style="text-align: center;"><img src="support.jpg" alt="支持作者" style="max-width: 100%; height: auto; border-radius: 12px;"></div>',
 				},
 			};

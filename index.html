@@ -531,6 +531,7 @@ function farmCalculator() {
 		priceChange: 'none',
 		lastPrice: 0,
 		_clearTimer: null,
+		quickSelectMax: false, // 一键优选默认不勾选
 
 
 		get minWeight() {
@@ -1046,7 +1047,13 @@ function farmCalculator() {
 				let titleHtml = `<div class="text-xs font-semibold text-indigo-500 mb-2 pl-1 border-l-3 border-indigo-300 flex items-center gap-2 flex-wrap">`;
 				titleHtml += `<span>${title}</span>`;
 				if (showQuickSelect) {
-					titleHtml += `<button @click="quickSelectLevel2()" class="px-2 py-0.5 text-xs bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-colors">一键优选</button>`;
+					titleHtml += `
+						<button @click="quickSelectLevel2()" class="px-2 py-0.5 text-xs bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-colors">一键优选</button>
+						<label class="flex items-center gap-1 text-xs text-indigo-500 cursor-pointer">
+							<input type="checkbox" x-model="quickSelectMax" class="w-3.5 h-3.5 text-indigo-500 rounded border-indigo-300 focus:ring-indigo-400 cursor-pointer">
+							<span>拉满</span>
+						</label>
+					`;
 				}
 				titleHtml += `</div>`;
 				
@@ -1089,76 +1096,118 @@ function farmCalculator() {
 		quickSelectLevel2() {
 			const allTags = this.getAllTags();
 			const level2Tags = allTags.filter(t => t.level === 2);
-		
 			const activityTagIds = tagGroups['group_activity']?.tags || [];
-			
-			// 先清空所有常规突变
+		
+			// 先清空所有常规突变（排除活动突变）
 			level2Tags.forEach(tag => {
-				this.checkedTags.set(tag.id, false);
+				if (!activityTagIds.includes(tag.id)) {
+					this.checkedTags.set(tag.id, false);
+				}
 			});
-			
-			// 1. 获取所有常规突变的 ID（排除活动突变）
-			const allLevel2Ids = level2Tags
-				.filter(tag => !activityTagIds.includes(tag.id))
-				.map(tag => tag.id);
-			
-			// 2. 全部选中（仅非活动突变）
-			allLevel2Ids.forEach(id => {
-				this.checkedTags.set(id, true);
-			});
-			
-			// 3. 处理互斥组：每个互斥组只保留倍数最高的
-			for (const group of exclusiveGroups) {
-				const groupTags = group.tags.filter(id => {
-					const tag = tagLibrary[id];
-					return tag && tag.level === 2;
+		
+			if (this.quickSelectMax) {
+				// 拉满
+				
+				// 1. 全选所有非活动突变
+				level2Tags.forEach(tag => {
+					if (!activityTagIds.includes(tag.id)) {
+						this.checkedTags.set(tag.id, true);
+					}
 				});
 				
-				if (groupTags.length === 0) continue;
-				
-				let bestId = null;
-				let bestTimes = -1;
-				
-				for (const id of groupTags) {
-					if (activityTagIds.includes(id)) continue;
-					const times = tagLibrary[id]?.times || 0;
-					if (times > bestTimes) {
-						bestTimes = times;
-						bestId = id;
+				// 2. 处理互斥组：每个互斥组只保留倍数最高的
+				for (const group of exclusiveGroups) {
+					const groupTags = group.tags.filter(id => {
+						const tag = tagLibrary[id];
+						return tag && tag.level === 2 && !activityTagIds.includes(id);
+					});
+					
+					if (groupTags.length === 0) continue;
+					
+					let bestId = null;
+					let bestTimes = -1;
+					
+					for (const id of groupTags) {
+						const times = tagLibrary[id]?.times || 0;
+						if (times > bestTimes) {
+							bestTimes = times;
+							bestId = id;
+						}
+					}
+					
+					if (bestId === null) continue;
+					
+					for (const id of groupTags) {
+						if (id !== bestId) {
+							this.checkedTags.set(id, false);
+						}
 					}
 				}
 				
-				if (bestId === null) continue;
-				
-				for (const id of groupTags) {
-					if (id !== bestId) {
-						this.checkedTags.set(id, false);
-					}
-				}
-			}
-			
-			// ========== 4. 处理合成关系 ==========
-			// 如果有合成突变被选中，取消其子突变
-			let changed = true;
-			let loop = 0;
-			while (changed && loop++ < 10) {
-				changed = false;
-				for (const [compositeId, def] of Object.entries(tagLibrary)) {
-					if (def.synthesis && def.synthesis.length > 0) {
-						// 如果合成突变被选中
-						if (this.checkedTags.get(compositeId) === true) {
-							// 取消其子突变
-							for (const childId of def.synthesis) {
-								if (this.checkedTags.get(childId) === true) {
-									this.checkedTags.set(childId, false);
-									changed = true;
+				// 3. 处理合成关系
+				let changed = true;
+				let loop = 0;
+				while (changed && loop++ < 10) {
+					changed = false;
+					for (const [compositeId, def] of Object.entries(tagLibrary)) {
+						if (def.synthesis && def.synthesis.length > 0) {
+							if (this.checkedTags.get(compositeId) === true) {
+								for (const childId of def.synthesis) {
+									if (this.checkedTags.get(childId) === true) {
+										this.checkedTags.set(childId, false);
+										changed = true;
+									}
 								}
 							}
 						}
 					}
 				}
+				
+			} else {
+				// 不拉满
+				const customTags = [
+					'chengzuan2', 'cihua2', 'caihong2', 'yingguang2', 'luolei2',
+					'bingdong2', 'zhanli2', 'fuxue2', 'chaoshi2', 'miwu2',
+				];
+				
+				customTags.forEach(id => {
+					if (!activityTagIds.includes(id) && this.checkedTags.has(id)) {
+						this.checkedTags.set(id, true);
+					}
+				});
+				
+				// 处理互斥组：只保留自定义中倍数最高的
+				for (const group of exclusiveGroups) {
+					const groupTags = group.tags.filter(id => {
+						const tag = tagLibrary[id];
+						return tag && tag.level === 2 && !activityTagIds.includes(id);
+					});
+					
+					if (groupTags.length === 0) continue;
+					
+					// 找出自定义中倍数最高的
+					let bestId = null;
+					let bestTimes = -1;
+					
+					for (const id of groupTags) {
+						if (!this.checkedTags.get(id)) continue;
+						const times = tagLibrary[id]?.times || 0;
+						if (times > bestTimes) {
+							bestTimes = times;
+							bestId = id;
+						}
+					}
+					
+					if (bestId === null) continue;
+					
+					for (const id of groupTags) {
+						if (id !== bestId) {
+							this.checkedTags.set(id, false);
+						}
+					}
+				}
 			}
-			
+		
 			this.renderUnselectedTags();
 			this.recordPriceChange();
 		},
@@ -1243,6 +1292,7 @@ function farmCalculator() {
 						'',
 						'Q5: 估算果实成熟的时间接近吗?',
 						'A : 时间是以全程无加速效果估算的, 实际情况并不如此, 所以估算的只是成熟所需的最大时间, 但由此得到的重量和百分比是接近的.',
+					
 					],
 					get content() { return this.lines.join('<br>'); }
 				},

@@ -366,54 +366,54 @@ const FC = {
 // 标签库
 const tagLibrary = {
 	// 部分数据来自:https://www.bilibili.com/opus/1170360012470484992
-	'xingkong0': { id: 'xingkong0', name: '星空', times: 40, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
-	'liuguang0': { id: 'liuguang0', name: '流光', times: 30, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
-	'shuijing0': { id: 'shuijing0', name: '水晶', times: 20, level: 0, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
-	'jin0': { id: 'jin0', name: '金', times: 10, level: 0, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'yin0': { id: 'yin0', name: '银', times: 3, level: 0, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], syndel: [] },
+	'xingkong0': { id: 'xingkong0', name: '星空', times: 40, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
+	'liuguang0': { id: 'liuguang0', name: '流光', times: 30, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
+	'shuijing0': { id: 'shuijing0', name: '水晶', times: 20, level: 0, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [] },
+	'jin0': { id: 'jin0', name: '金', times: 10, level: 0, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'yin0': { id: 'yin0', name: '银', times: 3, level: 0, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [] },
 
-	'yicai2': { id: 'yicai2', name: '异彩', times: 1.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'huancai2': { id: 'huancai2', name: '幻彩', times: 3, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
-	'hupo2': { id: 'hupo2', name: '琥珀', times: 4.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: ['chaoshi2', 'shengji2'], syndel: ['chaoshi2', 'shengji2'] },
-	'chengzuan2': { id: 'chengzuan2', name: '橙钻', times: 18, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: ['liangjingjing2', 'hupo2'], syndel: ['liangjingjing2', 'hupo2', 'shengji2'] },
-	'shupian1': { id: 'shupian1', name: '薯片', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
-	'lianti1': { id: 'lianti1', name: '连体', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
-	'fangxing1': { id: 'fangxing1', name: '方形', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
-	'tanghulu1': { id: 'tanghulu1', name: '糖葫芦', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
-	'xiangjiaohou1': { id: 'xiangjiaohou1', name: '香蕉猴', times: 2, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
-	'wangshengye1': { id: 'wangshengye1', name: '万圣夜', times: 2, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
-	'huanghuashe1': { id: 'huanghuashe1', name: '黄瓜蛇', times: 2.5, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], syndel: [] },
-	'xiaorikui1': { id: 'xiaorikui1', name: '笑日葵', times: 10, level: 1, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
-	'chaoshi2': { id: 'chaoshi2', name: '潮湿', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'zhanli2': { id: 'zhanli2', name: '颤栗', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'shengji2': { id: 'shengji2', name: '生机', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'miwu2': { id: 'miwu2', name: '迷雾', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'fuxue2': { id: 'fuxue2', name: '覆雪', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'shachen2': { id: 'shachen2', name: '沙尘', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'jieshuang2': { id: 'jieshuang2', name: '结霜', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'zhuore2': { id: 'zhuore2', name: '灼热', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], syndel: [] },
-	'luolei2': { id: 'luolei2', name: '落雷', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], syndel: [] },
-	'yunshi2': { id: 'yunshi2', name: '陨石', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], syndel: [] },
-	'taiyangyaoban2': { id: 'taiyangyaoban2', name: '太阳耀斑', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'caihong2': { id: 'caihong2', name: '彩虹', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'guzhang2': { id: 'guzhang2', name: '故障', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'hajimi2': { id: 'hajimi2', name: '哈基咪', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'jinbi2': { id: 'jinbi2', name: '金币', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'xueyue2': { id: 'xueyue2', name: '血月', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'youhun2': { id: 'youhun2', name: '幽魂', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'jinghunye2': { id: 'jinghunye2', name: '惊魂夜', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'jiguang2': { id: 'jiguang2', name: '极光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], syndel: [] },
-	'rishi2': { id: 'rishi2', name: '日蚀', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
-	'liangjingjing2': { id: 'liangjingjing2', name: '亮晶晶', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
-	'xinghuan2': { id: 'xinghuan2', name: '星环', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
-	'cihua2': { id: 'cihua2', name: '瓷化', times: 8, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: ['taohua2', 'zhuore2'], syndel: ['taohua2', 'zhuore2'] },
-	'nihong2': { id: 'nihong2', name: '霓虹', times: 18, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
-	'bingdong2': { id: 'bingdong2', name: '冰冻', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'jieshuang2'], syndel: ['chaoshi2', 'jieshuang2'] },
-	'taohua2': { id: 'taohua2', name: '陶化', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'shachen2'], syndel: ['shachen2'] },
-	'liuhuo2': { id: 'liuhuo2', name: '流火', times: 15, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: ['taiyangyaoban2', 'zhuore2'], syndel: ['taiyangyaoban2', 'zhuore2']}, 
-	'caichen2': {id: 'caichen2',  name: '彩尘',  times: 5,  level:2, fillColor: FC.JIN.color,  priority: FC.JIN.priority,  synthesis: [], syndel: []}, 
+	'yicai2': { id: 'yicai2', name: '异彩', times: 1.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'huancai2': { id: 'huancai2', name: '幻彩', times: 3, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [] },
+	'hupo2': { id: 'hupo2', name: '琥珀', times: 4.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: ['chaoshi2', 'shengji2'], synDel: ['chaoshi2', 'shengji2'] },
+	'chengzuan2': { id: 'chengzuan2', name: '橙钻', times: 18, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: ['liangjingjing2', 'hupo2'], synDel: ['liangjingjing2', 'hupo2', 'shengji2'] },
+	'shupian1': { id: 'shupian1', name: '薯片', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
+	'lianti1': { id: 'lianti1', name: '连体', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
+	'fangxing1': { id: 'fangxing1', name: '方形', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
+	'tanghulu1': { id: 'tanghulu1', name: '糖葫芦', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
+	'xiangjiaohou1': { id: 'xiangjiaohou1', name: '香蕉猴', times: 2, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [] },
+	'wangshengye1': { id: 'wangshengye1', name: '万圣夜', times: 2, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [] },
+	'huanghuashe1': { id: 'huanghuashe1', name: '黄瓜蛇', times: 2.5, level: 1, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [] },
+	'xiaorikui1': { id: 'xiaorikui1', name: '笑日葵', times: 10, level: 1, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
+	'chaoshi2': { id: 'chaoshi2', name: '潮湿', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'zhanli2': { id: 'zhanli2', name: '颤栗', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'shengji2': { id: 'shengji2', name: '生机', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'miwu2': { id: 'miwu2', name: '迷雾', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'fuxue2': { id: 'fuxue2', name: '覆雪', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'shachen2': { id: 'shachen2', name: '沙尘', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'jieshuang2': { id: 'jieshuang2', name: '结霜', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'zhuore2': { id: 'zhuore2', name: '灼热', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
+	'luolei2': { id: 'luolei2', name: '落雷', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [] },
+	'yunshi2': { id: 'yunshi2', name: '陨石', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [] },
+	'taiyangyaoban2': { id: 'taiyangyaoban2', name: '太阳耀斑', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'caihong2': { id: 'caihong2', name: '彩虹', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'guzhang2': { id: 'guzhang2', name: '故障', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'hajimi2': { id: 'hajimi2', name: '哈基咪', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'jinbi2': { id: 'jinbi2', name: '金币', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'xueyue2': { id: 'xueyue2', name: '血月', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'youhun2': { id: 'youhun2', name: '幽魂', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'jinghunye2': { id: 'jinghunye2', name: '惊魂夜', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'jiguang2': { id: 'jiguang2', name: '极光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
+	'rishi2': { id: 'rishi2', name: '日蚀', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
+	'liangjingjing2': { id: 'liangjingjing2', name: '亮晶晶', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
+	'xinghuan2': { id: 'xinghuan2', name: '星环', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
+	'cihua2': { id: 'cihua2', name: '瓷化', times: 8, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: ['taohua2', 'zhuore2'], synDel: ['taohua2', 'zhuore2'] },
+	'nihong2': { id: 'nihong2', name: '霓虹', times: 18, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
+	'bingdong2': { id: 'bingdong2', name: '冰冻', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'jieshuang2'], synDel: ['chaoshi2', 'jieshuang2'], synKeep: ['chaoshi2'], },
+	'taohua2': { id: 'taohua2', name: '陶化', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'shachen2'], synDel: ['shachen2'], synKeep: ['chaoshi2'] },
+	'liuhuo2': { id: 'liuhuo2', name: '流火', times: 15, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: ['taiyangyaoban2', 'zhuore2'], synDel: ['taiyangyaoban2', 'zhuore2']}, 
+	'caichen2': {id: 'caichen2',  name: '彩尘',  times: 5,  level:2, fillColor: FC.JIN.color,  priority: FC.JIN.priority,  synthesis: [], synDel: []}, 
 };
 
 // 标签组
@@ -955,81 +955,105 @@ function farmCalculator() {
 		},
 
 
-		toggleTag(tagId) {
-			const isChecked = this.checkedTags.get(tagId) === true;
-			const newMap = new Map(this.checkedTags);
-			
-			if (!isChecked) {
-				newMap.set(tagId, true);
-				
-				for (const group of exclusiveGroups) {
-					if (group.tags.includes(tagId)) {
-						group.tags.forEach(otherId => {
-							if (otherId !== tagId && newMap.get(otherId) === true) {
-								newMap.set(otherId, false);
-							}
-						});
-					}
-				}
-				
-				const parentComposites = [];
-				for (const [compositeId, def] of Object.entries(tagLibrary)) {
-					if (def.synthesis && def.synthesis.includes(tagId) && newMap.get(compositeId) === true) {
-						parentComposites.push(compositeId);
-					}
-				}
-				for (const parentId of parentComposites) {
-					newMap.set(parentId, false);
-				}
-				
-				let changed = true;
-				let loop = 0;
-				while (changed && loop++ < 10) {
-					changed = false;
-					for (const [compositeId, def] of Object.entries(tagLibrary)) {
-						if (def.synthesis && def.synthesis.length > 0) {
-							const allChildrenChecked = def.synthesis.every(child => newMap.get(child) === true);
-							if (allChildrenChecked && newMap.get(compositeId) !== true) {
-								newMap.set(compositeId, true);
-								def.syndel.forEach(sub => newMap.set(sub, false));
-								changed = true;
-							}
-						}
-					}
-				}
-				
-				for (const [compositeId, def] of Object.entries(tagLibrary)) {
-					if (def.syndel && def.syndel.length > 0 && newMap.get(compositeId) === true) {
-						for (let sub of def.syndel) {
-							if (newMap.get(sub) === true) {
-								newMap.set(sub, false);
-							}
-						}
-					}
-				}
-				
-			} else {
-				newMap.set(tagId, false);
-				
-				for (const [compositeId, def] of Object.entries(tagLibrary)) {
-					if (def.synthesis && def.synthesis.includes(tagId)) {
-						if (newMap.get(compositeId) === true) {
-							const stillAllChecked = def.synthesis.every(child => newMap.get(child) === true);
-							if (!stillAllChecked) {
-								newMap.set(compositeId, false);
-							}
-						}
-					}
-				}
-			}
-			
-			this.checkedTags = newMap;
-			this.renderUnselectedTags();
-			this.recordPriceChange();
-			this.$nextTick(() => {
-				this.setupIntersectionObserver();
-			});
-		},
+toggleTag(tagId) {
+    const isChecked = this.checkedTags.get(tagId) === true;
+    const newMap = new Map(this.checkedTags);
+    
+    if (!isChecked) {
+        // ========== 选中逻辑 ==========
+        
+        // 1. 检查该突变是否被某个合成突变消耗
+        let consumedBy = null;
+        for (const [compositeId, def] of Object.entries(tagLibrary)) {
+            if (def.synDel && def.synDel.includes(tagId) && newMap.get(compositeId) === true) {
+                consumedBy = { compositeId, def };
+                break;
+            }
+        }
+        
+        if (consumedBy) {
+            // 被合成突变消耗了
+            const { compositeId, def } = consumedBy;
+            const keepList = def.synKeep || [];
+            
+            if (keepList.includes(tagId)) {
+                // ✅ 在 synKeep 中：允许和合成突变共存
+                newMap.set(tagId, true);
+            } else {
+                // ❌ 不在 synKeep 中：退掉合成，选中该子突变
+                newMap.set(compositeId, false);
+                newMap.set(tagId, true);
+            }
+        } else {
+            // 正常情况下选中
+            newMap.set(tagId, true);
+        }
+        
+        // 2. 处理互斥组
+        for (const group of exclusiveGroups) {
+            if (group.tags.includes(tagId)) {
+                group.tags.forEach(otherId => {
+                    if (otherId !== tagId && newMap.get(otherId) === true) {
+                        newMap.set(otherId, false);
+                    }
+                });
+            }
+        }
+        
+        // 3. 检查是否触发新的合成
+        // 注意：只有"刚合成"时才取消所有子突变（包括 synKeep）
+        const newlySynthesized = [];
+        let changed = true;
+        let loop = 0;
+        while (changed && loop++ < 10) {
+            changed = false;
+            for (const [compositeId, def] of Object.entries(tagLibrary)) {
+                if (!def.synthesis || def.synthesis.length === 0) continue;
+                if (newMap.get(compositeId) === true) continue;
+                
+                const allChildrenChecked = def.synthesis.every(child => newMap.get(child) === true);
+                if (allChildrenChecked) {
+                    newMap.set(compositeId, true);
+                    newlySynthesized.push({ compositeId, def });
+                    changed = true;
+                }
+            }
+        }
+        
+        // 4. 新合成的突变：取消其所有 synDel 中的子突变（包括 synKeep）
+        for (const { def } of newlySynthesized) {
+            if (def.synDel) {
+                for (const sub of def.synDel) {
+                    if (newMap.get(sub) === true) {
+                        newMap.set(sub, false);
+                    }
+                }
+            }
+        }
+        
+    } else {
+        // ========== 取消选中逻辑 ==========
+        newMap.set(tagId, false);
+        
+        for (const [compositeId, def] of Object.entries(tagLibrary)) {
+            if (def.synthesis && def.synthesis.includes(tagId)) {
+                if (newMap.get(compositeId) === true) {
+                    const stillAllChecked = def.synthesis.every(child => newMap.get(child) === true);
+                    if (!stillAllChecked) {
+                        newMap.set(compositeId, false);
+                    }
+                }
+            }
+        }
+    }
+    
+    this.checkedTags = newMap;
+    this.renderUnselectedTags();
+    this.recordPriceChange();
+    this.$nextTick(() => {
+        this.setupIntersectionObserver();
+    });
+},
 
 		
 		renderUnselectedTags() {
@@ -1100,124 +1124,159 @@ function farmCalculator() {
 		},
 		
 		
-		quickSelectLevel2() {
-			const allTags = this.getAllTags();
-			const level2Tags = allTags.filter(t => t.level === 2);
-			const activityTagIds = tagGroups['group_activity']?.tags || [];
-		
-			// 先清空所有常规突变（排除活动突变）
-			level2Tags.forEach(tag => {
-				if (!activityTagIds.includes(tag.id)) {
-					this.checkedTags.set(tag.id, false);
-				}
-			});
-		
-			if (this.quickSelectMax) {
-				// 拉满
-				
-				// 1. 全选所有非活动突变
-				level2Tags.forEach(tag => {
-					if (!activityTagIds.includes(tag.id)) {
-						this.checkedTags.set(tag.id, true);
-					}
-				});
-				
-				// 2. 处理互斥组：每个互斥组只保留倍数最高的
-				for (const group of exclusiveGroups) {
-					const groupTags = group.tags.filter(id => {
-						const tag = tagLibrary[id];
-						return tag && tag.level === 2 && !activityTagIds.includes(id);
-					});
-					
-					if (groupTags.length === 0) continue;
-					
-					let bestId = null;
-					let bestTimes = -1;
-					
-					for (const id of groupTags) {
-						const times = tagLibrary[id]?.times || 0;
-						if (times > bestTimes) {
-							bestTimes = times;
-							bestId = id;
-						}
-					}
-					
-					if (bestId === null) continue;
-					
-					for (const id of groupTags) {
-						if (id !== bestId) {
-							this.checkedTags.set(id, false);
-						}
-					}
-				}
-				
-				// 3. 处理合成关系
-				let changed = true;
-				let loop = 0;
-				while (changed && loop++ < 10) {
-					changed = false;
-					for (const [compositeId, def] of Object.entries(tagLibrary)) {
-						if (def.synthesis && def.synthesis.length > 0) {
-							if (this.checkedTags.get(compositeId) === true) {
-								for (const childId of def.synthesis) {
-									if (this.checkedTags.get(childId) === true) {
-										this.checkedTags.set(childId, false);
-										changed = true;
-									}
-								}
-							}
-						}
-					}
-				}
-				
-			} else {
-				// 不拉满
-				const customTags = [
-					'chengzuan2', 'cihua2', 'caihong2', 'yingguang2', 'luolei2',
-					'bingdong2', 'zhanli2', 'fuxue2', 'chaoshi2', 'miwu2',
-				];
-				
-				customTags.forEach(id => {
-					if (!activityTagIds.includes(id) && this.checkedTags.has(id)) {
-						this.checkedTags.set(id, true);
-					}
-				});
-				
-				// 处理互斥组：只保留自定义中倍数最高的
-				for (const group of exclusiveGroups) {
-					const groupTags = group.tags.filter(id => {
-						const tag = tagLibrary[id];
-						return tag && tag.level === 2 && !activityTagIds.includes(id);
-					});
-					
-					if (groupTags.length === 0) continue;
-					
-					// 找出自定义中倍数最高的
-					let bestId = null;
-					let bestTimes = -1;
-					
-					for (const id of groupTags) {
-						if (!this.checkedTags.get(id)) continue;
-						const times = tagLibrary[id]?.times || 0;
-						if (times > bestTimes) {
-							bestTimes = times;
-							bestId = id;
-						}
-					}
-					
-					if (bestId === null) continue;
-					
-					for (const id of groupTags) {
-						if (id !== bestId) {
-							this.checkedTags.set(id, false);
-						}
-					}
-				}
-			}
-		
-			this.renderUnselectedTags();
-			this.recordPriceChange();
-		},
+quickSelectLevel2() {
+    const allTags = this.getAllTags();
+    const level2Tags = allTags.filter(t => t.level === 2);
+    const activityTagIds = tagGroups['group_activity']?.tags || [];
+
+    // 先清空所有常规突变（排除活动突变）
+    level2Tags.forEach(tag => {
+        if (!activityTagIds.includes(tag.id)) {
+            this.checkedTags.set(tag.id, false);
+        }
+    });
+
+    if (this.quickSelectMax) {
+        // ========== 拉满模式 ==========
+        
+        // 1. 全选所有非活动突变
+        level2Tags.forEach(tag => {
+            if (!activityTagIds.includes(tag.id)) {
+                this.checkedTags.set(tag.id, true);
+            }
+        });
+        
+        // 2. 处理互斥组：每个互斥组只保留倍数最高的
+        for (const group of exclusiveGroups) {
+            const groupTags = group.tags.filter(id => {
+                const tag = tagLibrary[id];
+                return tag && tag.level === 2 && !activityTagIds.includes(id);
+            });
+            
+            if (groupTags.length === 0) continue;
+            
+            let bestId = null;
+            let bestTimes = -1;
+            for (const id of groupTags) {
+                const times = tagLibrary[id]?.times || 0;
+                if (times > bestTimes) {
+                    bestTimes = times;
+                    bestId = id;
+                }
+            }
+            
+            if (bestId === null) continue;
+            for (const id of groupTags) {
+                if (id !== bestId) this.checkedTags.set(id, false);
+            }
+        }
+        
+        // 3. 处理合成关系：触发合成，但保留 synKeep 中的子突变
+        let changed = true;
+        let loop = 0;
+        while (changed && loop++ < 10) {
+            changed = false;
+            for (const [compositeId, def] of Object.entries(tagLibrary)) {
+                if (!def.synthesis || def.synthesis.length === 0) continue;
+                if (this.checkedTags.get(compositeId) === true) continue;
+                
+                const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
+                if (allChildrenChecked) {
+                    this.checkedTags.set(compositeId, true);
+                    changed = true;
+                }
+            }
+        }
+        
+        // 4. 取消被消耗的子突变，但保留 synKeep 中的
+        for (const [compositeId, def] of Object.entries(tagLibrary)) {
+            if (!def.synDel || def.synDel.length === 0) continue;
+            if (this.checkedTags.get(compositeId) !== true) continue;
+            
+            const keepList = def.synKeep || [];
+            for (const sub of def.synDel) {
+                // ✅ 跳过 synKeep 中的子突变
+                if (keepList.includes(sub)) continue;
+                if (this.checkedTags.get(sub) === true) {
+                    this.checkedTags.set(sub, false);
+                }
+            }
+        }
+        
+    } else {
+        // ========== 自定义模式 ==========
+        const customTags = [
+            'chengzuan2', 'cihua2', 'caihong2', 'yingguang2', 'luolei2',
+            'bingdong2', 'zhanli2', 'fuxue2', 'chaoshi2', 'miwu2',
+        ];
+        
+        customTags.forEach(id => {
+            if (!activityTagIds.includes(id) && this.checkedTags.has(id)) {
+                this.checkedTags.set(id, true);
+            }
+        });
+        
+        // 处理互斥组
+        for (const group of exclusiveGroups) {
+            const groupTags = group.tags.filter(id => {
+                const tag = tagLibrary[id];
+                return tag && tag.level === 2 && !activityTagIds.includes(id);
+            });
+            
+            if (groupTags.length === 0) continue;
+            
+            let bestId = null;
+            let bestTimes = -1;
+            for (const id of groupTags) {
+                if (!this.checkedTags.get(id)) continue;
+                const times = tagLibrary[id]?.times || 0;
+                if (times > bestTimes) {
+                    bestTimes = times;
+                    bestId = id;
+                }
+            }
+            
+            if (bestId === null) continue;
+            for (const id of groupTags) {
+                if (id !== bestId) this.checkedTags.set(id, false);
+            }
+        }
+        
+        // 处理合成关系（保留 synKeep）
+        let changed = true;
+        let loop = 0;
+        while (changed && loop++ < 10) {
+            changed = false;
+            for (const [compositeId, def] of Object.entries(tagLibrary)) {
+                if (!def.synthesis || def.synthesis.length === 0) continue;
+                if (this.checkedTags.get(compositeId) === true) continue;
+                
+                const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
+                if (allChildrenChecked) {
+                    this.checkedTags.set(compositeId, true);
+                    changed = true;
+                }
+            }
+        }
+        
+        // 取消被消耗的子突变，但保留 synKeep 中的
+        for (const [compositeId, def] of Object.entries(tagLibrary)) {
+            if (!def.synDel || def.synDel.length === 0) continue;
+            if (this.checkedTags.get(compositeId) !== true) continue;
+            
+            const keepList = def.synKeep || [];
+            for (const sub of def.synDel) {
+                if (keepList.includes(sub)) continue;
+                if (this.checkedTags.get(sub) === true) {
+                    this.checkedTags.set(sub, false);
+                }
+            }
+        }
+    }
+
+    this.renderUnselectedTags();
+    this.recordPriceChange();
+},
 		
 
 		openModal(type) {

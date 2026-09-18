@@ -410,7 +410,7 @@ const tagLibrary = {
 	'xinghuan2': { id: 'xinghuan2', name: '星环', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], syndel: [] },
 	'cihua2': { id: 'cihua2', name: '瓷化', times: 8, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: ['taohua2', 'zhuore2'], syndel: ['taohua2', 'zhuore2'] },
 	'nihong2': { id: 'nihong2', name: '霓虹', times: 18, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], syndel: [] },
-	'bingdong2': { id: 'bingdong2', name: '冰冻', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'jieshuang2'], syndel: ['jieshuang2'] },
+	'bingdong2': { id: 'bingdong2', name: '冰冻', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'jieshuang2'], syndel: ['chaoshi2', 'jieshuang2'] },
 	'taohua2': { id: 'taohua2', name: '陶化', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: ['chaoshi2', 'shachen2'], syndel: ['shachen2'] },
 	'liuhuo2': { id: 'liuhuo2', name: '流火', times: 15, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: ['taiyangyaoban2', 'zhuore2'], syndel: ['taiyangyaoban2', 'zhuore2']}, 
 	'caichen2': {id: 'caichen2',  name: '彩尘',  times: 5,  level:2, fillColor: FC.JIN.color,  priority: FC.JIN.priority,  synthesis: [], syndel: []}, 
@@ -443,7 +443,8 @@ const tagGroups = {
 
 const exclusiveGroups = [
 	{ id: 'exclusive_L0', tags: ['xingkong0', 'liuguang0', 'shuijing0', 'jin0', 'yin0'] }, 
-	{ id: 'exclusive_liuhuo_cihua', tags: ['liuhuo2', 'cihua2'] }
+	{ id: 'exclusive_liuhuo_cihua', tags: ['liuhuo2', 'cihua2'] },
+	{ id: 'exclusive_huancai_yicai', tags: ['huancai2', 'yicai2'] },
 ];
 
 // 作物数据

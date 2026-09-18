@@ -954,108 +954,115 @@ function farmCalculator() {
 			return base * weightPower * level0Multi * level1Multi * (1 + sumLevel2);
 		},
 
+		toggleTag(tagId) {
+			const isChecked = this.checkedTags.get(tagId) === true;
+			const newMap = new Map(this.checkedTags);
+			
+			if (!isChecked) {
+				// ========== 选中逻辑 ==========
+				
+				// 1. 检查该突变是否被某个合成突变消耗
+				let consumedBy = null;
+				for (const [compositeId, def] of Object.entries(tagLibrary)) {
+					if (def.synDel && def.synDel.includes(tagId) && newMap.get(compositeId) === true) {
+						consumedBy = { compositeId, def };
+						break;
+					}
+				}
+				
+				if (consumedBy) {
+					// 被合成突变消耗了
+					const { compositeId, def } = consumedBy;
+					const keepList = def.synKeep || [];
+					
+					if (keepList.includes(tagId)) {
+						// 在 synKeep 中：允许和合成突变共存
+						newMap.set(tagId, true);
+					} else {
+						// 不在 synKeep 中：退掉合成，选中该子突变
+						newMap.set(compositeId, false);
+						newMap.set(tagId, true);
+					}
+				} else {
+					// 正常情况下选中
+					newMap.set(tagId, true);
+				}
+				
+				// 2. 处理互斥组
+				for (const group of exclusiveGroups) {
+					if (group.tags.includes(tagId)) {
+						group.tags.forEach(otherId => {
+							if (otherId !== tagId && newMap.get(otherId) === true) {
+								newMap.set(otherId, false);
+							}
+						});
+					}
+				}
+				
+				// 3. 检查是否触发新的合成
+				const newlySynthesized = [];
+				let changed = true;
+				let loop = 0;
+				while (changed && loop++ < 10) {
+					changed = false;
+					for (const [compositeId, def] of Object.entries(tagLibrary)) {
+						if (!def.synthesis || def.synthesis.length === 0) continue;
+						if (newMap.get(compositeId) === true) continue;
+						
+						const allChildrenChecked = def.synthesis.every(child => newMap.get(child) === true);
+						if (allChildrenChecked) {
+							newMap.set(compositeId, true);
+							newlySynthesized.push({ compositeId, def });
+							changed = true;
+						}
+					}
+				}
+				
+				// 4. 新合成的突变：取消其所有 synDel 中的子突变（包括 synKeep）
+				for (const { def } of newlySynthesized) {
+					if (def.synDel) {
+						for (const sub of def.synDel) {
+							if (newMap.get(sub) === true) {
+								newMap.set(sub, false);
+							}
+						}
+					}
+				}
+				
+				// 5. 如果选中的突变本身是合成突变，取消它的 synDel 中的子突变
+				const selectedTag = tagLibrary[tagId];
+				if (selectedTag && selectedTag.synDel && selectedTag.synDel.length > 0) {
+					for (const sub of selectedTag.synDel) {
+						if (newMap.get(sub) === true) {
+							newMap.set(sub, false);
+						}
+					}
+				}
+				
+			} else {
+				// ========== 取消选中逻辑 ==========
+				newMap.set(tagId, false);
+				
+				for (const [compositeId, def] of Object.entries(tagLibrary)) {
+					if (def.synthesis && def.synthesis.includes(tagId)) {
+						if (newMap.get(compositeId) === true) {
+							const stillAllChecked = def.synthesis.every(child => newMap.get(child) === true);
+							if (!stillAllChecked) {
+								newMap.set(compositeId, false);
+							}
+						}
+					}
+				}
+			}
+			
+			this.checkedTags = newMap;
+			this.renderUnselectedTags();
+			this.recordPriceChange();
+			this.$nextTick(() => {
+				this.setupIntersectionObserver();
+			});
+		},
 
-toggleTag(tagId) {
-    const isChecked = this.checkedTags.get(tagId) === true;
-    const newMap = new Map(this.checkedTags);
-    
-    if (!isChecked) {
-        // ========== 选中逻辑 ==========
-        
-        // 1. 检查该突变是否被某个合成突变消耗
-        let consumedBy = null;
-        for (const [compositeId, def] of Object.entries(tagLibrary)) {
-            if (def.synDel && def.synDel.includes(tagId) && newMap.get(compositeId) === true) {
-                consumedBy = { compositeId, def };
-                break;
-            }
-        }
-        
-        if (consumedBy) {
-            // 被合成突变消耗了
-            const { compositeId, def } = consumedBy;
-            const keepList = def.synKeep || [];
-            
-            if (keepList.includes(tagId)) {
-                // ✅ 在 synKeep 中：允许和合成突变共存
-                newMap.set(tagId, true);
-            } else {
-                // ❌ 不在 synKeep 中：退掉合成，选中该子突变
-                newMap.set(compositeId, false);
-                newMap.set(tagId, true);
-            }
-        } else {
-            // 正常情况下选中
-            newMap.set(tagId, true);
-        }
-        
-        // 2. 处理互斥组
-        for (const group of exclusiveGroups) {
-            if (group.tags.includes(tagId)) {
-                group.tags.forEach(otherId => {
-                    if (otherId !== tagId && newMap.get(otherId) === true) {
-                        newMap.set(otherId, false);
-                    }
-                });
-            }
-        }
-        
-        // 3. 检查是否触发新的合成
-        // 注意：只有"刚合成"时才取消所有子突变（包括 synKeep）
-        const newlySynthesized = [];
-        let changed = true;
-        let loop = 0;
-        while (changed && loop++ < 10) {
-            changed = false;
-            for (const [compositeId, def] of Object.entries(tagLibrary)) {
-                if (!def.synthesis || def.synthesis.length === 0) continue;
-                if (newMap.get(compositeId) === true) continue;
-                
-                const allChildrenChecked = def.synthesis.every(child => newMap.get(child) === true);
-                if (allChildrenChecked) {
-                    newMap.set(compositeId, true);
-                    newlySynthesized.push({ compositeId, def });
-                    changed = true;
-                }
-            }
-        }
-        
-        // 4. 新合成的突变：取消其所有 synDel 中的子突变（包括 synKeep）
-        for (const { def } of newlySynthesized) {
-            if (def.synDel) {
-                for (const sub of def.synDel) {
-                    if (newMap.get(sub) === true) {
-                        newMap.set(sub, false);
-                    }
-                }
-            }
-        }
-        
-    } else {
-        // ========== 取消选中逻辑 ==========
-        newMap.set(tagId, false);
-        
-        for (const [compositeId, def] of Object.entries(tagLibrary)) {
-            if (def.synthesis && def.synthesis.includes(tagId)) {
-                if (newMap.get(compositeId) === true) {
-                    const stillAllChecked = def.synthesis.every(child => newMap.get(child) === true);
-                    if (!stillAllChecked) {
-                        newMap.set(compositeId, false);
-                    }
-                }
-            }
-        }
-    }
-    
-    this.checkedTags = newMap;
-    this.renderUnselectedTags();
-    this.recordPriceChange();
-    this.$nextTick(() => {
-        this.setupIntersectionObserver();
-    });
-},
-
-		
 		renderUnselectedTags() {
 			const container = document.getElementById('unselectedTagsContainer');
 			if (!this.currentCrop) {
@@ -1124,159 +1131,178 @@ toggleTag(tagId) {
 		},
 		
 		
-quickSelectLevel2() {
-    const allTags = this.getAllTags();
-    const level2Tags = allTags.filter(t => t.level === 2);
-    const activityTagIds = tagGroups['group_activity']?.tags || [];
-
-    // 先清空所有常规突变（排除活动突变）
-    level2Tags.forEach(tag => {
-        if (!activityTagIds.includes(tag.id)) {
-            this.checkedTags.set(tag.id, false);
-        }
-    });
-
-    if (this.quickSelectMax) {
-        // ========== 拉满模式 ==========
-        
-        // 1. 全选所有非活动突变
-        level2Tags.forEach(tag => {
-            if (!activityTagIds.includes(tag.id)) {
-                this.checkedTags.set(tag.id, true);
-            }
-        });
-        
-        // 2. 处理互斥组：每个互斥组只保留倍数最高的
-        for (const group of exclusiveGroups) {
-            const groupTags = group.tags.filter(id => {
-                const tag = tagLibrary[id];
-                return tag && tag.level === 2 && !activityTagIds.includes(id);
-            });
-            
-            if (groupTags.length === 0) continue;
-            
-            let bestId = null;
-            let bestTimes = -1;
-            for (const id of groupTags) {
-                const times = tagLibrary[id]?.times || 0;
-                if (times > bestTimes) {
-                    bestTimes = times;
-                    bestId = id;
-                }
-            }
-            
-            if (bestId === null) continue;
-            for (const id of groupTags) {
-                if (id !== bestId) this.checkedTags.set(id, false);
-            }
-        }
-        
-        // 3. 处理合成关系：触发合成，但保留 synKeep 中的子突变
-        let changed = true;
-        let loop = 0;
-        while (changed && loop++ < 10) {
-            changed = false;
-            for (const [compositeId, def] of Object.entries(tagLibrary)) {
-                if (!def.synthesis || def.synthesis.length === 0) continue;
-                if (this.checkedTags.get(compositeId) === true) continue;
-                
-                const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
-                if (allChildrenChecked) {
-                    this.checkedTags.set(compositeId, true);
-                    changed = true;
-                }
-            }
-        }
-        
-        // 4. 取消被消耗的子突变，但保留 synKeep 中的
-        for (const [compositeId, def] of Object.entries(tagLibrary)) {
-            if (!def.synDel || def.synDel.length === 0) continue;
-            if (this.checkedTags.get(compositeId) !== true) continue;
-            
-            const keepList = def.synKeep || [];
-            for (const sub of def.synDel) {
-                // ✅ 跳过 synKeep 中的子突变
-                if (keepList.includes(sub)) continue;
-                if (this.checkedTags.get(sub) === true) {
-                    this.checkedTags.set(sub, false);
-                }
-            }
-        }
-        
-    } else {
-        // ========== 自定义模式 ==========
-        const customTags = [
-            'chengzuan2', 'cihua2', 'caihong2', 'yingguang2', 'luolei2',
-            'bingdong2', 'zhanli2', 'fuxue2', 'chaoshi2', 'miwu2',
-        ];
-        
-        customTags.forEach(id => {
-            if (!activityTagIds.includes(id) && this.checkedTags.has(id)) {
-                this.checkedTags.set(id, true);
-            }
-        });
-        
-        // 处理互斥组
-        for (const group of exclusiveGroups) {
-            const groupTags = group.tags.filter(id => {
-                const tag = tagLibrary[id];
-                return tag && tag.level === 2 && !activityTagIds.includes(id);
-            });
-            
-            if (groupTags.length === 0) continue;
-            
-            let bestId = null;
-            let bestTimes = -1;
-            for (const id of groupTags) {
-                if (!this.checkedTags.get(id)) continue;
-                const times = tagLibrary[id]?.times || 0;
-                if (times > bestTimes) {
-                    bestTimes = times;
-                    bestId = id;
-                }
-            }
-            
-            if (bestId === null) continue;
-            for (const id of groupTags) {
-                if (id !== bestId) this.checkedTags.set(id, false);
-            }
-        }
-        
-        // 处理合成关系（保留 synKeep）
-        let changed = true;
-        let loop = 0;
-        while (changed && loop++ < 10) {
-            changed = false;
-            for (const [compositeId, def] of Object.entries(tagLibrary)) {
-                if (!def.synthesis || def.synthesis.length === 0) continue;
-                if (this.checkedTags.get(compositeId) === true) continue;
-                
-                const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
-                if (allChildrenChecked) {
-                    this.checkedTags.set(compositeId, true);
-                    changed = true;
-                }
-            }
-        }
-        
-        // 取消被消耗的子突变，但保留 synKeep 中的
-        for (const [compositeId, def] of Object.entries(tagLibrary)) {
-            if (!def.synDel || def.synDel.length === 0) continue;
-            if (this.checkedTags.get(compositeId) !== true) continue;
-            
-            const keepList = def.synKeep || [];
-            for (const sub of def.synDel) {
-                if (keepList.includes(sub)) continue;
-                if (this.checkedTags.get(sub) === true) {
-                    this.checkedTags.set(sub, false);
-                }
-            }
-        }
-    }
-
-    this.renderUnselectedTags();
-    this.recordPriceChange();
-},
+		quickSelectLevel2() {
+			const allTags = this.getAllTags();
+			const level2Tags = allTags.filter(t => t.level === 2);
+			const activityTagIds = tagGroups['group_activity']?.tags || [];
+		
+			// 先清空所有常规突变（排除活动突变）
+			level2Tags.forEach(tag => {
+				if (!activityTagIds.includes(tag.id)) {
+					this.checkedTags.set(tag.id, false);
+				}
+			});
+		
+			if (this.quickSelectMax) {
+				// ========== 拉满模式 ==========
+				
+				// 1. 全选所有非活动突变
+				level2Tags.forEach(tag => {
+					if (!activityTagIds.includes(tag.id)) {
+						this.checkedTags.set(tag.id, true);
+					}
+				});
+				
+				// 2. 处理互斥组：每个互斥组只保留倍数最高的
+				for (const group of exclusiveGroups) {
+					const groupTags = group.tags.filter(id => {
+						const tag = tagLibrary[id];
+						return tag && tag.level === 2 && !activityTagIds.includes(id);
+					});
+					
+					if (groupTags.length === 0) continue;
+					
+					let bestId = null;
+					let bestTimes = -1;
+					for (const id of groupTags) {
+						const times = tagLibrary[id]?.times || 0;
+						if (times > bestTimes) {
+							bestTimes = times;
+							bestId = id;
+						}
+					}
+					
+					if (bestId === null) continue;
+					for (const id of groupTags) {
+						if (id !== bestId) this.checkedTags.set(id, false);
+					}
+				}
+				
+				// 3. 处理合成关系：触发所有可合成的父突变
+				let changed = true;
+				let loop = 0;
+				while (changed && loop++ < 10) {
+					changed = false;
+					for (const [compositeId, def] of Object.entries(tagLibrary)) {
+						if (!def.synthesis || def.synthesis.length === 0) continue;
+						if (this.checkedTags.get(compositeId) === true) continue;
+						
+						const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
+						if (allChildrenChecked) {
+							this.checkedTags.set(compositeId, true);
+							changed = true;
+						}
+					}
+				}
+				
+				// 4. 宽松处理被消耗的子突变：synKeep 并集优先
+				const allSynDel = new Set();
+				const allSynKeep = new Set();
+		
+				for (const [compositeId, def] of Object.entries(tagLibrary)) {
+					if (!def.synDel || def.synDel.length === 0) continue;
+					if (this.checkedTags.get(compositeId) !== true) continue;
+					
+					const keepList = def.synKeep || [];
+					for (const sub of def.synDel) {
+						allSynDel.add(sub);
+						if (keepList.includes(sub)) {
+							allSynKeep.add(sub);
+						}
+					}
+				}
+		
+				for (const sub of allSynDel) {
+					if (allSynKeep.has(sub)) continue;
+					if (this.checkedTags.get(sub) === true) {
+						this.checkedTags.set(sub, false);
+					}
+				}
+				
+			} else {
+				// ========== 自定义模式 ==========
+				const customTags = [
+					'chengzuan2', 'cihua2', 'caihong2', 'yingguang2', 'luolei2',
+					'bingdong2', 'zhanli2', 'fuxue2', 'chaoshi2', 'miwu2',
+				];
+				
+				customTags.forEach(id => {
+					if (!activityTagIds.includes(id) && this.checkedTags.has(id)) {
+						this.checkedTags.set(id, true);
+					}
+				});
+				
+				// 处理互斥组
+				for (const group of exclusiveGroups) {
+					const groupTags = group.tags.filter(id => {
+						const tag = tagLibrary[id];
+						return tag && tag.level === 2 && !activityTagIds.includes(id);
+					});
+					
+					if (groupTags.length === 0) continue;
+					
+					let bestId = null;
+					let bestTimes = -1;
+					for (const id of groupTags) {
+						if (!this.checkedTags.get(id)) continue;
+						const times = tagLibrary[id]?.times || 0;
+						if (times > bestTimes) {
+							bestTimes = times;
+							bestId = id;
+						}
+					}
+					
+					if (bestId === null) continue;
+					for (const id of groupTags) {
+						if (id !== bestId) this.checkedTags.set(id, false);
+					}
+				}
+				
+				// 处理合成关系
+				let changed = true;
+				let loop = 0;
+				while (changed && loop++ < 10) {
+					changed = false;
+					for (const [compositeId, def] of Object.entries(tagLibrary)) {
+						if (!def.synthesis || def.synthesis.length === 0) continue;
+						if (this.checkedTags.get(compositeId) === true) continue;
+						
+						const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
+						if (allChildrenChecked) {
+							this.checkedTags.set(compositeId, true);
+							changed = true;
+						}
+					}
+				}
+				
+				// 宽松处理被消耗的子突变：synKeep 并集优先
+				const allSynDel = new Set();
+				const allSynKeep = new Set();
+		
+				for (const [compositeId, def] of Object.entries(tagLibrary)) {
+					if (!def.synDel || def.synDel.length === 0) continue;
+					if (this.checkedTags.get(compositeId) !== true) continue;
+					
+					const keepList = def.synKeep || [];
+					for (const sub of def.synDel) {
+						allSynDel.add(sub);
+						if (keepList.includes(sub)) {
+							allSynKeep.add(sub);
+						}
+					}
+				}
+		
+				for (const sub of allSynDel) {
+					if (allSynKeep.has(sub)) continue;
+					if (this.checkedTags.get(sub) === true) {
+						this.checkedTags.set(sub, false);
+					}
+				}
+			}
+		
+			this.renderUnselectedTags();
+			this.recordPriceChange();
+		},
 		
 
 		openModal(type) {

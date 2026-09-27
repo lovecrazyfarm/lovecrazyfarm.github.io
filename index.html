@@ -1179,7 +1179,7 @@ function farmCalculator() {
 					}
 				}
 				
-				// 3. 处理合成关系：触发所有可合成的父突变
+				// 3. 处理合成关系：触发所有可合成的父突变（避开互斥）
 				let changed = true;
 				let loop = 0;
 				while (changed && loop++ < 10) {
@@ -1187,6 +1187,21 @@ function farmCalculator() {
 					for (const [compositeId, def] of Object.entries(tagLibrary)) {
 						if (!def.synthesis || def.synthesis.length === 0) continue;
 						if (this.checkedTags.get(compositeId) === true) continue;
+						
+						// 检查是否与已选中的互斥突变冲突
+						let conflict = false;
+						for (const group of exclusiveGroups) {
+							if (group.tags.includes(compositeId)) {
+								for (const otherId of group.tags) {
+									if (otherId !== compositeId && this.checkedTags.get(otherId) === true) {
+										conflict = true;
+										break;
+									}
+								}
+							}
+							if (conflict) break;
+						}
+						if (conflict) continue;
 						
 						const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
 						if (allChildrenChecked) {
@@ -1259,7 +1274,7 @@ function farmCalculator() {
 					}
 				}
 				
-				// 处理合成关系
+				// 处理合成关系（避开互斥）
 				let changed = true;
 				let loop = 0;
 				while (changed && loop++ < 10) {
@@ -1267,6 +1282,21 @@ function farmCalculator() {
 					for (const [compositeId, def] of Object.entries(tagLibrary)) {
 						if (!def.synthesis || def.synthesis.length === 0) continue;
 						if (this.checkedTags.get(compositeId) === true) continue;
+						
+						// 检查是否与已选中的互斥突变冲突
+						let conflict = false;
+						for (const group of exclusiveGroups) {
+							if (group.tags.includes(compositeId)) {
+								for (const otherId of group.tags) {
+									if (otherId !== compositeId && this.checkedTags.get(otherId) === true) {
+										conflict = true;
+										break;
+									}
+								}
+							}
+							if (conflict) break;
+						}
+						if (conflict) continue;
 						
 						const allChildrenChecked = def.synthesis.every(child => this.checkedTags.get(child) === true);
 						if (allChildrenChecked) {

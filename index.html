@@ -1147,9 +1147,9 @@ function farmCalculator() {
 			if (this.quickSelectMax) {
 				// ========== 拉满模式 ==========
 				
-				// 1. 全选所有非活动突变
+				// 1. 全选所有非活动突变（排除幻彩和异彩）
 				level2Tags.forEach(tag => {
-					if (!activityTagIds.includes(tag.id)) {
+					if (!activityTagIds.includes(tag.id) && tag.id !== 'huancai2' && tag.id !== 'yicai2') {
 						this.checkedTags.set(tag.id, true);
 					}
 				});

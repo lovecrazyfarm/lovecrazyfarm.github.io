@@ -220,7 +220,6 @@
 		<div class="p-6 md:p-8 content-bg">
 			<div class="flex flex-wrap gap-2 mb-4">
 				<button @click="openModal('changelog')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">更新日志</button>
-				<button @click="openModal('faq')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">常见问题</button>
 				<button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">免责声明</button>
 				<button @click="openModal('contact')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">联系作者</button>
 				<button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">支持一下❤</button>
@@ -1226,31 +1225,6 @@ function farmCalculator() {
 					],
 					get content(){ return this.lines.join('<br>'); }
 				},
-				
-				faq: {
-					title: '常见问题',
-					lines: [
-						'Q: 如何从计算页面返回到选作物页面?',
-						'A : 点选版本.',
-						'',
-						'Q: "无加速时..."是什么功能?',
-						'A : 估算果实成熟时间, 也可由此得到大致的重量、百分比.',
-						'',
-						'Q: 如何估算果实成熟时间?',
-						'A : 用秒表计时作物+1%进度的秒数, 然后回到本工具的对应框输入秒数.',
-						'&nbsp;&nbsp;注意, "无加速时"指的是在秒表计时过程中, 作物不能受到任何加速效果.',
-						'&nbsp;&nbsp;加速效果: ',
-						'&nbsp;&nbsp;&nbsp;&nbsp;1.刷新了加速生长效果天气(对应的天气说明有"提高作物生长速度...");',
-						'&nbsp;&nbsp;&nbsp;&nbsp;2.对作物放了洒水器;',
-						'&nbsp;&nbsp;&nbsp;&nbsp;3.作物被果精灵释放了"果实加速".',
-						'',
-						'Q: 估算果实成熟的时间接近吗?',
-						'A : 时间是以全程无加速效果估算的, 实际情况并不如此, 所以估算的只是成熟所需的最大时间, 但由此得到的重量和百分比是接近的.',
-					
-					],
-					get content() { return this.lines.join('<br>'); }
-				},
-				
 				disclaimer: {
 					title: '免责声明', 
 					lines: [

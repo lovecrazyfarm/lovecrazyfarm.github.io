@@ -696,6 +696,12 @@ function farmCalculator() {
 		init() {
 			this.renderUnselectedTags();
 			this.setupIntersectionObserver();
+			
+			// 预加载作物图片到缓存
+			itemsData.forEach(crop => {
+				const img = new Image();
+				img.src = 'img/crops/' + crop.id + '.png';
+			});
 		},
 		
 		

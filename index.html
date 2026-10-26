@@ -61,7 +61,8 @@
 				transform: translateX(0) translateY(0) rotate(135deg);
 				opacity: 1;
 			}
-			70% {
+			40% {
+				transform: translateX(100px) translateY(100px) rotate(135deg); /* 飞一小段就淡出 */
 				opacity: 1;
 			}
 			100% {
@@ -76,7 +77,7 @@
 			height: 50px;
 			background: linear-gradient(135deg, rgba(255,240,180,0.9), rgba(255,200,100,0.6), rgba(255,255,255,0));
 			transform: rotate(135deg);
-			animation: meteor 1.6s linear infinite;
+			animation: meteor 5s linear infinite;
 			opacity: 0;
 			filter: blur(0.5px);
 			pointer-events: none;
@@ -168,6 +169,134 @@
 		.price-transition {
 				transition: all 0.15s ease;
 		}
+
+
+		/* ========== 迷你像素彩虹 UFO ========== */
+		/* 顶部圆顶 (3层阶梯像素) */
+		.ufo-dome {
+			position: absolute;
+			top: 0; left: 50%;
+			transform: translateX(-50%);
+			width: 18px;
+			height: 6px;
+			background: #a78bfa;
+			box-shadow: 
+				-4px 6px 0 #a78bfa, 4px 6px 0 #a78bfa, /* 第二层 */
+				-8px 12px 0 #8b5cf6, 8px 12px 0 #8b5cf6; /* 第三层 */
+			z-index: 3;
+		}
+		/* 圆顶顶部高光 */
+		.ufo-dome::before {
+			content: '';
+			position: absolute;
+			top: 0; left: 4px;
+			width: 10px; height: 2px;
+			background: #c4b5fd;
+		}
+		
+		/* 主碟身 (宽扁的像素椭圆) */
+		.ufo-body {
+			position: absolute;
+			top: 12px; left: 0;
+			width: 100%;
+			height: 14px;
+			background: #6d28d9;
+			/* 像素阶梯圆角 */
+			clip-path: polygon(
+				10% 0, 90% 0, 
+				100% 30%, 100% 70%, 
+				90% 100%, 10% 100%, 
+				0 70%, 0 30%
+			);
+			z-index: 4;
+			box-shadow: inset 0 -4px 0 #4c1d95;
+		}
+		
+		/* 彩虹灯带 (居中3个像素块) */
+		.ufo-lights {
+			position: absolute;
+			top: 18px; left: 50%;
+			transform: translateX(-50%);
+			width: 28px;
+			height: 2px;
+			background: transparent;
+			z-index: 5;
+			display: flex;
+			justify-content: space-between;
+		}
+		.ufo-lights::before,
+		.ufo-lights::after,
+		.ufo-lights span {
+			content: '';
+			display: block;
+			width: 3px; height: 2px;
+		}
+		/* 左红，右青，中间用伪元素填黄 */
+		.ufo-lights::before { background: #f87171; box-shadow: 0 0 4px #f87171; }
+		.ufo-lights::after { background: #22d3ee; box-shadow: 0 0 4px #22d3ee; }
+		.ufo-lights span { background: #fbbf24; box-shadow: 0 0 4px #fbbf24; }
+		
+		/* 底部光束 (极简像素梯形) */
+		.ufo-beam {
+			position: absolute;
+			top: 26px; left: 50%;
+			transform: translateX(-50%);
+			width: 36px;
+			height: 20px;
+			background: rgba(167, 139, 250, 0.5);
+			clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+			z-index: 2;
+			animation: ufo-beam-pulse 1s steps(2) infinite;
+		}
+		.ufo-beam::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px);
+		}
+		
+		.mini-ufo {
+			position: absolute;
+			top: 10px;
+			right: 20px;
+			width: 60px;
+			height: 40px;
+			z-index: 20;
+			pointer-events: none;
+			/* 初始缩放在这里，大小依然可控 */
+			transform-origin: top right;
+			/* 随机巡游动画，时长 12 秒，平滑缓动 */
+			animation: ufo-wander 12s ease-in-out infinite alternate;
+		}
+		
+		/* 纯 CSS 的巡游飞行轨迹 */
+		@keyframes ufo-wander {
+			0% {
+				transform: translate(0, 0) scale(0.8) rotate(0deg);
+			}
+			25% {
+				/* 往左上方飞，微微倾斜 */
+				transform: translate(-100px, -10px) scale(0.8) rotate(-5deg);
+			}
+			50% {
+				/* 飞向中间偏左，高度略微下沉 */
+				transform: translate(-200px, 15px) scale(0.8) rotate(5deg);
+			}
+			75% {
+				/* 飞回偏右侧，高度拉起 */
+				transform: translate(-80px, -5px) scale(0.8) rotate(-3deg);
+			}
+			100% {
+				/* 回到初始位置 */
+				transform: translate(0, 0) scale(0.8) rotate(0deg);
+			}
+		}
+		
+		/* 底部的光束闪烁保留，不受飞行影响 */
+		@keyframes ufo-beam-pulse {
+			0%, 100% { opacity: 0.4; }
+			50% { opacity: 1; }
+		}
 	</style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-6">
@@ -176,13 +305,29 @@
 	<div class="rounded-[68px] shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)] overflow-hidden">
 		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-5 px-7 text-center border-b border-white/20">
 			<div class="absolute inset-0 overflow-hidden pointer-events-none">
-				<div class="meteor" style="top: 5%; left: 10%; animation-delay: 0s;"></div>
-				<div class="meteor" style="top: 8%; left: 25%; animation-delay: 0.4s;"></div>
-				<div class="meteor" style="top: 12%; left: 40%; animation-delay: 0.8s;"></div>
-				<div class="meteor" style="top: 15%; left: 55%; animation-delay: 1.2s;"></div>
-				<div class="meteor" style="top: 18%; left: 70%; animation-delay: 1.6s;"></div>
+				<!-- 第一波 -->
+				<div class="meteor" style="top: -10%; left: 10%; animation-delay: 0s;"></div>
+				<div class="meteor" style="top: -20%; left: 40%; animation-delay: 1.2s;"></div>
+				<div class="meteor" style="top: -5%; left: 70%; animation-delay: 2.5s;"></div>
+				<div class="meteor" style="top: -15%; left: 25%; animation-delay: 3.8s;"></div>
+				
+				<!-- 第二波 -->
+				<div class="meteor" style="top: -25%; left: 85%; animation-delay: 0.5s;"></div>
+				<div class="meteor" style="top: -10%; left: 55%; animation-delay: 1.8s;"></div>
+				<div class="meteor" style="top: -30%; left: 15%; animation-delay: 3.1s;"></div>
+				<div class="meteor" style="top: -8%; left: 80%; animation-delay: 4.2s;"></div>
+				
+				<!-- 第三波 -->
+				<div class="meteor" style="top: -20%; left: 30%; animation-delay: 0.8s;"></div>
+				<div class="meteor" style="top: -12%; left: 60%; animation-delay: 2.1s;"></div>
+				<div class="meteor" style="top: -18%; left: 5%; animation-delay: 3.5s;"></div>
+				<div class="meteor" style="top: -22%; left: 75%; animation-delay: 4.8s;"></div>
+			
+				<!-- 星星点缀 -->
 				<div class="star" style="width: 1.5px; height: 1.5px; top: 10%; left: 8%;"></div>
 				<div class="star" style="width: 2px; height: 2px; top: 20%; left: 85%;"></div>
+				<div class="star" style="width: 1px; height: 1px; top: 50%; left: 50%;"></div>
+				<div class="star" style="width: 1.5px; height: 1.5px; top: 70%; left: 20%;"></div>
 			</div>
 			
 			<h2 class="text-nowrap drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)] relative z-10" 
@@ -215,6 +360,14 @@
 								max-width: 100%;">
 				疯狂农场作物价格计算器
 			</h2>
+			
+			<!-- 迷你像素彩虹 UFO -->
+			<div class="mini-ufo">
+				<div class="ufo-dome"></div>
+				<div class="ufo-body"></div>
+				<div class="ufo-lights"></div>
+				<div class="ufo-beam"></div>
+			</div>
 		</div>
 		
 		<div class="p-6 md:p-8 content-bg">
@@ -238,24 +391,91 @@
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-between">
 					<span>作物</span>
 				</div>
+
 				<div class="flex flex-wrap gap-3">
 					<template x-for="crop in filteredCrops" :key="crop.id">
-						<button @click="selectCrop(crop)" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all hover:scale-105 bg-white/80 text-indigo-600 shadow-sm hover:bg-white text-shadow-black" x-text="crop.name" :style="crop.fillColor ? `background: ${crop.fillColor}; color: white;` : ''"></button>
+						<button @click="selectCrop(crop)"
+								class="flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
+							<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
+								<img :src="'img/crops/' + crop.id + '.png'"
+									:alt="crop.name"
+									class="w-full h-full object-contain"
+									@error="$event.target.style.display='none'">
+							</div>
+							<span class="mt-1 text-xs font-semibold text-gray-700 text-center leading-tight"
+								x-text="crop.name"></span>
+						</button>
 					</template>
 					<div x-show="filteredCrops.length === 0" class="w-full text-center py-6 text-indigo-400 text-sm">无可选作物</div>
 				</div>
 			</div>
 
-
+			<!-- 作物基础信息和输入 -->
 			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
-				<div class="pt-0 px-4 pb-2 text-center">
-					<div class="text-lg font-bold text-gray-800" x-text="currentCrop?.name || '未选择作物'"></div>
-					<div class="text-3xl font-extrabold mt-1 text-indigo-600" x-text="formattedPrice"></div>
-					<div class="text-sm text-gray-800 mt-1">
-						<span x-show="weightInput"><span x-text="displayWeight || '0'"></span> kg</span>
+				<!-- 图片 + 信息 + 输入框 -->
+				<div class="p-4 pb-2 flex items-center justify-center gap-4">
+					<!-- 左：图片 -->
+					<div class="w-16 h-16 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden relative"
+						:style="currentCrop ? 'background:' + currentCrop.fillColor : 'background:#e5e7eb'">
+						<span class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-white"
+							style="text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;"
+							x-text="currentCrop ? currentCrop.name.charAt(0) : '?'"></span>
+						<template x-if="currentCrop">
+							<img :src="'img/crops/' + currentCrop.id + '.png'"
+								:alt="currentCrop.name"
+								class="w-full h-full object-contain relative z-10"
+								@error="$event.target.style.display='none'">
+						</template>
 					</div>
+				
+					<!-- 中：名称/价格/重量 -->
+					<div class="flex-shrink-0 min-w-0 text-left">
+						<div class="text-base font-bold text-gray-800 truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></div>
+						<div class="text-3xl font-extrabold text-indigo-600 leading-tight" x-text="formattedPrice"></div>
+						<div class="text-sm text-gray-600">
+							<span x-show="weightInput"><span x-text="displayWeight || '0'"></span> kg</span>
+						</div>
+					</div>
+				
+					<!-- 右：输入框（纵向排列） -->
+			<!-- 右：输入框（纵向排列） -->
+			<div class="flex-shrink-0 flex flex-col gap-1.5 w-auto">
+				<!-- 重量 -->
+				<div class="flex items-center gap-1">
+					<label class="text-[0.65rem] font-semibold text-indigo-500 w-8 text-right flex-shrink-0">重量</label>
+					<input type="text" size="16" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur"
+						class="px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+						oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
+						:placeholder="weightPlaceholder">
 				</div>
-				<div x-show="selectedTags.length > 0" class="px-4 pt-0 pb-3">
+				<!-- 占比 -->
+				<div class="flex items-center gap-1">
+					<label class="text-[0.65rem] font-semibold text-indigo-500 w-8 text-right flex-shrink-0">占比</label>
+					<input type="text" size="16" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur"
+						class="px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+						oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
+						:placeholder="percentPlaceholder">
+				</div>
+				<!-- 时间 -->
+				<div class="flex items-center gap-1">
+					<label class="text-[0.65rem] font-semibold text-indigo-500 w-8 text-right flex-shrink-0">时间</label>
+					<input type="text" size="16" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur"
+						class="px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+						oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
+						placeholder="+1%的秒数(无加速)">
+				</div>
+			</div>
+				</div>
+				
+				<!-- 时间提示 -->
+				<div class="px-4 pb-3 text-center border-b border-gray-100" x-show="timeInput && currentCrop">
+					<span class="text-[0.65rem] text-gray-500">
+						从0%开始, 约 <span class="text-indigo-600 font-semibold" x-text="maturityTimeDisplay"></span> 内成熟
+					</span>
+				</div>
+			
+				<!-- 下：已选突变 -->
+				<div x-show="selectedTags.length > 0" class="px-4 pt-3 pb-3">
 					<div class="flex flex-wrap gap-2 justify-center">
 						<template x-for="tag in selectedTags" :key="tag.id">
 							<div @click="toggleTag(tag.id)" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md tag-transition" :style="`background: ${tag.fillColor}; color: white; text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;`"><span x-text="tag.name"></span></div>
@@ -269,7 +489,7 @@
 				</div>
 			</div>
 
-
+			<!-- 已选突变 -->
 			<div x-show="selectedCropId !== null && isPriceFloating" 
 					x-transition:enter.duration.400ms.opacity.scale
 					x-transition:leave.duration.300ms.opacity.scale
@@ -293,25 +513,8 @@
 					</div>
 				</div>
 			</div>
-			
 
-			<div x-show="selectedCropId !== null" x-transition.duration.200ms class="backdrop-blur-sm rounded-[48px] p-4 mb-6 ">
-				<div class="flex flex-wrap gap-4 items-center">
-					<div class="horizontal-input-group">
-						<label>重量</label>
-						<input type="text" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur" class="flex-1 px-2.5 py-1.5 rounded-full border border-blue-200 bg-white text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')" :placeholder="weightPlaceholder">
-					</div>
-					<div class="horizontal-input-group">
-						<label>百分比</label>
-						<input type="text" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur" class="flex-1 px-2.5 py-1.5 rounded-full border border-blue-200 bg-white text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')" :placeholder="percentPlaceholder">
-					</div>
-	
-					<div class="time-input-group">
-						<label class="text-xs font-semibold text-indigo-500 block mb-1">无加速时，果实以每<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur" class="inline-block w-14 px-2 py-1 mx-1 rounded-full border border-blue-200 bg-white text-sm text-center outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200" oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')">秒1%的速率生长，长成约需<span x-html="maturityTimeDisplay" class="font-medium text-indigo-600"></span></label>
-					</div>
-				</div>
-			</div>
-			
+			<!-- 可选突变 -->
 			<div x-show="selectedCropId !== null" x-transition.duration.200ms class="mb-6 pb-4 border-b border-blue-200">
 				<div id="unselectedTagsContainer" class="space-y-4"></div>
 			</div>
@@ -1170,58 +1373,84 @@ function farmCalculator() {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
-						'2026-10-26',
+						'2026.10.26',
 						'• 铃兰幽幽、秋水仙的价格计算准确性提升了',
-						'2026-10-17',
+						'• 芦荟、柿黛拉的时间计算准确性提升了',
+						'• 作物有图示了。 此外, 调整了排序, 同品质中按出场时间排序',
+						'• 优化了突变的显示顺序',
+						'• 优化了计算页布局',
+						'<br>',
+						'2026.10.17',
 						'• 芦荟、火龙狗、柿黛拉的价格计算准确性提升了',
-						'2026-09-24',
+						'<br>',
+						'2026.09.24',
 						'• 添加秋水仙作物',
-						'2026-09-03',
+						'<br>',
+						'2026.09.03',
 						'• 添加"一键优选", 快速选择常用的突变("awa"提供的想法)',
 						'• 添加"活动突变"栏("awa"提供的想法)',
 						'• 现在当基础突变被选时隐藏其选择栏, 以防后续误触("awa"提供的想法)',
 						'• 添加"常见问题"',
-						'2026-08-31',
+						'<br>',
+						'2026.08.31',
 						'• 添加显示价格的浮动卡片, 当下滑超出显示价格区域时会在顶部有相关信息的卡片, 优化移动端体验 ("Alex"提供的想法)',
 						'• 去掉多余的"开源 · 免费 · 易用"副标题, 但这六个字还会贯彻到每一个版本的迭代中',
-						'2026-08-16',
+						'<br>',
+						'2026.08.16',
 						'• 现在所有作物的果实生长预计耗时都可正常使用了(此前部分作物未作处理)',
-						'2026-08-12',
+						'<br>',
+						'2026.08.12',
 						'• 添加铃兰幽幽、跳舞的柿黛拉作物',
-						'2026-07-23',
+						'<br>',
+						'2026.07.23',
 						'• 更新果王争霸赛',
-						'2026-07-01',
+						'<br>',
+						'2026.07.01',
 						'• 添加蓝莓、花生、柚子、菠菜、马蹄莲作物', 
-						'2026-06-18',
+						'<br>',
+						'2026.06.18',
 						'• 添加彩尘突变',
-						'2026-06-01',
+						'<br>',
+						'2026.06.01',
 						'• 添加橙钻突变',
 						'• 添加火龙狗作物',
-						'2026-05-31',
+						'<br>',
+						'2026.05.31',
 						'• 添加异彩、幻彩、琥珀突变',
 						'• 添加龙眼、柿子、芦荟作物',
-						'2026-05-29',
+						'<br>',
+						'2026.05.29',
 						'• 更新免责声明',
-						'2026-05-26',
+						'<br>',
+						'2026.05.26',
 						'• 更新免责声明',
-						'2026-05-05',
+						'<br>',
+						'2026.05.05',
 						'• 添加月蟾蜍',
-						'2026-05-01',
+						'<br>',
+						'2026.05.01',
 						'• 添加故障突变',
-						'2026-04-30',
+						'<br>',
+						'2026.04.30',
 						'• 调整页面布局',
-						'2026-04-29',
+						'<br>',
+						'2026.04.29',
 						'• 更新免责声明',
-						'2026-04-10',
+						'<br>',
+						'2026.04.10',
 						'• 添加金币、血月、幽魂、惊魂夜、极光、星环突变',
-						'2026-04-06',
+						'<br>',
+						'2026.04.06',
 						'• 添加了彼岸花作物',
 						'• 更新果王争霸赛',
-						'2026-04-05',
+						'<br>',
+						'2026.04.05',
 						'• 添加了哈基咪突变',
-						'2026-03-30',
+						'<br>',
+						'2026.03.30',
 						'• 更新果王争霸赛',
-						'2026-03-29',
+						'<br>',
+						'2026.03.29',
 						'• 完善月兔、红包果、月影梅的计算功能',
 						'• 更新免责声明',
 					],
@@ -1268,7 +1497,7 @@ function farmCalculator() {
 				},
 				contact: {
 					title: '联系作者',
-					content: '微信: lovecrazyfarm<br>邮箱: lovecrazyfarm@163.com<br>',
+					content: '微信: lovecrazyfarm<br>邮箱: lovecrazyfarm@163.com<br><div style="text-align: center;"><img src="img/contact_wx.jpg"alt="微信" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 12px;"></div>',
 					},
 				support: {
 					title: '支持一下❤ (微信赞赏)',

@@ -18,15 +18,17 @@ const FC = {
 const tagLibrary = {
 	// 部分数据来自:https://www.bilibili.com/opus/1170360012470484992
 	'xingkong0': { id: 'xingkong0', name: '星空', times: 40, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
+	
 	'liuguang0': { id: 'liuguang0', name: '流光', times: 30, level: 0, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
+	'nihong2': { id: 'nihong2', name: '霓虹', times: 18, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
+	
 	'shuijing0': { id: 'shuijing0', name: '水晶', times: 20, level: 0, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [] },
 	'jin0': { id: 'jin0', name: '金', times: 10, level: 0, fillColor: FC.JIN.color, priority: FC.JIN.priority, synthesis: [], synDel: [] },
 	'yin0': { id: 'yin0', name: '银', times: 3, level: 0, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [] },
-
-	'yicai2': { id: 'yicai2', name: '异彩', times: 1.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.55, synthesis: [], synDel: [] },
 	'huancai2': { id: 'huancai2', name: '幻彩', times: 3, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority+0.18, synthesis: [], synDel: [] },
-	'hupo2': { id: 'hupo2', name: '琥珀', times: 4.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.82, synthesis: ['chaoshi2', 'shengji2'], synDel: ['chaoshi2', 'shengji2'] },
 	'chengzuan2': { id: 'chengzuan2', name: '橙钻', times: 18, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority+0.2, synthesis: ['liangjingjing2', 'hupo2'], synDel: ['liangjingjing2', 'hupo2', 'shengji2'] },
+	'liuhuo2': { id: 'liuhuo2', name: '流火', times: 15, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority+0.1, synthesis: ['taiyangyaoban2', 'zhuore2'], synDel: ['taiyangyaoban2', 'zhuore2']}, 
+	
 	'shupian1': { id: 'shupian1', name: '薯片', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
 	'lianti1': { id: 'lianti1', name: '连体', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
 	'fangxing1': { id: 'fangxing1', name: '方形', times: 1.5, level: 1, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [] },
@@ -41,17 +43,27 @@ const tagLibrary = {
 	'shengji2': { id: 'shengji2', name: '生机', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.35, synthesis: [], synDel: [] },
 	'miwu2': { id: 'miwu2', name: '迷雾', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.3, synthesis: [], synDel: [] },
 	'fuxue2': { id: 'fuxue2', name: '覆雪', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.1, synthesis: [], synDel: [] },
-	'shachen2': { id: 'shachen2', name: '沙尘', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.29, synthesis: [], synDel: [] },
-	'jieshuang2': { id: 'jieshuang2', name: '结霜', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.4, synthesis: [], synDel: [] },
+	'shachen2': { id: 'shachen2', name: '沙尘', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.28, synthesis: [], synDel: [] },
+	'jieshuang2': { id: 'jieshuang2', name: '结霜', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.26, synthesis: [], synDel: [] },
 	'zhuore2': { id: 'zhuore2', name: '灼热', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.5, synthesis: [], synDel: [] },
 	
 	'luolei2': { id: 'luolei2', name: '落雷', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [] },
 	'bingdong2': { id: 'bingdong2', name: '冰冻', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority+0.1, synthesis: ['chaoshi2', 'jieshuang2'], synDel: ['chaoshi2', 'jieshuang2'], synKeep: ['chaoshi2'], },
 	'yunshi2': { id: 'yunshi2', name: '陨石', times: 3, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority+0.2, synthesis: [], synDel: [] },
+	'taohua2': { id: 'taohua2', name: '陶化', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority+0.15, synthesis: ['chaoshi2', 'shachen2'], synDel: ['shachen2'], synKeep: ['chaoshi2'] },
+	
+	'cihua2': { id: 'cihua2', name: '瓷化', times: 8, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: ['taohua2', 'zhuore2'], synDel: ['taohua2', 'zhuore2'] },
+	'liangjingjing2': { id: 'liangjingjing2', name: '亮晶晶', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.2, synthesis: [], synDel: [] },
+	'xinghuan2': { id: 'xinghuan2', name: '星环', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.1, synthesis: [], synDel: [] },
+	'rishi2': { id: 'rishi2', name: '日蚀', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.25, synthesis: [], synDel: [] },
 	
 	'taiyangyaoban2': { id: 'taiyangyaoban2', name: '太阳耀斑', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.5, synthesis: [], synDel: [] },
+	'hupo2': { id: 'hupo2', name: '琥珀', times: 4.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.82, synthesis: ['chaoshi2', 'shengji2'], synDel: ['chaoshi2', 'shengji2'] },
+	'yicai2': { id: 'yicai2', name: '异彩', times: 1.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.55, synthesis: [], synDel: [] },
 	'caihong2': { id: 'caihong2', name: '彩虹', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.3, synthesis: [], synDel: [] },
 	'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.4, synthesis: [], synDel: [] },
+	'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.51, synthesis: [], synDel: [] },
+	
 	'guzhang2': { id: 'guzhang2', name: '故障', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.7, synthesis: [], synDel: [] },
 	'hajimi2': { id: 'hajimi2', name: '哈基咪', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.9, synthesis: [], synDel: [] },
 	'jinbi2': { id: 'jinbi2', name: '金币', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.6, synthesis: [], synDel: [] },
@@ -59,16 +71,8 @@ const tagLibrary = {
 	'youhun2': { id: 'youhun2', name: '幽魂', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.05, synthesis: [], synDel: [] },
 	'jinghunye2': { id: 'jinghunye2', name: '惊魂夜', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.1, synthesis: [], synDel: [] },
 	'jiguang2': { id: 'jiguang2', name: '极光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.2, synthesis: [], synDel: [] },
-	'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.51, synthesis: [], synDel: [] },
-	'rishi2': { id: 'rishi2', name: '日蚀', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.25, synthesis: [], synDel: [] },
-	'liangjingjing2': { id: 'liangjingjing2', name: '亮晶晶', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.2, synthesis: [], synDel: [] },
-	'xinghuan2': { id: 'xinghuan2', name: '星环', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.1, synthesis: [], synDel: [] },
-	'cihua2': { id: 'cihua2', name: '瓷化', times: 8, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: ['taohua2', 'zhuore2'], synDel: ['taohua2', 'zhuore2'] },
-	'nihong2': { id: 'nihong2', name: '霓虹', times: 18, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority, synthesis: [], synDel: [] },
-	
-	'taohua2': { id: 'taohua2', name: '陶化', times: 4, level: 2, fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority+0.15, synthesis: ['chaoshi2', 'shachen2'], synDel: ['shachen2'], synKeep: ['chaoshi2'] },
-	'liuhuo2': { id: 'liuhuo2', name: '流火', times: 15, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority+0.1, synthesis: ['taiyangyaoban2', 'zhuore2'], synDel: ['taiyangyaoban2', 'zhuore2']}, 
 	'caichen2': {id: 'caichen2',  name: '彩尘',  times: 5,  level:2, fillColor: FC.JIN.color,  priority: FC.JIN.priority+0.8,  synthesis: [], synDel: []}, 
+	
 };
 
 // 标签组
@@ -109,7 +113,7 @@ const itemsData = [
 	{ id: 'item_tiaowudeshidaila', name: '跳舞的柿黛拉', basePrice: 8781.526, maxWeight: 45.2, growthSpeed: 861.3, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_linglanyouyou', name: '铃兰幽幽', basePrice: 12082.314, maxWeight: 23.8, growthSpeed: 1549.1803, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_matilian', name: '马蹄莲', basePrice: 5081.2, maxWeight: 17, growthSpeed: 645.6105, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_luhui', name: '芦荟', basePrice: 54633.66, maxWeight: 10.2, growthSpeed: 2297.46, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_luhui', name: '芦荟', basePrice: 54636.33, maxWeight: 10.2, growthSpeed: 2297.46, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10888.888, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	
 	{ id: 'item_yuechanchu', name: '月蟾蜍', basePrice: 9759.5, maxWeight: 34, growthSpeed: 978.9, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },

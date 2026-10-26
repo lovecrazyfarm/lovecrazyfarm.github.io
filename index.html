@@ -397,7 +397,7 @@
 						<button @click="selectCrop(crop)"
 								class="flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
 							<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
-								<img :src="'img/crops/' + crop.id + '.png'"
+								<img :src="'img/crops/' + crop.id + '.png'" loading="lazy"
 									:alt="crop.name"
 									class="w-full h-full object-contain"
 									@error="$event.target.style.display='none'">

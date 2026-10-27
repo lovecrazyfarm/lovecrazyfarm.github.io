@@ -397,14 +397,23 @@
 
 			<div class="mb-6 pb-4 border-b border-blue-200">
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
-				<div class="flex flex-wrap gap-3">
+				<div class="flex flex-wrap items-center gap-3">
+					<!-- 版本按钮 -->
 					<template x-for="cat in categories" :key="cat.id">
 						<button @click="selectCategory(cat.id)" 
-								:class="selectedCategory === cat.id ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
+								:class="(selectedCategory === cat.id && selectedCropId === null) ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
 								class="px-5 py-2.5 rounded-full font-bold text-sm transition-all hover:scale-105">
 							<span x-text="(selectedCropId !== null && cat.id === 'cat_putong') ? '返回作物选择' : cat.name"></span>
 						</button>
 					</template>
+			
+					<button @click="openHistory()" 
+							class="bg-indigo-50 text-indigo-600 px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm hover:bg-indigo-100 transition-all flex items-center gap-1 border border-indigo-100 ml-auto">
+						<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+						</svg>
+						计算历史
+					</button>
 				</div>
 			</div>
 
@@ -429,7 +438,7 @@
 						<button @click="selectCrop(crop)"
 								class="flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
 							<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
-								<img :src="'img/crops/' + crop.id + '.png'" loading="lazy"
+								<img :src="'img/crops/' + crop.id + '.png'" loading="lazy" decoding="async"
 									:alt="crop.name"
 									class="w-full h-full object-contain"
 									@error="$event.target.style.display='none'">
@@ -586,6 +595,82 @@
 			<div class="p-4 text-sm text-indigo-700 leading-relaxed overflow-y-auto flex-1" x-html="modalContent"></div>
 		</div>
 	</div>
+	
+	<!-- 计算历史右侧抽屉 -->
+	<div x-show="historyOpen" style="display: none;" class="fixed inset-0 z-[100] flex justify-end">
+		<!-- 遮罩层 -->
+		<div x-show="historyOpen" 
+			x-transition:enter="transition-opacity ease-out duration-300"
+			x-transition:enter-start="opacity-0"
+			x-transition:enter-end="opacity-100"
+			x-transition:leave="transition-opacity ease-in duration-200"
+			x-transition:leave-start="opacity-100"
+			x-transition:leave-end="opacity-0"
+			@click="historyOpen = false" 
+			class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+	
+		<!-- 抽屉面板 -->
+		<div x-show="historyOpen"
+			x-transition:enter="transition ease-out duration-300"
+			x-transition:enter-start="translate-x-full"
+			x-transition:enter-end="translate-x-0"
+			x-transition:leave="transition ease-in duration-200"
+			x-transition:leave-start="translate-x-0"
+			x-transition:leave-end="translate-x-full"
+			class="relative w-full max-w-sm h-full bg-white shadow-2xl flex flex-col z-10">
+			
+			<!-- 头部 -->
+			<div class="flex justify-between items-center px-4 py-3 border-b border-gray-100 flex-shrink-0">
+				<span class="font-bold text-indigo-600">🕒计算历史</span>
+				<button @click="historyOpen = false" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+			</div>
+			
+			<!-- 列表 -->
+			<div class="p-4 overflow-y-auto flex-1 space-y-2">
+				<div x-show="historyList.length === 0" class="text-center py-12 text-gray-400 text-sm">
+					暂无计算历史
+				</div>
+				
+				<template x-for="(item, index) in historyList" :key="item.id">
+					<div class="flex items-center justify-between p-3 bg-gray-50 hover:bg-indigo-50 rounded-xl border border-gray-100 transition-colors cursor-pointer group"
+						@click="restoreHistory(item); historyOpen = false">
+						<div class="flex-1 min-w-0">
+							<div class="flex items-center gap-2 mb-1">
+								<span class="text-sm font-bold text-gray-800 truncate" x-text="item.cropName"></span>
+								<span class="text-[0.65rem] text-gray-400 flex-shrink-0" x-text="item.date"></span>
+							</div>
+							<div class="text-xs text-gray-500 flex flex-wrap items-center gap-2 mt-1">
+								<span><span x-text="item.weight"></span> kg</span>
+								
+								<!-- 基础突变展示 -->
+								<span x-show="item.baseTagName" 
+									class="px-1.5 py-0.5 rounded text-[0.6rem] font-medium"
+									:style="`background: ${item.baseTagColor}; color: white; text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;`"
+									x-text="item.baseTagName"></span>
+									
+								<!-- 全部突变总数 -->
+								<span x-show="item.tags && item.tags.length > 0" class="text-[0.65rem] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">
+									共 <span x-text="item.tags.length"></span> 个突变
+								</span>
+							</div>
+						</div>
+						<div class="flex items-center gap-3 pl-2">
+							<span class="text-base font-extrabold text-indigo-600" x-text="item.price"></span>
+							<button @click.stop="deleteHistory(index)" 
+									class="text-gray-300 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+							</button>
+						</div>
+					</div>
+				</template>
+			</div>
+			
+			<!-- 底部清空 -->
+			<div class="px-4 py-3 border-t border-gray-100 flex justify-end bg-gray-50" x-show="historyList.length > 0">
+				<button @click="clearHistory()" class="text-xs text-rose-500 hover:text-rose-700 transition-colors font-medium">清空全部历史</button>
+			</div>
+		</div>
+	</div>
 </div>
 <script>
 // ==================== Alpine.js 组件 ====================
@@ -610,6 +695,11 @@ function farmCalculator() {
 		lastPrice: 0,
 		_clearTimer: null,
 		quickSelectMax: false, // 一键优选默认不勾选
+
+		historyOpen: false,
+		historyList: [],
+		_historyTimer: null,
+
 		cropSearch: '',
 
 
@@ -747,6 +837,7 @@ function farmCalculator() {
 		init() {
 			this.renderUnselectedTags();
 			this.setupIntersectionObserver();
+			this.loadHistory();
 			
 			// 预加载作物图片到缓存
 			itemsData.forEach(crop => {
@@ -778,7 +869,7 @@ function farmCalculator() {
 			}, 800);
 		},
 		
-		
+
 		recordPriceChange() {
 			const currentPrice = this.computeTotalValue();
 			if (this.lastPrice === 0) {
@@ -796,6 +887,8 @@ function farmCalculator() {
 			this._clearTimer = setTimeout(() => {
 				this.priceChange = 'none';
 			}, 1000);
+
+			this.recordHistory();
 		},
 		
 		
@@ -923,6 +1016,7 @@ function farmCalculator() {
 			const weight = (pct / 100) * this.currentCrop.maxWeight;
 			this.weightInput = weight.toFixed(2);
 			this.updateTimeFromWeight(weight);
+			this.recordPriceChange();
 		},
 
 
@@ -937,6 +1031,7 @@ function farmCalculator() {
 			
 			if (weight >= minW && weight <= maxW) {
 				this.updateFromWeightInput(weight);
+				this.recordPriceChange();
 			}
 		},
 
@@ -1155,6 +1250,9 @@ function farmCalculator() {
 			this.checkedTags = newMap;
 			this.renderUnselectedTags();
 			this.recordPriceChange();
+
+			this.recordHistory();
+
 			this.$nextTick(() => {
 				this.setupIntersectionObserver();
 			});
@@ -1432,6 +1530,130 @@ function farmCalculator() {
 		},
 		
 
+		// ========== 历史记录 ==========
+		loadHistory() {
+			try {
+				const saved = localStorage.getItem('farmHistory');
+				if (saved) {
+					this.historyList = JSON.parse(saved).map(item => {
+						// 兼容旧数据，如果没有新字段，尝试从 tags 里临时推断一下，或者置空
+						if (item.baseTagName === undefined) {
+							const baseTagIds = ['xingkong0', 'liuguang0', 'shuijing0', 'jin0', 'yin0'];
+							const baseId = item.tags.find(id => baseTagIds.includes(id));
+							item.baseTagName = baseTagId ? (tagLibrary[baseId]?.name || '') : '';
+							item.baseTagColor = baseTagId ? (tagLibrary[baseId]?.fillColor || '') : '';
+							item.otherTagsCount = item.tags.length - (baseTagId ? 1 : 0);
+						}
+						return item;
+					});
+				}
+			} catch (e) {
+				console.error('读取历史记录失败', e);
+			}
+		},
+		
+		saveHistory() {
+			try {
+				localStorage.setItem('farmHistory', JSON.stringify(this.historyList));
+			} catch (e) {
+				console.error('保存历史记录失败', e);
+			}
+		},
+		
+		openHistory() {
+			this.loadHistory();
+			this.historyOpen = true;
+		},
+		
+		recordHistory() {
+			if (!this.currentCrop) return;
+			
+			const weight = parseFloat(this.weightInput);
+			const price = this.computeTotalValue();
+			if (isNaN(weight) || weight <= 0 || price <= 0) return;
+		
+			clearTimeout(this._historyTimer);
+			this._historyTimer = setTimeout(() => {
+				const now = new Date();
+				const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+				
+				// 分别提取基础突变和其他突变
+				const baseTagIds = ['xingkong0', 'liuguang0', 'shuijing0', 'jin0', 'yin0'];
+				const allSelected = this.selectedTags;
+				
+				const baseTag = allSelected.find(t => baseTagIds.includes(t.id));
+				const otherTags = allSelected.filter(t => !baseTagIds.includes(t.id));
+		
+				const record = {
+					id: Date.now(),
+					cropId: this.currentCrop.id,
+					cropName: this.currentCrop.name,
+					weight: parseFloat(this.weightInput),
+					percent: this.percentInput,
+					time: this.timeInput,
+					baseTagName: baseTag ? baseTag.name : '', // 记录基础突变名称
+					baseTagColor: baseTag ? baseTag.fillColor : '', // 记录基础突变颜色
+					otherTagsCount: otherTags.length, // 记录其他突变的数量
+					tags: allSelected.map(t => t.id), // 保留完整 ID 列表用于恢复
+					price: this.formattedPrice,
+					date: dateStr
+				};
+		
+				const latest = this.historyList[0];
+				if (latest && latest.cropId === record.cropId && latest.weight === record.weight) {
+					this.historyList[0] = record;
+					this.saveHistory();
+					return;
+				}
+		
+				this.historyList.unshift(record);
+				if (this.historyList.length > 50) {
+					this.historyList = this.historyList.slice(0, 50);
+				}
+				this.saveHistory();
+			}, 1500);
+		},
+		
+		restoreHistory(item) {
+			const crop = itemsData.find(c => c.id === item.cropId);
+			if (!crop) {
+				alert('未找到该作物数据，可能已过期');
+				return;
+			}
+			
+			this.selectedCropId = crop.id;
+			this.currentCrop = crop;
+			this.focusMode = true;
+			
+			this.weightInput = item.weight.toString();
+			this.percentInput = item.percent;
+			this.timeInput = item.time;
+			
+			this.initCheckedTags();
+			item.tags.forEach(tagId => {
+				if (this.checkedTags.has(tagId)) {
+					this.checkedTags.set(tagId, true);
+				}
+			});
+			
+			this.renderUnselectedTags();
+			this.lastPrice = this.computeTotalValue();
+			this.recordPriceChange();
+		},
+		
+		deleteHistory(index) {
+			this.historyList.splice(index, 1);
+			this.saveHistory();
+		},
+		
+		clearHistory() {
+			if (!confirm('确定要清空全部计算历史吗？')) return;
+			this.historyList = [];
+			this.saveHistory();
+		},
+
+
+		// 工具基础信息
 		openModal(type) {
 			const modals = {
 				changelog: { 
@@ -1440,7 +1662,7 @@ function farmCalculator() {
 						'2026.10.27',
 						'• 提高价格准确性: 月蟾蜍、彼岸花、月兔',
 						'• 新增作物: 听歌的柿黛拉',
-						'• 新增功能: 作物搜索',
+						'• 新增功能: 作物搜索; 计算历史',
 						'<br>',
 						'2026.10.26',
 						'• 提高价格准确性: 铃兰幽幽、秋水仙',

@@ -375,21 +375,53 @@
 				<button @click="openModal('changelog')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">更新日志</button>
 				<button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">免责声明</button>
 				<button @click="openModal('contact')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">联系作者</button>
-				<button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">支持一下❤</button>
+				<button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all flex items-center gap-1.5">
+					支持一下
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 inline-block">
+						<style>
+							@keyframes pulse {
+								0%, 100% { transform: scale(1); }
+								50% { transform: scale(1.08); }
+							}
+							.heart-pulse {
+								transform-origin: 12px 12px;
+								animation: pulse 1.2s ease-in-out infinite;
+							}
+						</style>
+						<path class="heart-pulse"
+							fill="#e63946" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round"
+							d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+					</svg>
+				</button>
 			</div>
 
 			<div class="mb-6 pb-4 border-b border-blue-200">
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
 				<div class="flex flex-wrap gap-3">
 					<template x-for="cat in categories" :key="cat.id">
-						<button @click="selectCategory(cat.id)" :class="selectedCategory === cat.id ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all hover:scale-105" x-text="cat.name"></button>
+						<button @click="selectCategory(cat.id)" 
+								:class="selectedCategory === cat.id ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
+								class="px-5 py-2.5 rounded-full font-bold text-sm transition-all hover:scale-105">
+							<span x-text="(selectedCropId !== null && cat.id === 'cat_putong') ? '返回作物选择' : cat.name"></span>
+						</button>
 					</template>
 				</div>
 			</div>
 
 			<div x-show="selectedCropId === null" class="mb-6 pb-4 border-b border-blue-200">
-				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-between">
+				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-start gap-3">
 					<span>作物</span>
+					<!-- 搜索框 -->
+					<div class="relative">
+						<input type="text" 
+							x-model="cropSearch" 
+							placeholder="搜索作物 (中文/拼音)" 
+							class="px-3 py-1.5 pr-8 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200 w-48 sm:w-64 transition-all">
+						<button x-show="cropSearch" @click="cropSearch = ''" 
+								class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+							&times;
+						</button>
+					</div>
 				</div>
 
 				<div class="flex flex-wrap gap-3 justify-center">
@@ -476,7 +508,7 @@
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
 						</svg>
-						<span>请输入重量/占比/时间</span>
+						<span>未输入重量/占比/时间</span>
 					</div>
 				</div>
 				
@@ -521,29 +553,29 @@
 			</div>
 
 			<!-- 可选突变 -->
-			<div x-show="selectedCropId !== null" x-transition.duration.200ms class="mb-6 pb-4 border-b border-blue-200">
+			<div x-show="selectedCropId !== null" x-transition.duration.200ms class="mb-6 pb-4">
 				<div id="unselectedTagsContainer" class="space-y-4"></div>
 			</div>
 		</div>
 	</div>
 
-		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-[68px] w-full max-w-full">
-			<div class="absolute inset-0 overflow-hidden pointer-events-none">
-				<div class="meteor" style="top: 5%; left: 15%; animation-delay: 0.1s;"></div>
-				<div class="meteor" style="top: 10%; left: 30%; animation-delay: 0.5s;"></div>
-				<div class="meteor" style="top: 15%; left: 45%; animation-delay: 0.9s;"></div>
-				<div class="meteor" style="top: 20%; left: 60%; animation-delay: 1.3s;"></div>
-				<div class="star" style="width: 1.5px; height: 1.5px; top: 8%; left: 20%;"></div>
-				<div class="star" style="width: 2px; height: 2px; top: 18%; left: 70%;"></div>
-			</div>
-			<div class="relative z-10 flex items-center justify-center gap-2 sm:gap-4 text-nowrap overflow-hidden">
-					<div class="flex items-center gap-1 flex-shrink-0">
-							<img src="beian.png" class="h-3 w-auto sm:h-3.5 flex-shrink-0"/>
-							<a href="https://beian.mps.gov.cn/#/query/webSearch?code=45022602000049" rel="noreferrer" target="_blank" class="text-[0.5rem] sm:text-xs text-white/80 hover:text-white transition-colors text-nowrap flex-shrink-0">桂公网安备45022602000049号</a>
-					</div>
-					<a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" class="text-[0.5rem] sm:text-xs text-white/80 hover:text-white transition-colors text-nowrap flex-shrink-0">桂ICP备2026005605号</a>
-			</div>
+	<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-[68px] w-full max-w-full">
+		<div class="absolute inset-0 overflow-hidden pointer-events-none">
+			<div class="meteor" style="top: 5%; left: 15%; animation-delay: 0.1s;"></div>
+			<div class="meteor" style="top: 10%; left: 30%; animation-delay: 0.5s;"></div>
+			<div class="meteor" style="top: 15%; left: 45%; animation-delay: 0.9s;"></div>
+			<div class="meteor" style="top: 20%; left: 60%; animation-delay: 1.3s;"></div>
+			<div class="star" style="width: 1.5px; height: 1.5px; top: 8%; left: 20%;"></div>
+			<div class="star" style="width: 2px; height: 2px; top: 18%; left: 70%;"></div>
 		</div>
+		<div class="relative z-10 flex items-center justify-center gap-2 sm:gap-4 text-nowrap overflow-hidden">
+				<div class="flex items-center gap-1 flex-shrink-0">
+						<img src="beian.png" class="h-3 w-auto sm:h-3.5 flex-shrink-0"/>
+						<a href="https://beian.mps.gov.cn/#/query/webSearch?code=45022602000049" rel="noreferrer" target="_blank" class="text-[0.5rem] sm:text-xs text-white/80 hover:text-white transition-colors text-nowrap flex-shrink-0">桂公网安备45022602000049号</a>
+				</div>
+				<a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" class="text-[0.5rem] sm:text-xs text-white/80 hover:text-white transition-colors text-nowrap flex-shrink-0">桂ICP备2026005605号</a>
+		</div>
+	</div>
 
 	<div x-show="modalOpen" style="display: none;"  @click.away="modalOpen = false" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm" x-transition.opacity.duration.200ms>
 		<div class="bg-white rounded-2xl max-w-[350px] w-[85%] shadow-xl max-h-[80vh] flex flex-col" @click.stop>
@@ -578,6 +610,7 @@ function farmCalculator() {
 		lastPrice: 0,
 		_clearTimer: null,
 		quickSelectMax: false, // 一键优选默认不勾选
+		cropSearch: '',
 
 
 		get minWeight() {
@@ -622,6 +655,24 @@ function farmCalculator() {
 
 		get filteredCrops() {
 			let crops = itemsData.filter(c => c.categories.includes(this.selectedCategory));
+			
+			if (this.cropSearch) {
+				// 1. 把输入转小写，并删除所有空格
+				const keyword = this.cropSearch.trim().toLowerCase().replace(/\s+/g, '');
+				
+				if (keyword) {
+					crops = crops.filter(c => {
+						const name = c.name.toLowerCase();
+						const rawId = c.id.toLowerCase();
+						const pureId = rawId.replace(/^item_/, ''); // 去掉 item_ 前缀
+						
+						// 2. 判断：中文名包含、纯拼音ID包含
+						return name.includes(keyword) || 
+							pureId.includes(keyword);
+					});
+				}
+			}
+		
 			if (this.focusMode && this.selectedCropId) {
 				crops = crops.filter(c => c.id === this.selectedCropId);
 			}
@@ -779,6 +830,7 @@ function farmCalculator() {
 
 
 		selectCategory(catId) {
+			this.cropSearch = '';
 			this.selectedCategory = catId;
 			this.selectedCropId = null;
 			this.currentCrop = null;
@@ -1385,15 +1437,20 @@ function farmCalculator() {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'2026.10.27',
+						'• 提高价格准确性: 月蟾蜍、彼岸花、月兔',
+						'• 新增作物: 听歌的柿黛拉',
+						'• 新增功能: 作物搜索',
+						'<br>',
 						'2026.10.26',
-						'• 铃兰幽幽、秋水仙的价格计算准确性提升了',
-						'• 芦荟、柿黛拉的时间计算准确性提升了',
-						'• 作物有图示了。此外, 调整了排序, 同品质中按出场时间排序',
-						'• 优化了突变的显示顺序',
-						'• 优化了页面布局',
+						'• 提高价格准确性: 铃兰幽幽、秋水仙',
+						'• 提高时间准确性: 芦荟、柿黛拉',
+						'• 新增功能: 作物图示',
+						'• 优化: 突变排序; 页面布局',
+						'• 调整: 同品质中的作物按出场时间排序',
 						'<br>',
 						'2026.10.17',
-						'• 芦荟、火龙狗、柿黛拉的价格计算准确性提升了',
+						'• 芦荟、火龙狗、柿黛拉的价格计算准确性得到提升了',
 						'<br>',
 						'2026.09.24',
 						'• 添加秋水仙作物',

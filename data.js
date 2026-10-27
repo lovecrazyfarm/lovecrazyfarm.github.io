@@ -40,7 +40,7 @@ const tagLibrary = {
 	
 	'chaoshi2': { id: 'chaoshi2', name: '潮湿', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.2, synthesis: [], synDel: [] },
 	'zhanli2': { id: 'zhanli2', name: '颤栗', times: 1, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [] },
-	'shengji2': { id: 'shengji2', name: '生机', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.35, synthesis: [], synDel: [] },
+	'shengji2': { id: 'shengji2', name: '生机', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.55, synthesis: [], synDel: [] },
 	'miwu2': { id: 'miwu2', name: '迷雾', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.3, synthesis: [], synDel: [] },
 	'fuxue2': { id: 'fuxue2', name: '覆雪', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.1, synthesis: [], synDel: [] },
 	'shachen2': { id: 'shachen2', name: '沙尘', times: 2, level: 2, fillColor: FC.MIWU.color, priority: FC.MIWU.priority+0.28, synthesis: [], synDel: [] },
@@ -114,10 +114,10 @@ const itemsData = [
 	{ id: 'item_linglanyouyou', name: '铃兰幽幽', basePrice: 12082.314, maxWeight: 23.8, growthSpeed: 1549.1803, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_matilian', name: '马蹄莲', basePrice: 5081.2, maxWeight: 17, growthSpeed: 645.6105, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_luhui', name: '芦荟', basePrice: 54636.33, maxWeight: 10.2, growthSpeed: 2297.46, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10888.888, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10881.881, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	
 	{ id: 'item_yuechanchu', name: '月蟾蜍', basePrice: 9801.135, maxWeight: 34, growthSpeed: 978.9, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_bianhua', name: '彼岸花', basePrice: 49876.54, maxWeight: 10.2, growthSpeed: 2908.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_bianhua', name: '彼岸花', basePrice: 49684.72, maxWeight: 10.2, growthSpeed: 2908.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_yuetu', name: '月兔', basePrice: 11154.54, maxWeight: 23.8, growthSpeed: 1523, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 5125, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_xingkongmeigui', name: '星空玫瑰', basePrice: 33134.09, maxWeight: 10.2, growthSpeed: 2966.6, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
@@ -134,6 +134,7 @@ const itemsData = [
 	{ id: 'item_xiangrikui', name: '向日葵', basePrice: 370.3206, maxWeight: 51, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangrikui', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 
 	// 橙
+	{ id: 'item_tinggedeshidaila', name: '听歌的柿黛拉', basePrice: 783.386, maxWeight: 42.5,  growthSpeed: 888.888, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	{ id: 'item_youzi', name: '柚子', basePrice: 225.22, maxWeight: 61.2,  growthSpeed: 67.34, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	{ id: 'item_bocai', name: '菠菜', basePrice: 3880.3, maxWeight: 20.4,  growthSpeed: 495.7627, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 
@@ -193,5 +194,5 @@ const itemsData = [
 ];
 
 const categories = [
-	{ id: 'cat_putong', name: '≤ 2026.10.26' }
+	{ id: 'cat_putong', name: '≤ 2026.10.27' }
 ];

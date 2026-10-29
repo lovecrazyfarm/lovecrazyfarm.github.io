@@ -393,6 +393,26 @@
 							d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
 					</svg>
 				</button>
+				<!--<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all flex items-center gap-1.5">
+					不烧心的提醒群
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 inline-block">
+						<style>
+							@keyframes bell-swing {
+								0%, 100% { transform: rotate(0); }
+								10% { transform: rotate(12deg); }
+								20% { transform: rotate(-10deg); }
+								30% { transform: rotate(5deg); }
+								40% { transform: rotate(-5deg); }
+								50%, 100% { transform: rotate(0); }
+							}
+							.bell-icon { transform-origin: 12px 3px; animation: bell-swing 2s ease-in-out infinite; }
+						</style>
+						<g class="bell-icon">
+							<path fill="#fbbf24" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round" d="M18 16v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+							<path fill="#fbbf24" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round" d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"/>
+						</g>
+					</svg>
+					</button> -->
 			</div>
 
 			<div class="mb-6 pb-4 border-b border-blue-200">
@@ -1659,6 +1679,7 @@ function farmCalculator() {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'<br>',
 						'2026.10.28',
 						'• 更新免责声明',
 						'<br>',
@@ -1789,7 +1810,11 @@ function farmCalculator() {
 				support: {
 					title: '支持一下❤ (微信赞赏)',
 					content: '<div style="text-align: center;"><img src="support.jpg" alt="支持作者" style="max-width: 100%; height: auto; border-radius: 12px;"></div>',
-				},
+				}, /*
+				reminder: {
+					title: '不烧心的提醒群(QQ群, 8:00-23:50提醒)',
+					content: '秒进，禁言。<br><br>当种子有雪莲、蟠桃,<br>或道具有金洒,<br>或天气有霓虹、流星雨、日蚀、太阳耀斑时,<br>群号为 939466297 的群内有提醒消息<br><br>当种子有大王菊、松树、向日葵,<br>或道具有银洒,<br>或天气有彩虹、荧光、落雷、沙尘时,<br>群号为 104732228 的群内有提醒消息',
+				},*/
 			};
 			const modal = modals[type];
 			if (modal) {

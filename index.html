@@ -801,7 +801,7 @@ function farmCalculator() {
 		get maturityTimeDisplay() {
 			if (!this.currentCrop) return '';
 			if (this.currentCrop.growthSpeed == 0) {
-				return '(!未做此果实的成熟进度处理!)';
+				return '(不知道多少时间)';
 			}
 			// 获取有效重量（不超过最大值）
 			let weight = parseFloat(this.weightInput);
@@ -1679,6 +1679,10 @@ function farmCalculator() {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'2026.10.29',
+						'• 作物+5:【雪莲】、【银杏】、【藏红花】、【灵芝】、【芒果】',
+						'• 突变+1:【花雨】',
+						'<br>',
 						'2026.10.28',
 						'• 更新免责声明',
 						'<br>',
@@ -1811,7 +1815,7 @@ function farmCalculator() {
 					content: '<div style="text-align: center;"><img src="support.jpg" alt="支持作者" style="max-width: 100%; height: auto; border-radius: 12px;"></div>',
 				}, /*
 				reminder: {
-					title: '不烧心的提醒群(QQ群, 8:00-23:50提醒)',
+					title: '不烧心的提醒群(QQ群, 8:00-23:59提醒)',
 					content: '秒进，禁言。<br><br>当种子有雪莲、蟠桃,<br>或道具有金洒,<br>或天气有霓虹、流星雨、日蚀、太阳耀斑时,<br>群号为 939466297 的群内有提醒消息<br><br>当种子有大王菊、松树、向日葵,<br>或道具有银洒,<br>或天气有彩虹、荧光、落雷、沙尘时,<br>群号为 104732228 的群内有提醒消息',
 				},*/
 			};

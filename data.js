@@ -56,6 +56,7 @@ const tagLibrary = {
 	'liangjingjing2': { id: 'liangjingjing2', name: '亮晶晶', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.2, synthesis: [], synDel: [] },
 	'xinghuan2': { id: 'xinghuan2', name: '星环', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.1, synthesis: [], synDel: [] },
 	'rishi2': { id: 'rishi2', name: '日蚀', times: 10, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.25, synthesis: [], synDel: [] },
+	'huayu2': { id: 'huayu2', name: '花雨', times: 7, level: 2, fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority+0.25, synthesis: [], synDel: [] },
 	
 	'taiyangyaoban2': { id: 'taiyangyaoban2', name: '太阳耀斑', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.5, synthesis: [], synDel: [] },
 	'hupo2': { id: 'hupo2', name: '琥珀', times: 4.5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.82, synthesis: ['chaoshi2', 'shengji2'], synDel: ['chaoshi2', 'shengji2'] },
@@ -77,7 +78,7 @@ const tagLibrary = {
 
 // 标签组
 const tagGroups = {
-	'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2', 'yicai2', 'huancai2', 'hupo2', 'chengzuan2','yunshi2', 'xingkong0', 'rishi2', 'anwu2', 'taiyangyaoban2', 'liuhuo2'] },
+	'group_basic': { tags: ['liuguang0', 'shuijing0', 'jin0', 'yin0', 'chaoshi2', 'zhanli2', 'shengji2', 'miwu2', 'fuxue2', 'shachen2', 'jieshuang2', 'zhuore2', 'luolei2', 'caihong2', 'yingguang2', 'liangjingjing2', 'nihong2', 'bingdong2', 'taohua2', 'cihua2', 'yicai2', 'huancai2', 'hupo2', 'chengzuan2','yunshi2', 'xingkong0', 'rishi2', 'anwu2', 'taiyangyaoban2', 'liuhuo2', 'huayu2'] },
 	'group_tudou': { tags: ['shupian1'] },
 	'group_huanggua': { tags: ['huanghuashe1'] },
 	'group_xigua': { tags: ['fangxing1'] },
@@ -109,6 +110,8 @@ const exclusiveGroups = [
 // 作物数据
 const itemsData = [
 	// 幻彩
+	{ id: 'item_xuelian', name: '雪莲', basePrice: 56980.64, maxWeight: 10.2, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yinxing', name: '银杏', basePrice: 96760.6, maxWeight: 5.1, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_qiushuixian', name: '秋水仙', basePrice: 10342.25, maxWeight: 34, growthSpeed: 705.8824, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_tiaowudeshidaila', name: '跳舞的柿黛拉', basePrice: 8781.526, maxWeight: 45.2, growthSpeed: 796.4602, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_linglanyouyou', name: '铃兰幽幽', basePrice: 12082.314, maxWeight: 23.8, growthSpeed: 1512.61, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
@@ -134,6 +137,9 @@ const itemsData = [
 	{ id: 'item_xiangrikui', name: '向日葵', basePrice: 370.3206, maxWeight: 51, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangrikui', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 
 	// 橙
+	{ id: 'item_zanghonghua', name: '藏红花', basePrice: 4286.443, maxWeight: 20.4,  growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_lingzhi', name: '灵芝', basePrice: 306.306, maxWeight: 61.2,  growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	
 	{ id: 'item_tinggedeshidaila', name: '听歌的柿黛拉', basePrice: 783.386, maxWeight: 42.5,  growthSpeed: 888.888, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	{ id: 'item_youzi', name: '柚子', basePrice: 225.22, maxWeight: 61.2,  growthSpeed: 67.34, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	{ id: 'item_bocai', name: '菠菜', basePrice: 3880.3, maxWeight: 20.4,  growthSpeed: 495.7627, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
@@ -147,6 +153,8 @@ const itemsData = [
 	{ id: 'item_liulian', name: '榴莲', basePrice: 202.944, maxWeight: 61.2, growthSpeed: 55.55, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	
 	// 紫
+	{ id: 'item_mangguo', name: '芒果', basePrice: 5040.3, maxWeight: 8.5, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
+	
 	{ id: 'item_longyan', name: '龙眼', basePrice: 4319.81, maxWeight: 8.5, growthSpeed: 438.7755, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
 	{ id: 'item_shizi', name: '柿子', basePrice: 236.5, maxWeight: 37.4, growthSpeed: 45.5122, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YM.color, priority: FC.YM.priority },
 
@@ -194,5 +202,5 @@ const itemsData = [
 ];
 
 const categories = [
-	{ id: 'cat_putong', name: '≤ 2026.10.28' }
+	{ id: 'cat_putong', name: '≤ 2026.10.29' }
 ];

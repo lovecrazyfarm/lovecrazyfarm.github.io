@@ -205,5 +205,5 @@ const itemsData = [
 ];
 
 const categories = [
-	{ id: 'cat_putong', name: '≤ 2026.10.30' }
+	{ id: 'cat_putong', name: '≤ 2026.10.31' }
 ];

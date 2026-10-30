@@ -65,6 +65,7 @@ const tagLibrary = {
 	'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.4, synthesis: [], synDel: [] },
 	'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.51, synthesis: [], synDel: [] },
 	
+	'youyounangua2': { id: 'youyounangua2', name: '幽幽南瓜', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.7, synthesis: [], synDel: [] },
 	'guzhang2': { id: 'guzhang2', name: '故障', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.7, synthesis: [], synDel: [] },
 	'hajimi2': { id: 'hajimi2', name: '哈基咪', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.9, synthesis: [], synDel: [] },
 	'jinbi2': { id: 'jinbi2', name: '金币', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.6, synthesis: [], synDel: [] },
@@ -89,6 +90,7 @@ const tagGroups = {
 	'group_xiangrikui': { tags: ['xiaorikui1'] },
 	
 	'group_activity': { tags: [
+		'youyounangua2',
 		'xinghuan2',
 		'caichen2',
 		'guzhang2',
@@ -202,5 +204,5 @@ const itemsData = [
 ];
 
 const categories = [
-	{ id: 'cat_putong', name: '≤ 2026.10.29' }
+	{ id: 'cat_putong', name: '≤ 2026.10.30' }
 ];

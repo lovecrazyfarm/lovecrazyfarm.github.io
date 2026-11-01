@@ -375,43 +375,31 @@
 				<button @click="openModal('changelog')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">更新日志</button>
 				<button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">免责声明</button>
 				<button @click="openModal('contact')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all">联系作者</button>
-				<button @click="openModal('support')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all flex items-center gap-1.5">
-					支持一下
+				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all flex items-center gap-1.5">
+					不烧心的提醒群
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 inline-block">
 						<style>
-							@keyframes pulse {
-								0%, 100% { transform: scale(1); }
-								50% { transform: scale(1.08); }
+							@keyframes bell-swing {
+								0%, 100% { transform: rotate(0); }
+								10% { transform: rotate(12deg); }
+								20% { transform: rotate(-10deg); }
+								30% { transform: rotate(5deg); }
+								40% { transform: rotate(-5deg); }
+								50%, 100% { transform: rotate(0); }
 							}
-							.heart-pulse {
-								transform-origin: 12px 12px;
-								animation: pulse 1.2s ease-in-out infinite;
-							}
+							.bell-icon { transform-origin: 12px 3px; animation: bell-swing 2s ease-in-out infinite; }
 						</style>
-						<path class="heart-pulse"
-							fill="#e63946" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round"
-							d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+						<g class="bell-icon">
+							<path fill="#fbbf24" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round" d="M18 16v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+							<path fill="#fbbf24" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round" d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"/>
+						</g>
 					</svg>
 				</button>
-				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all flex items-center gap-1.5">
-				不烧心的提醒群
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 inline-block">
-					<style>
-						@keyframes bell-swing {
-							0%, 100% { transform: rotate(0); }
-							10% { transform: rotate(12deg); }
-							20% { transform: rotate(-10deg); }
-							30% { transform: rotate(5deg); }
-							40% { transform: rotate(-5deg); }
-							50%, 100% { transform: rotate(0); }
-						}
-						.bell-icon { transform-origin: 12px 3px; animation: bell-swing 2s ease-in-out infinite; }
-					</style>
-					<g class="bell-icon">
-						<path fill="#fbbf24" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round" d="M18 16v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
-						<path fill="#fbbf24" stroke="#2b2d42" stroke-width="1.8" stroke-linejoin="round" d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"/>
-					</g>
-				</svg>
+				<button @click="openModal('support')"
+						class="relative bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all inline-flex items-center"
+						style="margin-right:48px;">
+					请我吃薯片
+					<img src="img/misc/shupian.png" alt="" style="position:absolute; width:64px; height:64px; border-radius:8px; object-fit:cover; right:-35px; top:60%; transform:translateY(-50%); pointer-events:none;">
 				</button>
 			</div>
 
@@ -1687,6 +1675,10 @@ function farmCalculator() {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'2026.11.02',
+						'• 作物+1:【迷路的疯象南瓜】',
+						'• 更新免责声明',
+						'<br>',
 						'2026.11.01',
 						'• 作物+1:【沉静的疯象南瓜】',
 						'<br>',
@@ -1799,7 +1791,7 @@ function farmCalculator() {
 						'• 用户访问第三方平台或使用第三方服务时，应遵守相应平台的服务条款与隐私政策。',
 						'<br>',
 						'【赞赏说明】',
-						'• 本工具所有功能完全免费。页面内的“支持一下❤”或“赞赏”入口，是出于用户自愿原则的感谢渠道，绝非为使用本工具而必须支付的费用。',
+						'• 本工具所有功能完全免费。页面内的“支持一下”或“赞赏”入口，是出于用户自愿原则的感谢渠道，绝非为使用本工具而必须支付的费用。',
 						'• 任何赞赏行为均视为用户对开发者个人努力的认可与鼓励，不代表购买任何服务、特权或对计算准确性的承诺。',
 						'• 未成年人请在监护人知情并同意的情况下进行相关操作。',
 						'<br>',
@@ -1829,7 +1821,7 @@ function farmCalculator() {
 					content: '微信: lovecrazyfarm<br>邮箱: lovecrazyfarm@163.com<br><div style="text-align: center;"><img src="img/contact_wx.jpg"alt="微信" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 12px;"></div>',
 					},
 				support: {
-					title: '支持一下❤ (微信赞赏)',
+					title: '支持一下 (微信赞赏)',
 					content: '<div style="text-align: center;"><img src="support.jpg" alt="支持作者" style="max-width: 100%; height: auto; border-radius: 12px;"></div>',
 				},
 				reminder: {

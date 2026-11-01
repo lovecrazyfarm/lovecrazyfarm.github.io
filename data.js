@@ -143,6 +143,7 @@ const itemsData = [
 	// 橙
 	{ id: 'item_zanghonghua', name: '藏红花', basePrice: 4286.443, maxWeight: 20.4,  growthSpeed: 571.77, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	{ id: 'item_lingzhi', name: '灵芝', basePrice: 306.306, maxWeight: 61.2,  growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
+	{ id: 'item_miludefengxiangnangua', name: '迷路的疯象南瓜', basePrice: 955.438, maxWeight: 42.5,  growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	
 	{ id: 'item_tinggedeshidaila', name: '听歌的柿黛拉', basePrice: 783.386, maxWeight: 42.5,  growthSpeed: 87.53, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
 	{ id: 'item_youzi', name: '柚子', basePrice: 225.22, maxWeight: 61.2,  growthSpeed: 67.34, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },

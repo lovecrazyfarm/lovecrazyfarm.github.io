@@ -8,11 +8,6 @@
 
 	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍇</text></svg>">
 
-	<!--
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script src="https://unpkg.com/alpinejs" defer></script>
-	-->
-	
 	<script src="data.js" defer></script>
 	<script src="tailwind-3.4.17.min.js"></script>
 	<script src="alpine-3.17.1.min.js" defer></script>
@@ -62,7 +57,7 @@
 				opacity: 1;
 			}
 			40% {
-				transform: translateX(100px) translateY(100px) rotate(135deg); /* 飞一小段就淡出 */
+				transform: translateX(100px) translateY(100px) rotate(135deg);
 				opacity: 1;
 			}
 			100% {
@@ -97,7 +92,6 @@
 			overflow-x: hidden;
 		}
 		
-		/* 横向输入组样式 */
 		.horizontal-input-group {
 			display: flex;
 			align-items: center;
@@ -170,9 +164,6 @@
 				transition: all 0.15s ease;
 		}
 
-
-		/* ========== 迷你像素彩虹 UFO ========== */
-		/* 顶部圆顶 (3层阶梯像素) */
 		.ufo-dome {
 			position: absolute;
 			top: 0; left: 50%;
@@ -181,11 +172,10 @@
 			height: 6px;
 			background: #a78bfa;
 			box-shadow: 
-				-4px 6px 0 #a78bfa, 4px 6px 0 #a78bfa, /* 第二层 */
-				-8px 12px 0 #8b5cf6, 8px 12px 0 #8b5cf6; /* 第三层 */
+				-4px 6px 0 #a78bfa, 4px 6px 0 #a78bfa,
+				-8px 12px 0 #8b5cf6, 8px 12px 0 #8b5cf6;
 			z-index: 3;
 		}
-		/* 圆顶顶部高光 */
 		.ufo-dome::before {
 			content: '';
 			position: absolute;
@@ -194,14 +184,12 @@
 			background: #c4b5fd;
 		}
 		
-		/* 主碟身 (宽扁的像素椭圆) */
 		.ufo-body {
 			position: absolute;
 			top: 12px; left: 0;
 			width: 100%;
 			height: 14px;
 			background: #6d28d9;
-			/* 像素阶梯圆角 */
 			clip-path: polygon(
 				10% 0, 90% 0, 
 				100% 30%, 100% 70%, 
@@ -212,7 +200,6 @@
 			box-shadow: inset 0 -4px 0 #4c1d95;
 		}
 		
-		/* 彩虹灯带 (居中3个像素块) */
 		.ufo-lights {
 			position: absolute;
 			top: 18px; left: 50%;
@@ -231,12 +218,10 @@
 			display: block;
 			width: 3px; height: 2px;
 		}
-		/* 左红，右青，中间用伪元素填黄 */
 		.ufo-lights::before { background: #f87171; box-shadow: 0 0 4px #f87171; }
 		.ufo-lights::after { background: #22d3ee; box-shadow: 0 0 4px #22d3ee; }
 		.ufo-lights span { background: #fbbf24; box-shadow: 0 0 4px #fbbf24; }
 		
-		/* 底部光束 (极简像素梯形) */
 		.ufo-beam {
 			position: absolute;
 			top: 26px; left: 50%;
@@ -263,39 +248,52 @@
 			height: 40px;
 			z-index: 20;
 			pointer-events: none;
-			/* 初始缩放在这里，大小依然可控 */
 			transform-origin: top right;
-			/* 随机巡游动画，时长 12 秒，平滑缓动 */
 			animation: ufo-wander 12s ease-in-out infinite alternate;
 		}
 		
-		/* 纯 CSS 的巡游飞行轨迹 */
 		@keyframes ufo-wander {
-			0% {
-				transform: translate(0, 0) scale(0.8) rotate(0deg);
-			}
-			25% {
-				/* 往左上方飞，微微倾斜 */
-				transform: translate(-100px, -10px) scale(0.8) rotate(-5deg);
-			}
-			50% {
-				/* 飞向中间偏左，高度略微下沉 */
-				transform: translate(-200px, 15px) scale(0.8) rotate(5deg);
-			}
-			75% {
-				/* 飞回偏右侧，高度拉起 */
-				transform: translate(-80px, -5px) scale(0.8) rotate(-3deg);
-			}
-			100% {
-				/* 回到初始位置 */
-				transform: translate(0, 0) scale(0.8) rotate(0deg);
-			}
+			0% { transform: translate(0, 0) scale(0.8) rotate(0deg); }
+			25% { transform: translate(-100px, -10px) scale(0.8) rotate(-5deg); }
+			50% { transform: translate(-200px, 15px) scale(0.8) rotate(5deg); }
+			75% { transform: translate(-80px, -5px) scale(0.8) rotate(-3deg); }
+			100% { transform: translate(0, 0) scale(0.8) rotate(0deg); }
 		}
 		
-		/* 底部的光束闪烁保留，不受飞行影响 */
 		@keyframes ufo-beam-pulse {
 			0%, 100% { opacity: 0.4; }
 			50% { opacity: 1; }
+		}
+
+		/* 星标按钮样式 */
+		.star-btn {
+			transition: transform 0.15s ease, color 0.15s ease;
+			cursor: pointer;
+		}
+		.star-btn:hover {
+			transform: scale(1.15);
+		}
+		.star-filled {
+			color: #fbbf24;
+			filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.6));
+		}
+		.star-empty {
+			color: #9ca3af;
+		}
+		.star-empty:hover {
+			color: #fbbf24;
+		}
+		.starred-crop-item {
+			position: relative;
+		}
+		.starred-crop-item::after {
+			content: '★';
+			position: absolute;
+			top: 2px;
+			right: 4px;
+			font-size: 0.6rem;
+			color: #fbbf24;
+			text-shadow: 0 0 4px rgba(251, 191, 36, 0.8);
 		}
 	</style>
 </head>
@@ -305,25 +303,19 @@
 	<div class="rounded-[68px] shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)] overflow-hidden">
 		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-5 px-7 text-center border-b border-white/20">
 			<div class="absolute inset-0 overflow-hidden pointer-events-none">
-				<!-- 第一波 -->
 				<div class="meteor" style="top: -10%; left: 10%; animation-delay: 0s;"></div>
 				<div class="meteor" style="top: -20%; left: 40%; animation-delay: 1.2s;"></div>
 				<div class="meteor" style="top: -5%; left: 70%; animation-delay: 2.5s;"></div>
 				<div class="meteor" style="top: -15%; left: 25%; animation-delay: 3.8s;"></div>
-				
-				<!-- 第二波 -->
 				<div class="meteor" style="top: -25%; left: 85%; animation-delay: 0.5s;"></div>
 				<div class="meteor" style="top: -10%; left: 55%; animation-delay: 1.8s;"></div>
 				<div class="meteor" style="top: -30%; left: 15%; animation-delay: 3.1s;"></div>
 				<div class="meteor" style="top: -8%; left: 80%; animation-delay: 4.2s;"></div>
-				
-				<!-- 第三波 -->
 				<div class="meteor" style="top: -20%; left: 30%; animation-delay: 0.8s;"></div>
 				<div class="meteor" style="top: -12%; left: 60%; animation-delay: 2.1s;"></div>
 				<div class="meteor" style="top: -18%; left: 5%; animation-delay: 3.5s;"></div>
 				<div class="meteor" style="top: -22%; left: 75%; animation-delay: 4.8s;"></div>
 			
-				<!-- 星星点缀 -->
 				<div class="star" style="width: 1.5px; height: 1.5px; top: 10%; left: 8%;"></div>
 				<div class="star" style="width: 2px; height: 2px; top: 20%; left: 85%;"></div>
 				<div class="star" style="width: 1px; height: 1px; top: 50%; left: 50%;"></div>
@@ -361,7 +353,6 @@
 				疯狂农场作物价格计算器
 			</h2>
 			
-			<!-- 迷你像素彩虹 UFO -->
 			<div class="mini-ufo">
 				<div class="ufo-dome"></div>
 				<div class="ufo-body"></div>
@@ -406,7 +397,6 @@
 			<div class="mb-6 pb-4 border-b border-blue-200">
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
 				<div class="flex flex-wrap items-center gap-3">
-					<!-- 版本按钮 -->
 					<template x-for="cat in categories" :key="cat.id">
 						<button @click="selectCategory(cat.id)" 
 								:class="(selectedCategory === cat.id && selectedCropId === null) ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
@@ -426,9 +416,30 @@
 			</div>
 
 			<div x-show="selectedCropId === null" class="mb-6 pb-4 border-b border-blue-200">
+				<!-- 星标作物栏 -->
+				<div x-show="starredCrops.length > 0" class="mb-4">
+					<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
+						<span>星标作物</span>
+					</div>
+					<div class="flex flex-wrap gap-3 justify-center">
+						<template x-for="crop in starredCrops" :key="'star_' + crop.id">
+							<button @click="selectCrop(crop)"
+									class="starred-crop-item flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-amber-50/70 hover:bg-amber-50 border border-amber-200/60">
+								<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
+									<img :src="'img/crops/' + crop.id + '.png'" loading="lazy" decoding="async"
+										:alt="crop.name"
+										class="w-full h-full object-contain"
+										@error="$event.target.style.display='none'">
+								</div>
+								<span class="mt-1 text-xs font-semibold text-gray-700 text-center leading-tight"
+									x-text="crop.name"></span>
+							</button>
+						</template>
+					</div>
+				</div>
+
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-start gap-3">
-					<span>作物</span>
-					<!-- 搜索框 -->
+					<span>全部作物</span>
 					<div class="relative">
 						<input type="text" 
 							x-model="cropSearch" 
@@ -460,10 +471,19 @@
 			</div>
 
 			<!-- 作物基础信息和输入 -->
-			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
+			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="relative backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
+				<!-- 右上角星标按钮 -->
+				<button x-show="currentCrop" @click="toggleStar(currentCrop.id)"
+						class="star-btn absolute top-2.5 right-2.5 z-20 p-1 rounded-full bg-white/70 backdrop-blur-sm shadow-sm hover:bg-white"
+						:class="isStarred(currentCrop?.id) ? 'star-filled' : 'star-empty'"
+						:title="isStarred(currentCrop?.id) ? '取消星标' : '添加星标'">
+					<svg class="w-5 h-5" viewBox="0 0 24 24" :fill="isStarred(currentCrop?.id) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.8">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+					</svg>
+				</button>
+
 				<!-- 图片 + 信息 + 输入框 -->
 				<div class="p-4 pb-2 flex flex-col sm:flex-row items-center justify-center gap-4 order-1">
-					<!-- 左：图片 -->
 					<div class="w-16 h-16 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden relative"
 						:style="currentCrop ? 'background:' + currentCrop.fillColor : 'background:#e5e7eb'">
 						<span class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-white"
@@ -477,23 +497,16 @@
 						</template>
 					</div>
 				
-					<!-- 中：名称/价格/重量 -->
 					<div class="flex-shrink-0 min-w-0 text-left">
 						<div class="text-base font-bold text-gray-800 truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></div>
 						
-						<!-- 价格与 PNG 图标的 Flex 容器 -->
 						<div class="flex items-center gap-0.5">
-							<!-- 替换为你自备的 PNG 图片路径 -->
 							<img src="img/misc/fengkuangbi.png" alt="icon" class="w-12 h-12 object-contain flex-shrink-0 drop-shadow-sm">
-							
-							<!-- 价格文字 -->
 							<div class="text-3xl font-extrabold text-indigo-600 leading-tight" x-text="formattedPrice"></div>
 						</div>
 					</div>
 				
-					<!-- 右：输入框（手机端移至底部，PC端留在右侧） -->
 					<div class="flex-shrink-0 flex flex-col gap-2 w-full sm:w-44 order-4 sm:order-none mt-2 sm:mt-0">
-						<!-- 重量 -->
 						<div class="flex flex-row items-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">重量</label>
 							<input type="text" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur"
@@ -501,7 +514,6 @@
 								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 								:placeholder="weightPlaceholder">
 						</div>
-						<!-- 占比 -->
 						<div class="flex flex-row items-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">占比</label>
 							<input type="text" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur"
@@ -509,7 +521,6 @@
 								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 								:placeholder="percentPlaceholder">
 						</div>
-						<!-- 时间 -->
 						<div class="flex flex-row items-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">时间</label>
 							<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur"
@@ -520,15 +531,12 @@
 					</div>
 				</div>
 				
-				<!-- 时间提示 / 输入引导 -->
 				<div class="px-4 pb-3 text-center order-2 sm:order-none" x-show="currentCrop">
-					<!-- 有输入时显示时间 -->
 					<div x-show="weightInput">
 						<span class="text-sm text-gray-600">
 							从0%开始，约 <span class="text-indigo-600 font-bold" x-text="maturityTimeDisplay"></span> 内成熟
 						</span>
 					</div>
-					<!-- 没输入时显示警告提示 -->
 					<div x-show="!weightInput" class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded-full text-sm font-medium">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
@@ -537,7 +545,6 @@
 					</div>
 				</div>
 				
-				<!-- 已选突变 -->
 				<div x-show="selectedTags.length > 0" class="px-4 pt-3 pb-3 order-3 sm:order-none">
 					<div class="flex flex-wrap gap-2 justify-center">
 						<template x-for="tag in selectedTags" :key="tag.id">
@@ -614,7 +621,6 @@
 	
 	<!-- 计算历史右侧抽屉 -->
 	<div x-show="historyOpen" style="display: none;" class="fixed inset-0 z-[100] flex justify-end">
-		<!-- 遮罩层 -->
 		<div x-show="historyOpen" 
 			x-transition:enter="transition-opacity ease-out duration-300"
 			x-transition:enter-start="opacity-0"
@@ -625,7 +631,6 @@
 			@click="historyOpen = false" 
 			class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
 	
-		<!-- 抽屉面板 -->
 		<div x-show="historyOpen"
 			x-transition:enter="transition ease-out duration-300"
 			x-transition:enter-start="translate-x-full"
@@ -635,13 +640,11 @@
 			x-transition:leave-end="translate-x-full"
 			class="relative w-full max-w-sm h-full bg-white shadow-2xl flex flex-col z-10">
 			
-			<!-- 头部 -->
 			<div class="flex justify-between items-center px-4 py-3 border-b border-gray-100 flex-shrink-0">
 				<span class="font-bold text-indigo-600">🕒计算历史</span>
 				<button @click="historyOpen = false" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
 			</div>
 			
-			<!-- 列表 -->
 			<div class="p-4 overflow-y-auto flex-1 space-y-2">
 				<div x-show="historyList.length === 0" class="text-center py-12 text-gray-400 text-sm">
 					暂无计算历史
@@ -658,13 +661,11 @@
 							<div class="text-xs text-gray-500 flex flex-wrap items-center gap-2 mt-1">
 								<span><span x-text="item.weight"></span> kg</span>
 								
-								<!-- 基础突变展示 -->
 								<span x-show="item.baseTagName" 
 									class="px-1.5 py-0.5 rounded text-[0.6rem] font-medium"
 									:style="`background: ${item.baseTagColor}; color: white; text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;`"
 									x-text="item.baseTagName"></span>
 									
-								<!-- 全部突变总数 -->
 								<span x-show="item.tags && item.tags.length > 0" class="text-[0.65rem] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">
 									共 <span x-text="item.tags.length"></span> 个突变
 								</span>
@@ -681,7 +682,6 @@
 				</template>
 			</div>
 			
-			<!-- 底部清空 -->
 			<div class="px-4 py-3 border-t border-gray-100 flex justify-end bg-gray-50" x-show="historyList.length > 0">
 				<button @click="clearHistory()" class="text-xs text-rose-500 hover:text-rose-700 transition-colors font-medium">清空全部历史</button>
 			</div>
@@ -710,7 +710,7 @@ function farmCalculator() {
 		priceChange: 'none',
 		lastPrice: 0,
 		_clearTimer: null,
-		quickSelectMax: false, // 一键优选默认不勾选
+		quickSelectMax: false,
 
 		historyOpen: false,
 		historyList: [],
@@ -718,19 +718,62 @@ function farmCalculator() {
 
 		cropSearch: '',
 
+		// ========== 星标相关 ==========
+		starredCropIds: [],
+
+		get starredCrops() {
+			return itemsData.filter(c => this.starredCropIds.includes(c.id));
+		},
+
+		isStarred(cropId) {
+			if (!cropId) return false;
+			return this.starredCropIds.includes(cropId);
+		},
+
+		toggleStar(cropId) {
+			if (!cropId) return;
+			const idx = this.starredCropIds.indexOf(cropId);
+			if (idx === -1) {
+				this.starredCropIds.push(cropId);
+			} else {
+				this.starredCropIds.splice(idx, 1);
+			}
+			this.saveStars();
+		},
+
+		saveStars() {
+			try {
+				localStorage.setItem('farmStarredCrops', JSON.stringify(this.starredCropIds));
+			} catch (e) {
+				console.error('保存星标失败', e);
+			}
+		},
+
+		loadStars() {
+			try {
+				const saved = localStorage.getItem('farmStarredCrops');
+				if (saved) {
+					const arr = JSON.parse(saved);
+					if (Array.isArray(arr)) {
+						this.starredCropIds = arr.filter(id => itemsData.some(c => c.id === id));
+					}
+				}
+			} catch (e) {
+				console.error('读取星标失败', e);
+			}
+		},
+		// ========== 星标相关结束 ==========
 
 		get minWeight() {
 			if (!this.currentCrop) return 0;
 			return this.currentCrop.maxWeight / 34;
 		},
 
-
 		getAllTags() {
 			if (!this.currentCrop) return [];
 			const tagIds = this.getUniqueTagIds(this.currentCrop);
 			return tagIds.map(id => tagLibrary[id]).filter(t => t);
 		},
-
 
 		get selectedTags() {
 			const allTags = this.getAllTags();
@@ -740,7 +783,6 @@ function farmCalculator() {
 				return b.times - a.times;
 			});
 		},
-
 
 		get unselectedTagsByLevel() {
 			const allTags = this.getAllTags();
@@ -758,21 +800,18 @@ function farmCalculator() {
 			return { level0, level1, level2 };
 		},
 
-
 		get filteredCrops() {
 			let crops = itemsData.filter(c => c.categories.includes(this.selectedCategory));
 			
 			if (this.cropSearch) {
-				// 1. 把输入转小写，并删除所有空格
 				const keyword = this.cropSearch.trim().toLowerCase().replace(/\s+/g, '');
 				
 				if (keyword) {
 					crops = crops.filter(c => {
 						const name = c.name.toLowerCase();
 						const rawId = c.id.toLowerCase();
-						const pureId = rawId.replace(/^item_/, ''); // 去掉 item_ 前缀
+						const pureId = rawId.replace(/^item_/, '');
 						
-						// 2. 判断：中文名包含、纯拼音ID包含
 						return name.includes(keyword) || 
 							pureId.includes(keyword);
 					});
@@ -785,7 +824,6 @@ function farmCalculator() {
 			return crops.sort((b, a) => (a.priority || 999) - (b.priority || 999));
 		},
 
-
 		get formattedPrice() {
 			const total = this.computeTotalValue();
 			if (total >= 100000000) return (total / 100000000).toFixed(2) + '亿';
@@ -793,13 +831,11 @@ function farmCalculator() {
 			return total.toFixed(0);
 		},
 
-
 		get maturityTimeDisplay() {
 			if (!this.currentCrop) return '';
 			if (this.currentCrop.growthSpeed == 0) {
 				return '(不知道多少时间)';
 			}
-			// 获取有效重量（不超过最大值）
 			let weight = parseFloat(this.weightInput);
 			if (isNaN(weight) || weight <= 0) return '';
 			const maxWeight = this.currentCrop.maxWeight;
@@ -808,7 +844,6 @@ function farmCalculator() {
 			return this.formatTime(totalSeconds);
 		},
 
-
 		get weightPlaceholder() {
 			if (!this.currentCrop) return '';
 			const minW = this.minWeight.toFixed(2);
@@ -816,13 +851,11 @@ function farmCalculator() {
 			return `${minW} ~ ${maxW} kg`;
 		},
 
-
 		get percentPlaceholder() {
 			if (!this.currentCrop) return '';
 			const minP = Math.ceil(((this.minWeight / this.currentCrop.maxWeight) * 100));
 			return `${minP}% ~ 100%`;
 		},
-
 
 		get displayWeight() {
 			if (!this.currentCrop) return '0';
@@ -831,7 +864,6 @@ function farmCalculator() {
 			const maxWeight = this.currentCrop.maxWeight;
 			return Math.min(weight, maxWeight).toFixed(2);
 		},
-
 
 		formatTime(seconds) {
 			if (seconds < 60) {
@@ -849,19 +881,17 @@ function farmCalculator() {
 			}
 		},
 
-
 		init() {
 			this.renderUnselectedTags();
 			this.setupIntersectionObserver();
 			this.loadHistory();
+			this.loadStars();
 			
-			// 预加载作物图片到缓存
 			itemsData.forEach(crop => {
 				const img = new Image();
 				img.src = 'img/crops/' + crop.id + '.png';
 			});
 		},
-		
 		
 		scrollToPriceCard() {
 			const placeholder = document.getElementById('priceCardPlaceholder');
@@ -885,7 +915,6 @@ function farmCalculator() {
 			}, 800);
 		},
 		
-
 		recordPriceChange() {
 			const currentPrice = this.computeTotalValue();
 			if (this.lastPrice === 0) {
@@ -906,7 +935,6 @@ function farmCalculator() {
 
 			this.recordHistory();
 		},
-		
 		
 		setupIntersectionObserver() {
 			this.$nextTick(() => {
@@ -937,7 +965,6 @@ function farmCalculator() {
 			});
 		},
 
-
 		selectCategory(catId) {
 			this.cropSearch = '';
 			this.selectedCategory = catId;
@@ -948,7 +975,6 @@ function farmCalculator() {
 			this.checkedTags.clear();
 			this.renderUnselectedTags();
 		},
-
 
 		selectCrop(crop) {
 			if (this.selectedCropId === crop.id) {
@@ -975,7 +1001,6 @@ function farmCalculator() {
 			this.renderUnselectedTags();
 		},
 
-
 		clearAllInputs() {
 			this.weightInput = '';
 			this.percentInput = '';
@@ -983,14 +1008,12 @@ function farmCalculator() {
 			this.isPriceFloating = false;
 		},
 
-
 		initCheckedTags() {
 			this.checkedTags.clear();
 			if (!this.currentCrop) return;
 			const tags = this.getUniqueTagIds(this.currentCrop);
 			tags.forEach(tid => this.checkedTags.set(tid, false));
 		},
-
 
 		getUniqueTagIds(item) {
 			if (!item || !item.tagGroups) return [];
@@ -1003,7 +1026,6 @@ function farmCalculator() {
 			}
 			return Array.from(tagIdSet);
 		},
-
 
 		updateFromWeight() {
 			if (!this.currentCrop) return;
@@ -1020,7 +1042,6 @@ function farmCalculator() {
 			this.recordPriceChange();
 		},
 
-
 		updateFromPercent() {
 			if (!this.currentCrop) return;
 			let pct = parseFloat(this.percentInput);
@@ -1034,7 +1055,6 @@ function farmCalculator() {
 			this.updateTimeFromWeight(weight);
 			this.recordPriceChange();
 		},
-
 
 		updateFromTime() {
 			if (!this.currentCrop) return;
@@ -1051,7 +1071,6 @@ function farmCalculator() {
 			}
 		},
 
-
 		updateFromWeightInput(weight) {
 			const maxW = this.currentCrop.maxWeight;
 			this.weightInput = weight.toFixed(2);
@@ -1059,12 +1078,10 @@ function farmCalculator() {
 			this.recordPriceChange();
 		},
 
-
 		updateTimeFromWeight(weight) {
 			const time = (weight * this.currentCrop.growthSpeed) / 100;
 			this.timeInput = time.toFixed(2);
 		},
-
 
 		handleWeightBlur() {
 			if (!this.currentCrop) return;
@@ -1083,7 +1100,6 @@ function farmCalculator() {
 			}
 		},
 
-
 		handlePercentBlur() {
 			if (!this.currentCrop) return;
 			let pct = parseFloat(this.percentInput);
@@ -1099,7 +1115,6 @@ function farmCalculator() {
 				this.updateFromPercent();
 			}
 		},
-
 
 		handleTimeBlur() {
 			if (!this.currentCrop) return;
@@ -1134,15 +1149,12 @@ function farmCalculator() {
 			this.updateFromWeightInput(finalWeight);
 		},
 
-
 		computeTotalValue() {
 			if (!this.currentCrop) return 0;
 			let weight = parseFloat(this.weightInput);
 			if (isNaN(weight) || weight <= 0) return 0;
 			
-			// 获取最大重量限制
 			const maxWeight = this.currentCrop.maxWeight;
-			// 计算时使用限制后的重量（不超过最大值）
 			let effectiveWeight = Math.min(weight, maxWeight);
 			
 			let base = this.currentCrop.basePrice;
@@ -1167,9 +1179,6 @@ function farmCalculator() {
 			const newMap = new Map(this.checkedTags);
 			
 			if (!isChecked) {
-				// ========== 选中逻辑 ==========
-				
-				// 1. 检查该突变是否被某个合成突变消耗
 				let consumedBy = null;
 				for (const [compositeId, def] of Object.entries(tagLibrary)) {
 					if (def.synDel && def.synDel.includes(tagId) && newMap.get(compositeId) === true) {
@@ -1179,24 +1188,19 @@ function farmCalculator() {
 				}
 				
 				if (consumedBy) {
-					// 被合成突变消耗了
 					const { compositeId, def } = consumedBy;
 					const keepList = def.synKeep || [];
 					
 					if (keepList.includes(tagId)) {
-						// 在 synKeep 中：允许和合成突变共存
 						newMap.set(tagId, true);
 					} else {
-						// 不在 synKeep 中：退掉合成，选中该子突变
 						newMap.set(compositeId, false);
 						newMap.set(tagId, true);
 					}
 				} else {
-					// 正常情况下选中
 					newMap.set(tagId, true);
 				}
 				
-				// 2. 处理互斥组
 				for (const group of exclusiveGroups) {
 					if (group.tags.includes(tagId)) {
 						group.tags.forEach(otherId => {
@@ -1207,7 +1211,6 @@ function farmCalculator() {
 					}
 				}
 				
-				// 3. 检查是否触发新的合成
 				const newlySynthesized = [];
 				let changed = true;
 				let loop = 0;
@@ -1226,7 +1229,6 @@ function farmCalculator() {
 					}
 				}
 				
-				// 4. 新合成的突变：取消其所有 synDel 中的子突变（包括 synKeep）
 				for (const { def } of newlySynthesized) {
 					if (def.synDel) {
 						for (const sub of def.synDel) {
@@ -1237,7 +1239,6 @@ function farmCalculator() {
 					}
 				}
 				
-				// 5. 如果选中的突变本身是合成突变，取消它的 synDel 中的子突变
 				const selectedTag = tagLibrary[tagId];
 				if (selectedTag && selectedTag.synDel && selectedTag.synDel.length > 0) {
 					for (const sub of selectedTag.synDel) {
@@ -1248,7 +1249,6 @@ function farmCalculator() {
 				}
 				
 			} else {
-				// ========== 取消选中逻辑 ==========
 				newMap.set(tagId, false);
 				
 				for (const [compositeId, def] of Object.entries(tagLibrary)) {
@@ -1283,10 +1283,8 @@ function farmCalculator() {
 			
 			const { level0, level1, level2 } = this.unselectedTagsByLevel;
 			
-			// 获取活动突变
 			const activityTagIds = tagGroups['group_activity']?.tags || [];
 			
-			// 从 level2 中分离出活动突变
 			const activityTags = level2.filter(tag => activityTagIds.includes(tag.id));
 			const normalLevel2 = level2.filter(tag => !activityTagIds.includes(tag.id));
 			
@@ -1341,13 +1339,11 @@ function farmCalculator() {
 			});
 		},
 		
-		
 		quickSelectLevel2() {
 			const allTags = this.getAllTags();
 			const level2Tags = allTags.filter(t => t.level === 2);
 			const activityTagIds = tagGroups['group_activity']?.tags || [];
 		
-			// 先清空所有常规突变（排除活动突变）
 			level2Tags.forEach(tag => {
 				if (!activityTagIds.includes(tag.id)) {
 					this.checkedTags.set(tag.id, false);
@@ -1355,16 +1351,12 @@ function farmCalculator() {
 			});
 		
 			if (this.quickSelectMax) {
-				// ========== 拉满模式 ==========
-				
-				// 1. 全选所有非活动突变（排除幻彩和异彩）
 				level2Tags.forEach(tag => {
 					if (!activityTagIds.includes(tag.id) && tag.id !== 'huancai2' && tag.id !== 'yicai2') {
 						this.checkedTags.set(tag.id, true);
 					}
 				});
 				
-				// 2. 处理互斥组：每个互斥组只保留倍数最高的
 				for (const group of exclusiveGroups) {
 					const groupTags = group.tags.filter(id => {
 						const tag = tagLibrary[id];
@@ -1389,7 +1381,6 @@ function farmCalculator() {
 					}
 				}
 				
-				// 3. 处理合成关系：触发所有可合成的父突变（避开互斥）
 				let changed = true;
 				let loop = 0;
 				while (changed && loop++ < 10) {
@@ -1398,7 +1389,6 @@ function farmCalculator() {
 						if (!def.synthesis || def.synthesis.length === 0) continue;
 						if (this.checkedTags.get(compositeId) === true) continue;
 						
-						// 检查是否与已选中的互斥突变冲突
 						let conflict = false;
 						for (const group of exclusiveGroups) {
 							if (group.tags.includes(compositeId)) {
@@ -1421,7 +1411,6 @@ function farmCalculator() {
 					}
 				}
 				
-				// 4. 宽松处理被消耗的子突变：synKeep 并集优先
 				const allSynDel = new Set();
 				const allSynKeep = new Set();
 		
@@ -1446,7 +1435,6 @@ function farmCalculator() {
 				}
 				
 			} else {
-				// ========== 自定义模式 ==========
 				const customTags = [
 					'chengzuan2', 'cihua2', 'caihong2', 'yingguang2', 'luolei2',
 					'bingdong2', 'zhanli2', 'fuxue2', 'chaoshi2', 'miwu2',
@@ -1458,7 +1446,6 @@ function farmCalculator() {
 					}
 				});
 				
-				// 处理互斥组
 				for (const group of exclusiveGroups) {
 					const groupTags = group.tags.filter(id => {
 						const tag = tagLibrary[id];
@@ -1484,7 +1471,6 @@ function farmCalculator() {
 					}
 				}
 				
-				// 处理合成关系（避开互斥）
 				let changed = true;
 				let loop = 0;
 				while (changed && loop++ < 10) {
@@ -1493,7 +1479,6 @@ function farmCalculator() {
 						if (!def.synthesis || def.synthesis.length === 0) continue;
 						if (this.checkedTags.get(compositeId) === true) continue;
 						
-						// 检查是否与已选中的互斥突变冲突
 						let conflict = false;
 						for (const group of exclusiveGroups) {
 							if (group.tags.includes(compositeId)) {
@@ -1516,7 +1501,6 @@ function farmCalculator() {
 					}
 				}
 				
-				// 宽松处理被消耗的子突变：synKeep 并集优先
 				const allSynDel = new Set();
 				const allSynKeep = new Set();
 		
@@ -1546,13 +1530,11 @@ function farmCalculator() {
 		},
 		
 
-		// ========== 历史记录 ==========
 		loadHistory() {
 			try {
 				const saved = localStorage.getItem('farmHistory');
 				if (saved) {
 					this.historyList = JSON.parse(saved).map(item => {
-						// 兼容旧数据，如果没有新字段，尝试从 tags 里临时推断一下，或者置空
 						if (item.baseTagName === undefined) {
 							const baseTagIds = ['xingkong0', 'liuguang0', 'shuijing0', 'jin0', 'yin0'];
 							const baseId = item.tags.find(id => baseTagIds.includes(id));
@@ -1593,7 +1575,6 @@ function farmCalculator() {
 				const now = new Date();
 				const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 				
-				// 分别提取基础突变和其他突变
 				const baseTagIds = ['xingkong0', 'liuguang0', 'shuijing0', 'jin0', 'yin0'];
 				const allSelected = this.selectedTags;
 				
@@ -1607,10 +1588,10 @@ function farmCalculator() {
 					weight: parseFloat(this.weightInput),
 					percent: this.percentInput,
 					time: this.timeInput,
-					baseTagName: baseTag ? baseTag.name : '', // 记录基础突变名称
-					baseTagColor: baseTag ? baseTag.fillColor : '', // 记录基础突变颜色
-					otherTagsCount: otherTags.length, // 记录其他突变的数量
-					tags: allSelected.map(t => t.id), // 保留完整 ID 列表用于恢复
+					baseTagName: baseTag ? baseTag.name : '',
+					baseTagColor: baseTag ? baseTag.fillColor : '',
+					otherTagsCount: otherTags.length,
+					tags: allSelected.map(t => t.id),
 					price: this.formattedPrice,
 					date: dateStr
 				};
@@ -1669,12 +1650,15 @@ function farmCalculator() {
 		},
 
 
-		// 工具基础信息
 		openModal(type) {
 			const modals = {
 				changelog: { 
 					title: '更新日志', 
 					lines: [
+						'2026.11.06',
+						'• 新增[星标作物]：在作物计算页右上角点★，即可把当前作物加入星标；回到作物选择页时，顶部会多出一栏「星标作物」，常用作物一点直达。',
+						'• 星标数据仅保存在你自己的浏览器本地，换设备或清缓存后需要重新星标。',
+						'<br>',
 						'2026.11.05',
 						'• 新增[原创性声明]。声明说明了本工具的开发背景、数据来源与实现方式，回应了近期关于与某收费工具相似性的质疑。需要说明的是：质疑针对的是工具本身，与使用者无关——用这个工具，不代表你认同任何抄袭，也不该因此被扣帽子。',
 						'<br>',
@@ -1701,6 +1685,7 @@ function farmCalculator() {
 						'2026.10.27',
 						'• 作物+1: 【听歌的柿黛拉】',
 						'• 现在有了[作物搜索]，还有[计算历史]',
+						'• [计算历史]数据仅保存在你自己的浏览器本地，换设备或清缓存后数据清空',
 						'<br>',
 						'2026.10.26',
 						'• 作物有图了',

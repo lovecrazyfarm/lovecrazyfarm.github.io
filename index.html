@@ -53,20 +53,10 @@
 		}
 		
 		@keyframes meteor {
-			0% {
-				transform: translateX(0) translateY(0) rotate(135deg);
-				opacity: 1;
-			}
-			40% {
-				transform: translateX(100px) translateY(100px) rotate(135deg);
-				opacity: 1;
-			}
-			100% {
-				transform: translateX(300px) translateY(300px) rotate(135deg);
-				opacity: 0;
-			}
+			0% { transform: translateX(0) translateY(0) rotate(135deg); opacity: 1; }
+			40% { transform: translateX(100px) translateY(100px) rotate(135deg); opacity: 1; }
+			100% { transform: translateX(300px) translateY(300px) rotate(135deg); opacity: 0; }
 		}
-		
 		.meteor {
 			position: absolute;
 			width: 2px;
@@ -84,14 +74,9 @@
 			text-shadow: -0.5px -0.5px 0 #000000, 0.5px -0.5px 0 #000000, -0.5px 0.5px 0 #000000, 0.5px 0.5px 0 #000000;
 		}
 		
-		.content-bg {
-			background: #fefef7;
-		}
+		.content-bg { background: #fefef7; }
 		
-		body {
-			overflow-y: auto;
-			overflow-x: hidden;
-		}
+		body { overflow-y: auto; overflow-x: hidden; }
 		
 		.horizontal-input-group {
 			display: flex;
@@ -114,56 +99,24 @@
 			font-size: 0.8rem;
 		}
 		
-		.time-input-group {
-			flex: 1.2;
-			min-width: 200px;
-		}
+		.time-input-group { flex: 1.2; min-width: 200px; }
 		
 		@media (max-width: 768px) {
-			.horizontal-input-group {
-				flex: 1;
-				min-width: 100%;
-			}
-			.time-input-group {
-				min-width: 100%;
-			}
+			.horizontal-input-group { flex: 1; min-width: 100%; }
+			.time-input-group { min-width: 100%; }
 		}
 
-		.floating-enter-active {
-			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-		}
-		.floating-enter-from {
-			opacity: 0;
-			transform: translateY(-20px);
-		}
-		.floating-enter-to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-		.floating-leave-active {
-			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		}
-		.floating-leave-from {
-			opacity: 1;
-			transform: translateY(0);
-		}
-		.floating-leave-to {
-			opacity: 0;
-			transform: translateY(-20px);
-		}
+		.floating-enter-active { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+		.floating-enter-from { opacity: 0; transform: translateY(-20px); }
+		.floating-enter-to { opacity: 1; transform: translateY(0); }
+		.floating-leave-active { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+		.floating-leave-from { opacity: 1; transform: translateY(0); }
+		.floating-leave-to { opacity: 0; transform: translateY(-20px); }
 		
-		.price-up-effect {
-				color: #fbbf24;
-		}
-		.price-down-effect {
-				color: #f87171;
-		}
-		.price-normal {
-				color: #6366f1;
-		}
-		.price-transition {
-				transition: all 0.15s ease;
-		}
+		.price-up-effect { color: #fbbf24; }
+		.price-down-effect { color: #f87171; }
+		.price-normal { color: #6366f1; }
+		.price-transition { transition: all 0.15s ease; }
 
 		.ufo-dome {
 			position: absolute;
@@ -271,22 +224,14 @@
 			transition: transform 0.15s ease, color 0.15s ease;
 			cursor: pointer;
 		}
-		.star-btn:hover {
-			transform: scale(1.15);
-		}
+		.star-btn:hover { transform: scale(1.15); }
 		.star-filled {
 			color: #fbbf24;
 			filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.6));
 		}
-		.star-empty {
-			color: #9ca3af;
-		}
-		.star-empty:hover {
-			color: #fbbf24;
-		}
-		.starred-crop-item {
-			position: relative;
-		}
+		.star-empty { color: #9ca3af; }
+		.star-empty:hover { color: #fbbf24; }
+		.starred-crop-item { position: relative; }
 		.starred-crop-item::after {
 			content: '★';
 			position: absolute;
@@ -338,9 +283,7 @@
 			opacity: 0.9;
 			transition: opacity 0.15s ease;
 		}
-		.combat-card-head .combat-detail-btn:hover {
-			opacity: 1;
-		}
+		.combat-card-head .combat-detail-btn:hover { opacity: 1; }
 		.combat-card-body {
 			background: #fff;
 			color: #4f46e5;
@@ -366,19 +309,13 @@
 			gap: 0.5rem;
 			padding: 0.12rem 0;
 		}
-		.combat-detail-row + .combat-detail-row {
-			border-top: 1px dashed #e2e8f0;
-		}
-		.combat-detail-label {
-			color: #64748b;
-			font-weight: 500;
-		}
+		.combat-detail-row + .combat-detail-row { border-top: 1px dashed #e2e8f0; }
+		.combat-detail-label { color: #64748b; font-weight: 500; }
 		.combat-detail-value {
 			color: #1e293b;
 			font-weight: 700;
 			font-variant-numeric: tabular-nums;
 		}
-		/* 介绍小窗 */
 		.intro-pop {
 			margin-top: 0.4rem;
 			background: #f8fafc;
@@ -400,10 +337,7 @@
 			margin: 0 auto;
 			width: max-content;
 		}
-		.sim-board-wrapper {
-			position: relative;
-			z-index: 1;
-		}
+		.sim-board-wrapper { position: relative; z-index: 1; }
 		.sim-grid {
 			display: grid;
 			grid-template-columns: repeat(8, 48px);
@@ -459,162 +393,128 @@
 			border-color: rgba(99, 102, 241, 0.65) !important;
 			box-shadow: 0 2px 4px rgba(0,0,0,0.06);
 		}
-		.btn-outline:active {
-			transform: translateY(1px);
-		}
+		.btn-outline:active { transform: translateY(1px); }
 		.btn-outline.border-rose-200 { border-color: #fecdd3 !important; }
 		.btn-outline.border-emerald-200 { border-color: #a7f3d0 !important; }
 		.btn-outline.border-gray-200 { border-color: #e5e7eb !important; }
 		.btn-outline.border-indigo-100 { border-color: #e0e7ff !important; }
 
-		/* ========== 手机端：页面内平铺的“横屏形态”战斗区 ========== */
-		.mobile-battle-wrapper { display: none; }
+		/* ========== 手机端全屏战斗布局（强制横屏） ========== */
+		.sim-fullscreen-btn { display: none; }
 
 		@media (max-width: 768px) {
-			/* 隐藏桌面端战场 */
 			.sim-desktop-area { display: none !important; }
 			.sim-desktop-toolbar { display: none !important; }
-
-			/* 外层占位：宽=视口宽，高=视口宽（旋转后内容高度） */
-			.mobile-battle-wrapper {
-				display: block !important;
-				position: relative;
-				width: 100%;
-				margin-left: calc(-1 * (100vw - 100%) / 2);
-				margin-right: calc(-1 * (100vw - 100%) / 2);
-				height: 100vw;
-				overflow: hidden;
-				background: #0b1020;
-			}
-
-			/* 旋转容器：宽高互换 + rotate(90deg)，与全屏内完全一致 */
-			.mobile-battle-rotate {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				width: 100vh;   /* 横屏后的宽 = 视口高 */
-				height: 100vw;  /* 横屏后的高 = 视口宽 */
-				transform: translate(-50%, -50%) rotate(90deg);
-				transform-origin: center center;
-				background: #fefef7;
-				display: flex;
-				flex-direction: row;
-				overflow: hidden;
-			}
-
-			/* 左：竖排按钮栏（与全屏内完全一致） */
-			.mobile-battle-left {
-				width: 96px;
-				flex-shrink: 0;
-				background: #1e1b4b;
-				display: flex;
-				flex-direction: column;
-				align-items: stretch;
-				gap: 6px;
-				padding: 8px 6px;
-				overflow-y: auto;
-			}
-			.mobile-battle-left button {
-				width: 100%;
-				padding: 6px 4px;
-				border-radius: 8px;
-				font-size: 12px;
-				font-weight: 600;
-				border: none;
-				cursor: pointer;
-				line-height: 1.2;
-			}
-			.mobile-battle-left .mb-place { background: #6366f1; color: #fff; }
-			.mobile-battle-left .mb-delete { background: #f43f5e; color: #fff; }
-			.mobile-battle-left .mb-edit { background: #f59e0b; color: #fff; }
-			.mobile-battle-left .mb-save { background: #10b981; color: #fff; }
-			.mobile-battle-left .mb-save-layout { background: #64748b; color: #fff; }
-			.mobile-battle-left .mb-clear { background: #475569; color: #fff; }
-			.mobile-battle-left button:disabled { opacity: .4; cursor: not-allowed; }
-			.mobile-battle-left button.active-mode {
-				outline: 2px solid #fff;
-				outline-offset: -2px;
-			}
-
-			/* 中：战场（与全屏内一致） */
-			.mobile-battle-center {
-				flex: 1;
-				min-width: 0;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				overflow: auto;
-				padding: 8px;
-			}
-
-			/* 右：输出信息（与全屏内一致：上作物 / 下已放置） */
-			.mobile-battle-right {
-				width: 150px;
-				flex-shrink: 0;
-				background: #f1f5f9;
-				display: flex;
-				flex-direction: column;
-				border-left: 2px solid #cbd5e1;
-			}
-			.mobile-battle-right .mb-right-top {
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				text-align: center;
-				padding: 8px;
-				border-bottom: 2px dashed #cbd5e1;
-			}
-			.mobile-battle-right .mb-right-bottom {
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				text-align: center;
-				padding: 8px;
-			}
-			.mobile-battle-right .mb-name {
-				font-size: 12px;
-				font-weight: 700;
-				color: #4338ca;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				width: 100%;
-				margin-bottom: 4px;
-			}
-			.mobile-battle-right .mb-big {
-				font-size: 18px;
-				font-weight: 800;
-				color: #4f46e5;
-				line-height: 1.1;
-			}
-			.mobile-battle-right .mb-small {
-				font-size: 14px;
-				font-weight: 700;
-				color: #6366f1;
-				line-height: 1.2;
-			}
-			.mobile-battle-right .mb-label {
-				font-size: 11px;
-				color: #64748b;
-				font-weight: 500;
-			}
-			.mobile-battle-right .mb-total-big {
-				font-size: 18px;
-				font-weight: 800;
-				color: #e11d48;
-				line-height: 1.1;
-			}
-			.mobile-battle-right .mb-total-small {
-				font-size: 14px;
-				font-weight: 700;
-				color: #f43f5e;
-				line-height: 1.2;
-			}
+			.sim-fullscreen-btn { display: inline-flex !important; }
 		}
+
+		.sim-fs-overlay {
+			position: fixed;
+			inset: 0;
+			z-index: 9999;
+			background: #0b1020;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+		}
+
+		.sim-fs-rotate {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 100vh;
+			height: 100vw;
+			transform: translate(-50%, -50%) rotate(90deg);
+			transform-origin: center center;
+			background: #fefef7;
+			display: flex;
+			flex-direction: row;
+			overflow: hidden;
+		}
+
+		.sim-fs-left {
+			width: 96px;
+			flex-shrink: 0;
+			background: #1e1b4b;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 6px;
+			padding: 8px 6px;
+			overflow-y: auto;
+		}
+		.sim-fs-left button {
+			width: 100%;
+			padding: 6px 4px;
+			border-radius: 8px;
+			font-size: 12px;
+			font-weight: 600;
+			border: none;
+			cursor: pointer;
+			line-height: 1.2;
+		}
+		.sim-fs-left .fs-exit { background: #f43f5e; color: #fff; }
+		.sim-fs-left .fs-place { background: #6366f1; color: #fff; }
+		.sim-fs-left .fs-delete { background: #f43f5e; color: #fff; }
+		.sim-fs-left .fs-edit { background: #f59e0b; color: #fff; }
+		.sim-fs-left .fs-save-layout { background: #64748b; color: #fff; }
+		.sim-fs-left .fs-clear { background: #475569; color: #fff; }
+		.sim-fs-left button:disabled { opacity: .4; cursor: not-allowed; }
+		.sim-fs-left button.active-mode { outline: 2px solid #fff; outline-offset: -2px; }
+
+		.sim-fs-center {
+			flex: 1;
+			min-width: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: auto;
+			padding: 8px;
+		}
+
+		.sim-fs-right {
+			width: 150px;
+			flex-shrink: 0;
+			background: #f1f5f9;
+			display: flex;
+			flex-direction: column;
+			border-left: 2px solid #cbd5e1;
+		}
+		.sim-fs-right .fs-right-top {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: 8px;
+			border-bottom: 2px dashed #cbd5e1;
+		}
+		.sim-fs-right .fs-right-bottom {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: 8px;
+		}
+		.sim-fs-right .mb-name {
+			font-size: 12px;
+			font-weight: 700;
+			color: #4338ca;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 100%;
+			margin-bottom: 4px;
+		}
+		.sim-fs-right .mb-big { font-size: 18px; font-weight: 800; color: #4f46e5; line-height: 1.1; }
+		.sim-fs-right .mb-small { font-size: 14px; font-weight: 700; color: #6366f1; line-height: 1.2; }
+		.sim-fs-right .mb-label { font-size: 11px; color: #64748b; font-weight: 500; }
+		.sim-fs-right .mb-total-big { font-size: 18px; font-weight: 800; color: #e11d48; line-height: 1.1; }
+		.sim-fs-right .mb-total-small { font-size: 14px; font-weight: 700; color: #f43f5e; line-height: 1.2; }
 	</style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-6">
@@ -717,9 +617,7 @@
 			<div class="mb-6 pb-4 border-b border-blue-200">
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
 
-				<!-- 手机端：版本按钮与“计算历史”同一行，计算历史贴右；桌面端保持原样 -->
 				<div class="flex flex-wrap items-center gap-3">
-					<!-- 版本按钮组：手机上占满可用宽度，允许内部换行 -->
 					<div class="flex flex-wrap items-center gap-3 flex-1 min-w-0">
 						<template x-for="cat in categories" :key="cat.id">
 							<button @click="selectCategory(cat.id)" 
@@ -881,13 +779,11 @@
 				<!-- 作战属性三卡片（仅攻击作物） -->
 				<div x-show="currentCrop?.combat" class="w-full px-4 pb-3">
 					<div class="flex items-stretch gap-2 flex-wrap mx-auto" style="max-width: 380px;">
-						<!-- 攻击卡片 -->
 						<div class="combat-card">
 							<div class="combat-card-head">
 								<img class="combat-icon" src="img/icons/icon_jian.png" alt="">
 								<span class="combat-name">攻击</span>
-								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细"
-									 @click="toggleAllDetails()">
+								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细" @click="toggleAllDetails()">
 							</div>
 							<div class="combat-card-body" x-text="formattedAttack"></div>
 							<div x-show="detailOpenAll" x-transition class="combat-detail-pop">
@@ -906,7 +802,6 @@
 							</div>
 						</div>
 
-						<!-- 范围卡片（固定值，无明细按钮） -->
 						<div class="combat-card">
 							<div class="combat-card-head">
 								<img class="combat-icon" src="img/icons/icon_fanwei.png" alt="">
@@ -916,13 +811,11 @@
 							<div class="combat-card-body" x-text="formattedRange"></div>
 						</div>
 
-						<!-- 冷却卡片 -->
 						<div class="combat-card" x-show="currentCrop?.combat?.baseCooldown !== -666">
 							<div class="combat-card-head">
 								<img class="combat-icon" src="img/icons/icon_shandian.png" alt="">
 								<span class="combat-name">冷却</span>
-								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细"
-									 @click="toggleAllDetails()">
+								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细" @click="toggleAllDetails()">
 							</div>
 							<div class="combat-card-body" x-text="formattedCooldown"></div>
 							<div x-show="detailOpenAll" x-transition class="combat-detail-pop">
@@ -944,7 +837,6 @@
 				</div>
 				
 				<div class="px-4 pb-3 text-center order-2 sm:order-none" x-show="currentCrop">
-					<!-- 攻击作物数据未完成提示 -->
 					<div x-show="currentCrop?.combat && currentCrop.growthSpeed === 0" class="inline-flex items-center gap-1.5 px-3 py-1 bg-rose-50 text-rose-600 border border-rose-200 rounded-full text-sm font-medium">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
@@ -952,14 +844,12 @@
 						<span>该攻击作物数据尚未完成</span>
 					</div>
 
-					<!-- 普通作物时间提示 -->
 					<div x-show="!currentCrop?.combat && weightInput">
 						<span class="text-sm text-gray-600">
 							从0%开始，约 <span class="text-indigo-600 font-bold" x-text="maturityTimeDisplay"></span> 内成熟
 						</span>
 					</div>
 
-					<!-- 未输入提示 -->
 					<div x-show="!weightInput" class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded-full text-sm font-medium">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
@@ -1011,8 +901,7 @@
 			</div>
 
 			<!-- 突变区提示 -->
-			<div x-show="selectedCropId !== null && currentCrop?.combat" x-transition class="mb-2 text-xs text-rose-500 flex items-center gap-1">
-			</div>
+			<div x-show="selectedCropId !== null && currentCrop?.combat" x-transition class="mb-2 text-xs text-rose-500 flex items-center gap-1"></div>
 
 			<!-- 可选突变 -->
 			<div x-show="selectedCropId !== null" x-transition.duration.200ms class="mb-6 pb-4">
@@ -1025,14 +914,22 @@
 					<div class="text-sm font-bold text-indigo-700 flex items-center gap-2">
 						输出推演(施工中)
 					</div>
-					<!-- 桌面端操作按钮 -->
-					<div class="hidden md:flex flex-wrap gap-2">
-						<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'" class="px-2 py-1 rounded text-xs transition">放置</button>
-						<button @click="toggleSimMode('delete')" :class="simMode === 'delete' ? 'bg-rose-500 text-white' : 'bg-rose-50 text-rose-600 hover:bg-rose-100'" class="px-2 py-1 rounded text-xs transition">铲除</button>
-						<button @click="toggleSimMode('edit')" :class="simMode === 'edit' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-600 hover:bg-amber-100'" class="px-2 py-1 rounded text-xs transition">修改</button>
-						<button x-show="simMode === 'edit' && simSelectedCell" @click="saveSimEdit()" class="px-2 py-1 bg-emerald-50 text-emerald-600 rounded text-xs hover:bg-emerald-100 transition border border-emerald-200">保存修改</button>
-						<button @click="saveSimLayout()" class="px-2 py-1 bg-gray-50 text-gray-700 rounded text-xs hover:bg-gray-200 transition border border-gray-200">保存布局</button>
-						<button @click="clearSimLayout()" class="px-2 py-1 bg-white border border-gray-200 text-gray-500 rounded text-xs hover:bg-gray-50 transition">清空战场</button>
+					<div class="flex flex-wrap gap-2 items-center">
+						<!-- 手机端进入战斗布局按钮 -->
+						<button @click="openSimFullscreen()" class="sim-fullscreen-btn px-3 py-1.5 bg-indigo-500 text-white rounded-full text-xs font-bold shadow hover:bg-indigo-600 transition items-center gap-1">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+							进入战斗布局
+						</button>
+
+						<!-- 桌面端操作按钮 -->
+						<div class="hidden md:flex flex-wrap gap-2">
+							<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'" class="px-2 py-1 rounded text-xs transition">放置</button>
+							<button @click="toggleSimMode('delete')" :class="simMode === 'delete' ? 'bg-rose-500 text-white' : 'bg-rose-50 text-rose-600 hover:bg-rose-100'" class="px-2 py-1 rounded text-xs transition">铲除</button>
+							<button @click="toggleSimMode('edit')" :class="simMode === 'edit' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-600 hover:bg-amber-100'" class="px-2 py-1 rounded text-xs transition">修改</button>
+							<button x-show="simPendingCell" @click="saveSimEditFromPage()" class="px-2 py-1 bg-emerald-50 text-emerald-600 rounded text-xs hover:bg-emerald-100 transition border border-emerald-200">保存修改</button>
+							<button @click="saveSimLayout()" class="px-2 py-1 bg-gray-50 text-gray-700 rounded text-xs hover:bg-gray-200 transition border border-gray-200">保存布局</button>
+							<button @click="clearSimLayout()" class="px-2 py-1 bg-white border border-gray-200 text-gray-500 rounded text-xs hover:bg-gray-50 transition">清空战场</button>
+						</div>
 					</div>
 				</div>
 
@@ -1053,11 +950,8 @@
 				<div class="sim-desktop-area">
 					<div class="w-full flex justify-center bg-[#8fbf68] rounded-xl overflow-visible relative" @click.self="clearSelection()">
 						<div class="sim-container relative">
-							
-							<!-- 全局唯一的 SVG 画布 -->
 							<svg class="sim-svg-overlay" id="simSvg" xmlns="http://www.w3.org/2000/svg" style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index: 999;"></svg>
 
-							<!-- 上方网格 -->
 							<div class="sim-board-wrapper relative z-10">
 								<div class="sim-grid">
 									<template x-for="i in 32" :key="'top_'+i">
@@ -1070,10 +964,8 @@
 								</div>
 							</div>
 							
-							<!-- 中间路径 -->
 							<div class="sim-path relative z-10"></div>
 
-							<!-- 下方网格 -->
 							<div class="sim-board-wrapper relative z-10">
 								<div class="sim-grid">
 									<template x-for="i in 32" :key="'bottom_'+i">
@@ -1085,14 +977,10 @@
 									</template>
 								</div>
 							</div>
-							
 						</div>
 					</div>
 
-					<!-- 桌面端伤害信息面板 -->
 					<div class="mt-3 flex border border-indigo-200 rounded-lg overflow-hidden text-sm" x-show="simSelectedCell || simTotalDamage !== '0'">
-						
-						<!-- 左侧：选中格子的攻击作物 -->
 						<div x-show="simSelectedCell && simBoard[simSelectedCell]" class="flex-1 bg-indigo-50 border-r border-indigo-200 p-3 flex flex-col justify-center items-center text-center">
 							<div class="text-xs font-bold text-indigo-800 mb-1 truncate w-full" x-text="itemsData.find(c => c.id === simBoard[simSelectedCell]?.cropId)?.name || ''"></div>
 							<div class="text-base font-extrabold text-indigo-600 leading-tight">
@@ -1105,12 +993,10 @@
 							</div>
 						</div>
 
-						<!-- 占位 -->
 						<div x-show="!simSelectedCell || !simBoard[simSelectedCell]" class="flex-1 bg-indigo-50/50 border-r border-indigo-200 p-3 flex items-center justify-center text-xs text-indigo-400">
 							点击格子查看单个输出
 						</div>
 
-						<!-- 右侧：全场总伤害 -->
 						<div class="flex-1 bg-white p-3 flex flex-col justify-center items-center text-center">
 							<div class="text-xs font-bold text-gray-700 mb-1">已放置</div>
 							<div class="text-base font-extrabold text-rose-600 leading-tight">
@@ -1124,32 +1010,33 @@
 						</div>
 					</div>
 				</div>
+			</div>
 
-				<!-- ========== 手机端：平铺的横屏形态战斗区（与全屏内一致） ========== -->
-				<div class="mobile-battle-wrapper">
-					<div class="mobile-battle-rotate">
+			<!-- ========== 手机端全屏战斗布局（强制横屏） ========== -->
+			<div x-show="simFullscreenOpen" style="display:none;">
+				<div class="sim-fs-overlay">
+					<div class="sim-fs-rotate">
 
-						<!-- 左：竖排按钮 -->
-						<div class="mobile-battle-left">
-							<button class="mb-place" :class="{'active-mode': simMode==='place'}" @click="toggleSimMode('place')">放置</button>
-							<button class="mb-delete" :class="{'active-mode': simMode==='delete'}" @click="toggleSimMode('delete')">铲除</button>
-							<button class="mb-edit" :class="{'active-mode': simMode==='edit'}" @click="toggleSimMode('edit')">修改</button>
-							<button class="mb-save" :disabled="!(simMode==='edit' && simSelectedCell)" @click="saveSimEdit()">保存修改</button>
-							<button class="mb-save-layout" @click="saveSimLayout()">保存布局</button>
-							<button class="mb-clear" @click="clearSimLayout()">清空战场</button>
+						<!-- 左：按钮栏（不含保存修改） -->
+						<div class="sim-fs-left">
+							<button class="fs-exit" @click="closeSimFullscreen()">✕ 退出</button>
+							<button class="fs-place" :class="{'active-mode': simMode==='place'}" @click="toggleSimMode('place')">放置</button>
+							<button class="fs-delete" :class="{'active-mode': simMode==='delete'}" @click="toggleSimMode('delete')">铲除</button>
+							<button class="fs-edit" :class="{'active-mode': simMode==='edit'}" @click="toggleSimMode('edit')">修改</button>
+							<button class="fs-save-layout" @click="saveSimLayout()">保存布局</button>
+							<button class="fs-clear" @click="clearSimLayout()">清空战场</button>
 						</div>
 
-						<!-- 中：战场（结构与全屏内完全一致） -->
-						<div class="mobile-battle-center">
+						<!-- 中：战场 -->
+						<div class="sim-fs-center">
 							<div class="sim-container relative" style="padding:1.5rem;">
-								<svg class="sim-svg-overlay" id="simSvgMobile" xmlns="http://www.w3.org/2000/svg"
+								<svg class="sim-svg-overlay" id="simSvgFullscreen" xmlns="http://www.w3.org/2000/svg"
 									style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index:999;"></svg>
 
-								<!-- 上方网格 -->
 								<div class="sim-board-wrapper relative z-10">
 									<div class="sim-grid">
-										<template x-for="i in 32" :key="'m_top_'+i">
-											<div class="sim-cell" :data-id="'m_top_' + i"
+										<template x-for="i in 32" :key="'fs_top_'+i">
+											<div class="sim-cell" :data-id="'fs_top_' + i"
 												:class="{'selected': simSelectedCell === 'top_' + i}"
 												@click="handleCellClick('top_' + i)">
 												<template x-if="simBoard['top_' + i]">
@@ -1160,14 +1047,12 @@
 									</div>
 								</div>
 
-								<!-- 中间路径 -->
 								<div class="sim-path relative z-10"></div>
 
-								<!-- 下方网格 -->
 								<div class="sim-board-wrapper relative z-10">
 									<div class="sim-grid">
-										<template x-for="i in 32" :key="'m_bottom_'+i">
-											<div class="sim-cell" :data-id="'m_bottom_' + i"
+										<template x-for="i in 32" :key="'fs_bottom_'+i">
+											<div class="sim-cell" :data-id="'fs_bottom_' + i"
 												:class="{'selected': simSelectedCell === 'bottom_' + i}"
 												@click="handleCellClick('bottom_' + i)">
 												<template x-if="simBoard['bottom_' + i]">
@@ -1180,9 +1065,9 @@
 							</div>
 						</div>
 
-						<!-- 右：输出信息（上：当前作物，下：已放置） -->
-						<div class="mobile-battle-right">
-							<div class="mb-right-top">
+						<!-- 右：输出信息 -->
+						<div class="sim-fs-right">
+							<div class="fs-right-top">
 								<div class="mb-name" x-text="simSelectedCell && simBoard[simSelectedCell]
 									? (itemsData.find(c => c.id === simBoard[simSelectedCell]?.cropId)?.name || '')
 									: '未选中'"></div>
@@ -1202,7 +1087,7 @@
 									<div class="mb-label">点击格子查看</div>
 								</template>
 							</div>
-							<div class="mb-right-bottom">
+							<div class="fs-right-bottom">
 								<div class="mb-label mb-0.5">已放置</div>
 								<div class="mb-total-big">
 									<span x-text="simRoundDamage"></span>
@@ -1676,7 +1561,6 @@ function farmCalculator() {
 			this.loadHistory();
 			this.loadStars();
 			
-			// 加载模拟布局
 			try {
 				const savedBoard = localStorage.getItem('farmSimLayout');
 				if (savedBoard) this.simBoard = JSON.parse(savedBoard);
@@ -2464,6 +2348,33 @@ function farmCalculator() {
 		simGap: 2,
 		simRangeScale: 10,
 		simMode: 'none',
+		simFullscreenOpen: false,
+		simPendingCell: null,
+
+		async openSimFullscreen() {
+			this.simFullscreenOpen = true;
+			document.body.style.overflow = 'hidden';
+			const overlay = document.querySelector('.sim-fs-overlay');
+			try {
+				if (overlay && overlay.requestFullscreen) await overlay.requestFullscreen();
+				if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape');
+			} catch (e) {}
+			this.$nextTick(() => {
+				if (this.simSelectedCell) {
+					const item = this.simBoard[this.simSelectedCell];
+					if (item) setTimeout(() => this.drawRangeCircle(this.simSelectedCell, item), 80);
+				}
+			});
+		},
+
+		closeSimFullscreen() {
+			this.simFullscreenOpen = false;
+			document.body.style.overflow = '';
+			try {
+				if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+				if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+			} catch (e) {}
+		},
 
 		getBattleImg(cropId) {
 			const battleId = cropId.replace(/^item_/, 'battle_');
@@ -2496,6 +2407,8 @@ function farmCalculator() {
 			if (this.simMode === 'edit') {
 				if (item) {
 					this.simSelectedCell = cellId;
+					this.simPendingCell = cellId;
+					// 回填重量与突变
 					this.weightInput = item.weight;
 					this.currentCrop = itemsData.find(c => c.id === item.cropId);
 					this.checkedTags.clear();
@@ -2506,6 +2419,11 @@ function farmCalculator() {
 					});
 					this.renderUnselectedTags();
 					this.drawRangeCircle(cellId, item);
+					// 自动退出全屏
+					this.closeSimFullscreen();
+					this.$nextTick(() => {
+						this.setupIntersectionObserver();
+					});
 				}
 				return;
 			}
@@ -2525,7 +2443,6 @@ function farmCalculator() {
 				return;
 			}
 
-			// 正常模式：点击格子
 			if (item) {
 				this.simSelectedCell = cellId;
 				this.drawRangeCircle(cellId, item);
@@ -2534,11 +2451,13 @@ function farmCalculator() {
 			}
 		},
 
-		saveSimEdit() {
-			if (this.simSelectedCell && this.simBoard[this.simSelectedCell]) {
-				const item = this.simBoard[this.simSelectedCell];
+		// 全屏外的“保存修改”
+		saveSimEditFromPage() {
+			if (this.simPendingCell && this.simBoard[this.simPendingCell]) {
+				const item = this.simBoard[this.simPendingCell];
 				item.weight = parseFloat(this.weightInput) || item.weight;
 				item.tags = this.selectedTags.map(t => t.id);
+				this.simPendingCell = null;
 				this.simSelectedCell = null;
 				this.clearRangeCircle();
 				this.calcSim();
@@ -2576,49 +2495,49 @@ function farmCalculator() {
 			const crop = itemsData.find(c => c.id === item.cropId);
 			if (!crop?.combat) return;
 
-			const isMobile = window.matchMedia('(max-width: 768px)').matches;
+			const isFs = this.simFullscreenOpen;
+			const svgId = isFs ? 'simSvgFullscreen' : 'simSvg';
+			const containerSelector = isFs ? '.sim-fs-center .sim-container' : '.sim-container';
+			const cellSelector = isFs
+				? `[data-id="${cellId.replace('top_', 'fs_top_').replace('bottom_', 'fs_bottom_')}"]`
+				: `[data-id="${cellId}"]`;
 
-			if (isMobile) {
-				const svg = document.getElementById('simSvgMobile');
-				const container = document.querySelector('.mobile-battle-center .sim-container');
-				const cellEl = document.querySelector(`[data-id="m_${cellId}"]`);
-				if (!svg || !container || !cellEl) return;
+			const container = document.querySelector(containerSelector);
+			const svg = document.getElementById(svgId);
+			if (!svg || !container) return;
 
-				// offsetLeft/offsetTop 不受 rotate 影响，直接得到布局坐标
+			const cellEl = document.querySelector(cellSelector);
+			if (!cellEl) return;
+
+			let cx, cy;
+			if (isFs) {
+				// 全屏容器被 rotate(90deg)，用 offset 计算
 				let el = cellEl;
-				let cx = el.offsetWidth / 2;
-				let cy = el.offsetHeight / 2;
+				cx = el.offsetWidth / 2;
+				cy = el.offsetHeight / 2;
 				while (el && el !== container) {
 					cx += el.offsetLeft;
 					cy += el.offsetTop;
 					el = el.offsetParent;
 				}
-				const finalCx = cx + 500;
-				const finalCy = cy + 500;
-				const r = (crop.combat.rangeRadius || 0) * this.simRangeScale;
-				svg.innerHTML = `<circle cx="${finalCx}" cy="${finalCy}" r="${r}" class="sim-range-circle"></circle>`;
 			} else {
-				const svg = document.getElementById('simSvg');
-				const container = document.querySelector('.sim-container');
-				const cellEl = document.querySelector(`[data-id="${cellId}"]`);
-				if (!svg || !container || !cellEl) return;
-
 				const containerRect = container.getBoundingClientRect();
 				const cellRect = cellEl.getBoundingClientRect();
-				const cx = (cellRect.left + cellRect.width / 2) - containerRect.left;
-				const cy = (cellRect.top + cellRect.height / 2) - containerRect.top;
-				const finalCx = cx + 500;
-				const finalCy = cy + 500;
-				const r = (crop.combat.rangeRadius || 0) * this.simRangeScale;
-				svg.innerHTML = `<circle cx="${finalCx}" cy="${finalCy}" r="${r}" class="sim-range-circle"></circle>`;
+				cx = (cellRect.left + cellRect.width / 2) - containerRect.left;
+				cy = (cellRect.top + cellRect.height / 2) - containerRect.top;
 			}
+
+			const finalCx = cx + 500;
+			const finalCy = cy + 500;
+			const r = (crop.combat.rangeRadius || 0) * this.simRangeScale;
+			svg.innerHTML = `<circle cx="${finalCx}" cy="${finalCy}" r="${r}" class="sim-range-circle"></circle>`;
 		},
 
 		clearRangeCircle() {
 			const svg = document.getElementById('simSvg');
-			const svgMobile = document.getElementById('simSvgMobile');
+			const svgFs = document.getElementById('simSvgFullscreen');
 			if (svg) svg.innerHTML = '';
-			if (svgMobile) svgMobile.innerHTML = '';
+			if (svgFs) svgFs.innerHTML = '';
 		},
 
 		getSimCellDamage(cellId, type) {

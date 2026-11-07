@@ -481,64 +481,118 @@
 			}
 		}
 
-		/* 全屏模拟容器，使用 fixed 和 transform 强制横屏 */
-		.sim-fullscreen-container {
+		/* ========== 移动端全屏（王者荣耀式强制横屏） ========== */
+		.sim-fs-overlay {
 			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100vw;
-			height: 100vh;
-			background: #0f172a;
-			z-index: 9999;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			overflow: hidden;
-		}
-		.sim-fullscreen-inner {
-			position: relative;
-			width: 100vh; /* 宽高互换 */
-			height: 100vw;
-			transform: rotate(90deg);
-			transform-origin: center center;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			background: #fefef7;
-			overflow: hidden;
-		}
-		.sim-fullscreen-content {
-			position: absolute;
 			inset: 0;
+			z-index: 9999;
+			background: #0b1020;
 			display: flex;
-			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			padding: 0.5rem;
-			overflow: auto;
+			overflow: hidden;
 		}
-		.sim-fullscreen-toolbar {
+
+		/* 强制横屏：宽高互换 + 旋转90度 */
+		.sim-fs-rotate {
 			position: absolute;
-			top: 0.5rem;
-			right: 0.5rem;
+			top: 50%;
+			left: 50%;
+			width: 100vh;   /* 横屏后宽 = 原高 */
+			height: 100vw;  /* 横屏后高 = 原宽 */
+			transform: translate(-50%, -50%) rotate(90deg);
+			transform-origin: center center;
+			background: #fefef7;
 			display: flex;
-			gap: 0.5rem;
-			z-index: 100;
+			flex-direction: row;
+			overflow: hidden;
 		}
-		.sim-fullscreen-toolbar button {
-			padding: 0.4rem 0.8rem;
-			border-radius: 0.5rem;
-			font-size: 0.9rem;
+
+		/* 左：按钮栏（从上到下） */
+		.sim-fs-left {
+			width: 96px;
+			flex-shrink: 0;
+			background: #1e1b4b;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 6px;
+			padding: 8px 6px;
+			overflow-y: auto;
+		}
+		.sim-fs-left button {
+			width: 100%;
+			padding: 6px 4px;
+			border-radius: 8px;
+			font-size: 12px;
 			font-weight: 600;
 			border: none;
 			cursor: pointer;
-			transition: all 0.2s;
+			line-height: 1.2;
 		}
-		/* 全屏内的模拟网格稍大 */
-		.sim-grid-fullscreen {
-			grid-template-columns: repeat(8, 56px) !important;
-			grid-template-rows: repeat(4, 56px) !important;
+		.sim-fs-left .fs-exit {
+			background: #f43f5e;
+			color: #fff;
+		}
+		.sim-fs-left .fs-place { background: #6366f1; color: #fff; }
+		.sim-fs-left .fs-delete { background: #f43f5e; color: #fff; }
+		.sim-fs-left .fs-edit { background: #f59e0b; color: #fff; }
+		.sim-fs-left .fs-save { background: #10b981; color: #fff; }
+		.sim-fs-left .fs-save-layout { background: #64748b; color: #fff; }
+		.sim-fs-left .fs-clear { background: #475569; color: #fff; }
+		.sim-fs-left button:disabled { opacity: .4; cursor: not-allowed; }
+
+		/* 中：模拟布局 */
+		.sim-fs-center {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: auto;
+			padding: 8px;
+		}
+
+		/* 右：伤害信息（上：作物，下：全场） */
+		.sim-fs-right {
+			width: 150px;
+			flex-shrink: 0;
+			background: #f1f5f9;
+			display: flex;
+			flex-direction: column;
+			border-left: 2px solid #cbd5e1;
+		}
+		.sim-fs-right .fs-right-top {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: 8px;
+			border-bottom: 2px dashed #cbd5e1;
+		}
+		.sim-fs-right .fs-right-bottom {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: 8px;
+		}
+
+		/* 全屏内网格尺寸 */
+		.sim-fs-center .sim-grid {
+			grid-template-columns: repeat(8, 40px);
+			grid-template-rows: repeat(4, 40px);
+		}
+		.sim-fs-center .sim-path {
+			height: 32px;
+			margin: 0 -1.5rem;
+			width: calc(100% + 3rem);
+		}
+		.sim-fs-center .sim-container {
+			padding: 1.5rem;
 		}
 	</style>
 </head>
@@ -666,7 +720,7 @@
 					<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
 						<span>星标作物</span>
 					</div>
-					<div class="flex flex-wrap gap-3 justify-center">
+						<div class="flex flex-wrap gap-3 justify-center">
 						<template x-for="crop in starredCrops" :key="'star_' + crop.id">
 							<button @click="selectCrop(crop)"
 									class="starred-crop-item flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-amber-50/70 hover:bg-amber-50 border border-amber-200/60">
@@ -946,10 +1000,10 @@
 						输出推演(施工中)
 					</div>
 					<div class="flex flex-wrap gap-2 items-center">
-						<!-- 手机端战斗布局按钮，桌面端隐藏 -->
+						<!-- 手机端进入战斗布局按钮，桌面端隐藏 -->
 						<button @click="openSimFullscreen()" class="sim-fullscreen-btn px-3 py-1.5 bg-indigo-500 text-white rounded-full text-xs font-bold shadow hover:bg-indigo-600 transition items-center gap-1">
 							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-							战斗布局
+							进入战斗布局
 						</button>
 						<!-- 桌面端操作按钮（手机端隐藏，因为手机端全屏内操作） -->
 						<div class="hidden md:flex flex-wrap gap-2">
@@ -1051,103 +1105,106 @@
 				</div>
 			</div>
 
-			<!-- ========== 移动端全屏模拟区域（通过按钮打开） ========== -->
-			<div x-show="simFullscreenOpen" x-transition.opacity.duration.300ms style="display: none;">
-				<!-- 全屏容器，横屏强制显示 -->
-				<div class="sim-fullscreen-container" @keydown.escape.window="closeSimFullscreen()">
-					<div class="sim-fullscreen-inner">
-						<div class="sim-fullscreen-content">
-							<!-- 顶部工具栏 -->
-							<div class="sim-fullscreen-toolbar">
-								<button @click="closeSimFullscreen()" class="bg-gray-800 text-white hover:bg-gray-700 shadow-lg">退出</button>
-							</div>
-							<!-- 与主界面相同的模拟网格，共享 simBoard 数据 -->
-							<div class="flex flex-col items-center gap-3 w-full max-w-4xl">
-								<!-- 模式按钮行 -->
-								<div class="flex flex-wrap gap-2 justify-center">
-									<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'" class="px-3 py-1.5 rounded-lg text-sm transition">放置</button>
-									<button @click="toggleSimMode('delete')" :class="simMode === 'delete' ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-700 hover:bg-rose-200'" class="px-3 py-1.5 rounded-lg text-sm transition">铲除</button>
-									<button @click="toggleSimMode('edit')" :class="simMode === 'edit' ? 'bg-amber-500 text-white' : 'bg-amber-100 text-amber-700 hover:bg-amber-200'" class="px-3 py-1.5 rounded-lg text-sm transition">修改</button>
-									<button x-show="simMode === 'edit' && simSelectedCell" @click="saveSimEdit()" class="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-sm hover:bg-emerald-200 transition border border-emerald-300">保存修改</button>
-									<button @click="saveSimLayout()" class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 transition border border-gray-300">保存布局</button>
-									<button @click="clearSimLayout()" class="px-3 py-1.5 bg-white border border-gray-300 text-gray-500 rounded-lg text-sm hover:bg-gray-50 transition">清空战场</button>
-								</div>
-								<!-- 操作提示 -->
-								<div class="text-sm font-bold" 
-									 x-show="simMode !== 'none'"
-									 :class="{
-										 'text-indigo-500': simMode === 'place',
-										 'text-rose-500': simMode === 'delete',
-										 'text-orange-500': simMode === 'edit'
-									 }">
-									<span x-show="simMode === 'place'">放置模式：点击空格子放入作物</span>
-									<span x-show="simMode === 'delete'">铲除模式：点击作物铲除</span>
-									<span x-show="simMode === 'edit'">修改模式：点击作物回填数据</span>
-								</div>
+			<!-- ========== 移动端全屏模拟区域（王者荣耀式强制横屏） ========== -->
+			<div x-show="simFullscreenOpen" style="display:none;">
+				<div class="sim-fs-overlay">
+					<div class="sim-fs-rotate">
 
-								<!-- 战场网格（与主界面相同结构，但这里是大尺寸，操作更舒适） -->
-								<div class="bg-[#8fbf68] p-4 rounded-2xl shadow-2xl" style="transform: scale(1);">
-									<div class="sim-container relative" style="padding: 2rem;">
-										<!-- 全屏专用 SVG，id 不同，但绘制逻辑与桌面端一致 -->
-										<svg class="sim-svg-overlay" id="simSvgFullscreen" xmlns="http://www.w3.org/2000/svg" style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index: 999;"></svg>
-										<!-- 上方网格 -->
-										<div class="sim-board-wrapper relative z-10">
-											<div class="sim-grid sim-grid-fullscreen">
-												<template x-for="i in 32" :key="'fs_top_'+i">
-													<div class="sim-cell" :data-id="'fs_top_' + i" :class="{'selected': simSelectedCell === 'top_' + i}" 
-														draggable="true" 
-														@dragstart="handleDragStart($event, 'top_' + i)" 
-														@dragover.prevent 
-														@drop="handleDrop($event, 'top_' + i)" 
-														@click="handleCellClick('top_' + i)">
-														<template x-if="simBoard['top_' + i]">
-															<img :src="getBattleImg(simBoard['top_' + i].cropId)" alt="">
-														</template>
-													</div>
+						<!-- 左：操作按钮栏（从上到下） -->
+						<div class="sim-fs-left">
+							<button class="fs-exit" @click="closeSimFullscreen()">✕ 退出</button>
+							<button class="fs-place" :style="simMode==='place' ? 'outline:2px solid #fff;' : ''" @click="toggleSimMode('place')">放置</button>
+							<button class="fs-delete" :style="simMode==='delete' ? 'outline:2px solid #fff;' : ''" @click="toggleSimMode('delete')">铲除</button>
+							<button class="fs-edit" :style="simMode==='edit' ? 'outline:2px solid #fff;' : ''" @click="toggleSimMode('edit')">修改</button>
+							<button class="fs-save" :disabled="!(simMode==='edit' && simSelectedCell)" @click="saveSimEdit()">保存修改</button>
+							<button class="fs-save-layout" @click="saveSimLayout()">保存布局</button>
+							<button class="fs-clear" @click="clearSimLayout()">清空战场</button>
+						</div>
+
+						<!-- 中：模拟布局 -->
+						<div class="sim-fs-center">
+							<div class="sim-container relative" style="padding:1.5rem;">
+								<svg class="sim-svg-overlay" id="simSvgFullscreen" xmlns="http://www.w3.org/2000/svg"
+									style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index:999;"></svg>
+
+								<!-- 上方网格 -->
+								<div class="sim-board-wrapper relative z-10">
+									<div class="sim-grid">
+										<template x-for="i in 32" :key="'fs_top_'+i">
+											<div class="sim-cell" :data-id="'fs_top_' + i"
+												:class="{'selected': simSelectedCell === 'top_' + i}"
+												@click="handleCellClick('top_' + i)">
+												<template x-if="simBoard['top_' + i]">
+													<img :src="getBattleImg(simBoard['top_' + i].cropId)" alt="">
 												</template>
 											</div>
-										</div>
-										<div class="sim-path relative z-10" style="height: 48px; margin: 0 -2rem;"></div>
-										<!-- 下方网格 -->
-										<div class="sim-board-wrapper relative z-10">
-											<div class="sim-grid sim-grid-fullscreen">
-												<template x-for="i in 32" :key="'fs_bottom_'+i">
-													<div class="sim-cell" :data-id="'fs_bottom_' + i" :class="{'selected': simSelectedCell === 'bottom_' + i}" 
-														draggable="true" 
-														@dragstart="handleDragStart($event, 'bottom_' + i)" 
-														@dragover.prevent 
-														@drop="handleDrop($event, 'bottom_' + i)" 
-														@click="handleCellClick('bottom_' + i)">
-														<template x-if="simBoard['bottom_' + i]">
-															<img :src="getBattleImg(simBoard['bottom_' + i].cropId)" alt="">
-														</template>
-													</div>
-												</template>
-											</div>
-										</div>
+										</template>
 									</div>
 								</div>
 
-								<!-- 伤害信息面板（可简略显示） -->
-								<div class="mt-2 flex border border-indigo-200 rounded-lg overflow-hidden text-sm w-full max-w-lg">
-									<div x-show="simSelectedCell && simBoard[simSelectedCell]" class="flex-1 bg-indigo-50 border-r border-indigo-200 p-2 flex flex-col justify-center items-center text-center">
-										<div class="text-xs font-bold text-indigo-800 truncate w-full" x-text="itemsData.find(c => c.id === simBoard[simSelectedCell]?.cropId)?.name || ''"></div>
-										<div class="text-base font-extrabold text-indigo-600"><span x-text="getSimCellDamage(simSelectedCell, 'round')"></span><span class="text-[0.6rem] text-gray-500">/ 波</span></div>
-									</div>
-									<div x-show="!simSelectedCell || !simBoard[simSelectedCell]" class="flex-1 bg-indigo-50/50 border-r border-indigo-200 p-2 flex items-center justify-center text-xs text-indigo-400">
-										点击格子查看
-									</div>
-									<div class="flex-1 bg-white p-2 flex flex-col justify-center items-center text-center">
-										<div class="text-xs font-bold text-gray-700">全场</div>
-										<div class="text-base font-extrabold text-rose-600"><span x-text="simRoundDamage"></span><span class="text-[0.6rem] text-gray-500">/ 波</span></div>
+								<!-- 中间路径 -->
+								<div class="sim-path relative z-10"></div>
+
+								<!-- 下方网格 -->
+								<div class="sim-board-wrapper relative z-10">
+									<div class="sim-grid">
+										<template x-for="i in 32" :key="'fs_bottom_'+i">
+											<div class="sim-cell" :data-id="'fs_bottom_' + i"
+												:class="{'selected': simSelectedCell === 'bottom_' + i}"
+												@click="handleCellClick('bottom_' + i)">
+												<template x-if="simBoard['bottom_' + i]">
+													<img :src="getBattleImg(simBoard['bottom_' + i].cropId)" alt="">
+												</template>
+											</div>
+										</template>
 									</div>
 								</div>
 							</div>
 						</div>
+
+						<!-- 右：伤害信息（上：对应作物，下：已放置） -->
+						<div class="sim-fs-right">
+							<!-- 上部分：选中格子的作物 -->
+							<div class="fs-right-top">
+								<div class="text-[11px] font-bold text-indigo-700 mb-1 truncate w-full"
+									x-text="simSelectedCell && simBoard[simSelectedCell]
+										? (itemsData.find(c => c.id === simBoard[simSelectedCell]?.cropId)?.name || '')
+										: '未选中'"></div>
+
+								<template x-if="simSelectedCell && simBoard[simSelectedCell]">
+									<div>
+										<div class="text-lg font-extrabold text-indigo-600 leading-tight">
+											<span x-text="getSimCellDamage(simSelectedCell, 'round')"></span>
+											<span class="text-[10px] text-gray-500 font-normal">/ 波</span>
+										</div>
+										<div class="text-sm font-bold text-indigo-500 mt-1">
+											<span x-text="getSimCellDamage(simSelectedCell, 'total')"></span>
+											<span class="text-[10px] text-gray-500 font-normal">/ 场</span>
+										</div>
+									</div>
+								</template>
+								<template x-if="!(simSelectedCell && simBoard[simSelectedCell])">
+									<div class="text-[11px] text-indigo-400">点击格子查看</div>
+								</template>
+							</div>
+
+							<!-- 下部分：全场已放置总伤害 -->
+							<div class="fs-right-bottom">
+								<div class="text-[11px] font-bold text-gray-700 mb-1">已放置</div>
+								<div class="text-lg font-extrabold text-rose-600 leading-tight">
+									<span x-text="simRoundDamage"></span>
+									<span class="text-[10px] text-gray-500 font-normal">/ 波</span>
+								</div>
+								<div class="text-sm font-bold text-rose-500 mt-1">
+									<span x-text="simTotalDamage"></span>
+									<span class="text-[10px] text-gray-500 font-normal">/ 场</span>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
-			<!-- ========== 全屏模拟区域结束 ========== -->
 
 		</div>
 	</div>
@@ -2396,18 +2453,29 @@ function farmCalculator() {
 		simMode: 'none',
 		simFullscreenOpen: false,
 
-		openSimFullscreen() {
+		async openSimFullscreen() {
 			this.simFullscreenOpen = true;
 			document.body.style.overflow = 'hidden';
+
+			// 尝试进入全屏并锁定横屏（无视自动旋转）
+			const overlay = document.querySelector('.sim-fs-overlay');
+			try {
+				if (overlay && overlay.requestFullscreen) {
+					await overlay.requestFullscreen();
+				}
+				if (screen.orientation && screen.orientation.lock) {
+					await screen.orientation.lock('landscape');
+				}
+			} catch (e) {
+				console.warn('全屏/横屏锁定失败（不影响布局显示）', e);
+			}
+
+			// 重新绘制范围圈
 			this.$nextTick(() => {
-				// 如果之前有选中的格子，重新在全屏中绘制范围圈
 				if (this.simSelectedCell) {
 					const item = this.simBoard[this.simSelectedCell];
 					if (item) {
-						// 延迟一点确保全屏 DOM 已渲染
-						setTimeout(() => {
-							this.drawRangeCircle(this.simSelectedCell, item);
-						}, 50);
+						setTimeout(() => this.drawRangeCircle(this.simSelectedCell, item), 80);
 					}
 				}
 			});
@@ -2416,6 +2484,14 @@ function farmCalculator() {
 		closeSimFullscreen() {
 			this.simFullscreenOpen = false;
 			document.body.style.overflow = '';
+			try {
+				if (document.fullscreenElement && document.exitFullscreen) {
+					document.exitFullscreen();
+				}
+				if (screen.orientation && screen.orientation.unlock) {
+					screen.orientation.unlock();
+				}
+			} catch (e) {}
 		},
 
 		getBattleImg(cropId) {
@@ -2528,16 +2604,14 @@ function farmCalculator() {
 			this.clearRangeCircle();
 			const crop = itemsData.find(c => c.id === item.cropId);
 			if (!crop?.combat) return;
-			
-			// 根据是否全屏选择对应的 SVG 和容器
+
 			const isFs = this.simFullscreenOpen;
 			const svgId = isFs ? 'simSvgFullscreen' : 'simSvg';
-			const containerSelector = isFs ? '.sim-fullscreen-content .sim-container' : '.sim-container';
-			// 全屏中 cell id 需要加前缀 fs_
-			const cellSelector = isFs 
-				? `[data-id="${cellId.replace('top_', 'fs_top_').replace('bottom_', 'fs_bottom_')}"]` 
+			const containerSelector = isFs ? '.sim-fs-center .sim-container' : '.sim-container';
+			const cellSelector = isFs
+				? `[data-id="${cellId.replace('top_', 'fs_top_').replace('bottom_', 'fs_bottom_')}"]`
 				: `[data-id="${cellId}"]`;
-			
+
 			const container = document.querySelector(containerSelector);
 			const svg = document.getElementById(svgId);
 			if (!svg || !container) return;
@@ -2545,19 +2619,29 @@ function farmCalculator() {
 			const cellEl = document.querySelector(cellSelector);
 			if (!cellEl) return;
 
-			const containerRect = container.getBoundingClientRect();
-			const cellRect = cellEl.getBoundingClientRect();
+			let cx, cy;
+			if (isFs) {
+				// 全屏容器被 rotate(90deg)，getBoundingClientRect 返回旋转后的轴对齐矩形，
+				// 与 SVG 内部坐标系不符。改用 offsetLeft/offsetTop（布局坐标，不受 transform 影响）。
+				let el = cellEl;
+				cx = el.offsetWidth / 2;
+				cy = el.offsetHeight / 2;
+				while (el && el !== container) {
+					cx += el.offsetLeft;
+					cy += el.offsetTop;
+					el = el.offsetParent;
+				}
+			} else {
+				const containerRect = container.getBoundingClientRect();
+				const cellRect = cellEl.getBoundingClientRect();
+				cx = (cellRect.left + cellRect.width / 2) - containerRect.left;
+				cy = (cellRect.top + cellRect.height / 2) - containerRect.top;
+			}
 
-			// 计算格子中心相对于容器的坐标
-			const cx = (cellRect.left + cellRect.width / 2) - containerRect.left;
-			const cy = (cellRect.top + cellRect.height / 2) - containerRect.top;
-
-			// SVG 的 viewBox 偏移了 -500px，所以坐标需要加 500
+			// SVG 的坐标偏移了 -500px，所以加 500
 			const finalCx = cx + 500;
 			const finalCy = cy + 500;
-			
-			const rangeVal = crop.combat.rangeRadius || 0;
-			const r = rangeVal * this.simRangeScale;
+			const r = (crop.combat.rangeRadius || 0) * this.simRangeScale;
 
 			svg.innerHTML = `<circle cx="${finalCx}" cy="${finalCy}" r="${r}" class="sim-range-circle"></circle>`;
 		},

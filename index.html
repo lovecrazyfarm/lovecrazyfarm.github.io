@@ -467,41 +467,33 @@
 		.btn-outline.border-gray-200 { border-color: #e5e7eb !important; }
 		.btn-outline.border-indigo-100 { border-color: #e0e7ff !important; }
 
-		/* ========== 手机端内嵌横屏战斗布局 ========== */
-		.mobile-battle-wrapper {
-			display: none; /* 桌面端隐藏 */
-		}
+		/* ========== 手机端：页面内平铺的“横屏形态”战斗区 ========== */
+		.mobile-battle-wrapper { display: none; }
 
 		@media (max-width: 768px) {
-			/* 隐藏桌面端的战场与输出面板 */
+			/* 隐藏桌面端战场 */
 			.sim-desktop-area { display: none !important; }
-			/* 隐藏桌面端的操作按钮行和提示（手机端用旋转区内的按钮） */
 			.sim-desktop-toolbar { display: none !important; }
 
-			/* 手机端内嵌横屏战斗布局 */
+			/* 外层占位：宽=视口宽，高=视口宽（旋转后内容高度） */
 			.mobile-battle-wrapper {
 				display: block !important;
 				position: relative;
 				width: 100%;
-				/* 旋转前容器宽=视口高（横屏后的宽），高=视口宽（横屏后的高）。
-				   但在页面流中，我们用 height = 100vw 来占位，宽度用视口宽。
-				   为了让旋转后的内容完整落在视口宽度内，外层做一个固定视口宽、视口高的占位。
-				   由于页面本身有 padding，这里用负 margin 撑满。 */
 				margin-left: calc(-1 * (100vw - 100%) / 2);
 				margin-right: calc(-1 * (100vw - 100%) / 2);
-				height: 100vw; /* 旋转后内容的高度 = 原宽度 */
+				height: 100vw;
 				overflow: hidden;
 				background: #0b1020;
-				border-radius: 0;
 			}
 
+			/* 旋转容器：宽高互换 + rotate(90deg)，与全屏内完全一致 */
 			.mobile-battle-rotate {
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				/* 宽 = 视口高（横屏后宽），高 = 视口宽（横屏后高） */
-				width: 100vh;
-				height: 100vw;
+				width: 100vh;   /* 横屏后的宽 = 视口高 */
+				height: 100vw;  /* 横屏后的高 = 视口宽 */
 				transform: translate(-50%, -50%) rotate(90deg);
 				transform-origin: center center;
 				background: #fefef7;
@@ -510,7 +502,7 @@
 				overflow: hidden;
 			}
 
-			/* 左：按钮栏（从上到下） */
+			/* 左：竖排按钮栏（与全屏内完全一致） */
 			.mobile-battle-left {
 				width: 96px;
 				flex-shrink: 0;
@@ -544,7 +536,7 @@
 				outline-offset: -2px;
 			}
 
-			/* 中：战场 */
+			/* 中：战场（与全屏内一致） */
 			.mobile-battle-center {
 				flex: 1;
 				min-width: 0;
@@ -554,20 +546,8 @@
 				overflow: auto;
 				padding: 8px;
 			}
-			.mobile-battle-center .sim-container {
-				padding: 1.5rem;
-			}
-			.mobile-battle-center .sim-grid {
-				grid-template-columns: repeat(8, 44px);
-				grid-template-rows: repeat(4, 44px);
-			}
-			.mobile-battle-center .sim-path {
-				height: 36px;
-				margin: 0 -1.5rem;
-				width: calc(100% + 3rem);
-			}
 
-			/* 右：输出信息（上：当前作物，下：已放置） */
+			/* 右：输出信息（与全屏内一致：上作物 / 下已放置） */
 			.mobile-battle-right {
 				width: 150px;
 				flex-shrink: 0;
@@ -736,7 +716,7 @@
 
 			<div class="mb-6 pb-4 border-b border-blue-200">
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
-			
+
 				<!-- 手机端：版本按钮与“计算历史”同一行，计算历史贴右；桌面端保持原样 -->
 				<div class="flex flex-wrap items-center gap-3">
 					<!-- 版本按钮组：手机上占满可用宽度，允许内部换行 -->
@@ -749,8 +729,7 @@
 							</button>
 						</template>
 					</div>
-			
-					<!-- 计算历史：桌面端在 ml-auto 推到最右；手机端同样贴右，不单独占行 -->
+
 					<button @click="openHistory()" 
 							class="bg-indigo-50 text-indigo-600 px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm hover:bg-indigo-100 transition-all btn-outline flex items-center gap-1 border border-indigo-100 flex-shrink-0 ml-auto">
 						<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1146,7 +1125,7 @@
 					</div>
 				</div>
 
-				<!-- ========== 手机端内嵌横屏战斗布局 ========== -->
+				<!-- ========== 手机端：平铺的横屏形态战斗区（与全屏内一致） ========== -->
 				<div class="mobile-battle-wrapper">
 					<div class="mobile-battle-rotate">
 
@@ -1160,7 +1139,7 @@
 							<button class="mb-clear" @click="clearSimLayout()">清空战场</button>
 						</div>
 
-						<!-- 中：战场 -->
+						<!-- 中：战场（结构与全屏内完全一致） -->
 						<div class="mobile-battle-center">
 							<div class="sim-container relative" style="padding:1.5rem;">
 								<svg class="sim-svg-overlay" id="simSvgMobile" xmlns="http://www.w3.org/2000/svg"
@@ -1203,7 +1182,6 @@
 
 						<!-- 右：输出信息（上：当前作物，下：已放置） -->
 						<div class="mobile-battle-right">
-							<!-- 上部分 -->
 							<div class="mb-right-top">
 								<div class="mb-name" x-text="simSelectedCell && simBoard[simSelectedCell]
 									? (itemsData.find(c => c.id === simBoard[simSelectedCell]?.cropId)?.name || '')
@@ -1224,7 +1202,6 @@
 									<div class="mb-label">点击格子查看</div>
 								</template>
 							</div>
-							<!-- 下部分 -->
 							<div class="mb-right-bottom">
 								<div class="mb-label mb-0.5">已放置</div>
 								<div class="mb-total-big">
@@ -2479,8 +2456,8 @@ function farmCalculator() {
 		// ========== 实战模拟状态与方法 ==========
 		simBoard: {},
 		simSelectedCell: null,
-		simSeconds: 30,
-		simRounds: 10,
+		simSeconds: 80,
+		simRounds: 15,
 		simRoundDamage: '0',
 		simTotalDamage: 0,
 		simCellSize: 48,
@@ -2599,7 +2576,6 @@ function farmCalculator() {
 			const crop = itemsData.find(c => c.id === item.cropId);
 			if (!crop?.combat) return;
 
-			// 手机端用 mobile-battle-center 内的 SVG 和 m_ 前缀单元格；桌面端用 simSvg 和普通单元格
 			const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 			if (isMobile) {
@@ -2608,7 +2584,7 @@ function farmCalculator() {
 				const cellEl = document.querySelector(`[data-id="m_${cellId}"]`);
 				if (!svg || !container || !cellEl) return;
 
-				// 用 offsetLeft/offsetTop 相对容器计算（不受 rotate 影响）
+				// offsetLeft/offsetTop 不受 rotate 影响，直接得到布局坐标
 				let el = cellEl;
 				let cx = el.offsetWidth / 2;
 				let cy = el.offsetHeight / 2;

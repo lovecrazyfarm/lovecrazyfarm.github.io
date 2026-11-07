@@ -403,7 +403,7 @@
 		.btn-outline.border-gray-200 { border-color: #e5e7eb !important; }
 		.btn-outline.border-indigo-100 { border-color: #e0e7ff !important; }
 
-		/* ========== 手机端全屏战斗布局（强制横屏） ========== */
+		/* ========== 手机端全屏战斗布局（强制横屏，自动缩放铺满） ========== */
 		@media (max-width: 768px) {
 			.sim-desktop-area { display: none !important; }
 			.sim-desktop-toolbar { display: none !important; }
@@ -434,22 +434,23 @@
 			overflow: hidden;
 		}
 
+		/* 左：按钮栏 */
 		.sim-fs-left {
-			width: 96px;
+			width: 88px;
 			flex-shrink: 0;
 			background: #1e1b4b;
 			display: flex;
 			flex-direction: column;
 			align-items: stretch;
-			gap: 6px;
-			padding: 8px 6px;
+			gap: 5px;
+			padding: 6px 4px;
 			overflow-y: auto;
 		}
 		.sim-fs-left button {
 			width: 100%;
-			padding: 6px 4px;
-			border-radius: 8px;
-			font-size: 12px;
+			padding: 5px 3px;
+			border-radius: 7px;
+			font-size: 11px;
 			font-weight: 600;
 			border: none;
 			cursor: pointer;
@@ -464,18 +465,43 @@
 		.sim-fs-left button:disabled { opacity: .4; cursor: not-allowed; }
 		.sim-fs-left button.active-mode { outline: 2px solid #fff; outline-offset: -2px; }
 
+		/* 中：战场——自动缩放，不滚动 */
 		.sim-fs-center {
 			flex: 1;
 			min-width: 0;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			overflow: auto;
-			padding: 8px;
+			overflow: hidden;
+			padding: 4px;
+		}
+		.sim-fs-center .sim-stage {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.sim-fs-center .sim-scaler {
+			transform-origin: center center;
+		}
+		.sim-fs-center .sim-grid {
+			grid-template-columns: repeat(8, 48px);
+			grid-template-rows: repeat(4, 48px);
+		}
+		.sim-fs-center .sim-path {
+			height: 40px;
+			margin: 0 -2rem;
+			width: calc(100% + 4rem);
+		}
+		.sim-fs-center .sim-container {
+			padding: 2rem;
 		}
 
+		/* 右：输出信息 */
 		.sim-fs-right {
-			width: 150px;
+			width: 120px;
 			flex-shrink: 0;
 			background: #f1f5f9;
 			display: flex;
@@ -489,7 +515,7 @@
 			align-items: center;
 			justify-content: center;
 			text-align: center;
-			padding: 8px;
+			padding: 6px;
 			border-bottom: 2px dashed #cbd5e1;
 		}
 		.sim-fs-right .fs-right-bottom {
@@ -499,23 +525,23 @@
 			align-items: center;
 			justify-content: center;
 			text-align: center;
-			padding: 8px;
+			padding: 6px;
 		}
 		.sim-fs-right .mb-name {
-			font-size: 12px;
+			font-size: 11px;
 			font-weight: 700;
 			color: #4338ca;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			width: 100%;
-			margin-bottom: 4px;
+			margin-bottom: 3px;
 		}
-		.sim-fs-right .mb-big { font-size: 18px; font-weight: 800; color: #4f46e5; line-height: 1.1; }
-		.sim-fs-right .mb-small { font-size: 14px; font-weight: 700; color: #6366f1; line-height: 1.2; }
-		.sim-fs-right .mb-label { font-size: 11px; color: #64748b; font-weight: 500; }
-		.sim-fs-right .mb-total-big { font-size: 18px; font-weight: 800; color: #e11d48; line-height: 1.1; }
-		.sim-fs-right .mb-total-small { font-size: 14px; font-weight: 700; color: #f43f5e; line-height: 1.2; }
+		.sim-fs-right .mb-big { font-size: 16px; font-weight: 800; color: #4f46e5; line-height: 1.1; }
+		.sim-fs-right .mb-small { font-size: 12px; font-weight: 700; color: #6366f1; line-height: 1.2; }
+		.sim-fs-right .mb-label { font-size: 10px; color: #64748b; font-weight: 500; }
+		.sim-fs-right .mb-total-big { font-size: 16px; font-weight: 800; color: #e11d48; line-height: 1.1; }
+		.sim-fs-right .mb-total-small { font-size: 12px; font-weight: 700; color: #f43f5e; line-height: 1.2; }
 	</style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-6">
@@ -917,13 +943,12 @@
 
 			<!-- ========== 实战模拟区域（仅攻击作物） ========== -->
 			<div x-show="selectedCropId !== null && currentCrop?.combat" x-transition class="w-full mt-2 border-t border-indigo-100 pt-4 relative">
-				<!-- 标题 + 桌面端工具栏（手机端隐藏这个容器） -->
+				<!-- 标题 + 桌面端工具栏 -->
 				<div class="flex flex-wrap items-center justify-between gap-2 mb-3 sim-desktop-toolbar">
 					<div class="text-sm font-bold text-indigo-700 flex items-center gap-2">
-						输出推演(长期施工中)
+						输出推演(施工中)
 					</div>
 					<div class="flex flex-wrap gap-2 items-center">
-						<!-- 桌面端操作按钮 -->
 						<div class="hidden md:flex flex-wrap gap-2">
 							<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'" class="px-2 py-1 rounded text-xs transition">放置</button>
 							<button @click="toggleSimMode('delete')" :class="simMode === 'delete' ? 'bg-rose-500 text-white' : 'bg-rose-50 text-rose-600 hover:bg-rose-100'" class="px-2 py-1 rounded text-xs transition">铲除</button>
@@ -935,9 +960,9 @@
 					</div>
 				</div>
 
-				<!-- 手机端：进入战斗布局（独立于 sim-desktop-toolbar，所以不会被隐藏） -->
+				<!-- 手机端：进入战斗布局 -->
 				<div class="md:hidden flex items-center justify-between gap-2 mb-3">
-					<div class="text-sm font-bold text-indigo-700">输出推演(长期施工中)</div>
+					<div class="text-sm font-bold text-indigo-700">输出推演(施工中)</div>
 					<button @click="openSimFullscreen()"
 							class="px-3 py-1.5 bg-indigo-500 text-white rounded-full text-xs font-bold shadow hover:bg-indigo-600 transition inline-flex items-center gap-1">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
@@ -945,7 +970,7 @@
 					</button>
 				</div>
 
-				<!-- 全屏外“保存修改”按钮（手机端可见，桌面端也在工具栏里有） -->
+				<!-- 手机端：全屏外保存修改 -->
 				<div x-show="simPendingCell" class="md:hidden mb-2">
 					<button @click="saveSimEditFromPage()" class="w-full px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-semibold hover:bg-emerald-100 transition border border-emerald-200">
 						保存修改到战场
@@ -1031,12 +1056,12 @@
 				</div>
 			</div>
 
-			<!-- ========== 手机端全屏战斗布局（强制横屏） ========== -->
+			<!-- ========== 手机端全屏战斗布局（强制横屏，自动缩放铺满） ========== -->
 			<div x-show="simFullscreenOpen" style="display:none;">
 				<div class="sim-fs-overlay">
 					<div class="sim-fs-rotate">
 
-						<!-- 左：按钮栏（不含保存修改） -->
+						<!-- 左：按钮栏 -->
 						<div class="sim-fs-left">
 							<button class="fs-exit" @click="closeSimFullscreen()">✕ 退出</button>
 							<button class="fs-place" :class="{'active-mode': simMode==='place'}" @click="toggleSimMode('place')">放置</button>
@@ -1046,39 +1071,43 @@
 							<button class="fs-clear" @click="clearSimLayout()">清空战场</button>
 						</div>
 
-						<!-- 中：战场 -->
+						<!-- 中：战场（自动缩放，不滚动） -->
 						<div class="sim-fs-center">
-							<div class="sim-container relative" style="padding:1.5rem;">
-								<svg class="sim-svg-overlay" id="simSvgFullscreen" xmlns="http://www.w3.org/2000/svg"
-									style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index:999;"></svg>
+							<div class="sim-stage">
+								<div class="sim-scaler" id="simFsScaler">
+									<div class="sim-container relative" style="padding:2rem;">
+										<svg class="sim-svg-overlay" id="simSvgFullscreen" xmlns="http://www.w3.org/2000/svg"
+											style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index:999;"></svg>
 
-								<div class="sim-board-wrapper relative z-10">
-									<div class="sim-grid">
-										<template x-for="i in 32" :key="'fs_top_'+i">
-											<div class="sim-cell" :data-id="'fs_top_' + i"
-												:class="{'selected': simSelectedCell === 'top_' + i}"
-												@click="handleCellClick('top_' + i)">
-												<template x-if="simBoard['top_' + i]">
-													<img :src="getBattleImg(simBoard['top_' + i].cropId)" alt="">
+										<div class="sim-board-wrapper relative z-10">
+											<div class="sim-grid">
+												<template x-for="i in 32" :key="'fs_top_'+i">
+													<div class="sim-cell" :data-id="'fs_top_' + i"
+														:class="{'selected': simSelectedCell === 'top_' + i}"
+														@click="handleCellClick('top_' + i)">
+														<template x-if="simBoard['top_' + i]">
+															<img :src="getBattleImg(simBoard['top_' + i].cropId)" alt="">
+														</template>
+													</div>
 												</template>
 											</div>
-										</template>
-									</div>
-								</div>
+										</div>
 
-								<div class="sim-path relative z-10"></div>
+										<div class="sim-path relative z-10"></div>
 
-								<div class="sim-board-wrapper relative z-10">
-									<div class="sim-grid">
-										<template x-for="i in 32" :key="'fs_bottom_'+i">
-											<div class="sim-cell" :data-id="'fs_bottom_' + i"
-												:class="{'selected': simSelectedCell === 'bottom_' + i}"
-												@click="handleCellClick('bottom_' + i)">
-												<template x-if="simBoard['bottom_' + i]">
-													<img :src="getBattleImg(simBoard['bottom_' + i].cropId)" alt="">
+										<div class="sim-board-wrapper relative z-10">
+											<div class="sim-grid">
+												<template x-for="i in 32" :key="'fs_bottom_'+i">
+													<div class="sim-cell" :data-id="'fs_bottom_' + i"
+														:class="{'selected': simSelectedCell === 'bottom_' + i}"
+														@click="handleCellClick('bottom_' + i)">
+														<template x-if="simBoard['bottom_' + i]">
+															<img :src="getBattleImg(simBoard['bottom_' + i].cropId)" alt="">
+														</template>
+													</div>
 												</template>
 											</div>
-										</template>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1608,6 +1637,10 @@ function farmCalculator() {
 				if (savedBoard) this.simBoard = JSON.parse(savedBoard);
 			} catch(e) {}
 			this.calcSim();
+
+			window.addEventListener('resize', () => {
+				if (this.simFullscreenOpen) this.fitSimFullscreenScale();
+			});
 			
 			itemsData.forEach(crop => {
 				const img = new Image();
@@ -2402,6 +2435,7 @@ function farmCalculator() {
 				if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape');
 			} catch (e) {}
 			this.$nextTick(() => {
+				this.fitSimFullscreenScale();
 				if (this.simSelectedCell) {
 					const item = this.simBoard[this.simSelectedCell];
 					if (item) setTimeout(() => this.drawRangeCircle(this.simSelectedCell, item), 80);
@@ -2416,6 +2450,27 @@ function farmCalculator() {
 				if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
 				if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
 			} catch (e) {}
+		},
+
+		fitSimFullscreenScale() {
+			this.$nextTick(() => {
+				const stage = document.querySelector('.sim-fs-center .sim-stage');
+				const scaler = document.getElementById('simFsScaler');
+				if (!stage || !scaler) return;
+
+				scaler.style.transform = 'scale(1)';
+				const stageRect = stage.getBoundingClientRect();
+				const contentRect = scaler.getBoundingClientRect();
+
+				if (contentRect.width === 0 || contentRect.height === 0) return;
+
+				const scale = Math.min(
+					stageRect.width / contentRect.width,
+					stageRect.height / contentRect.height,
+					1
+				);
+				scaler.style.transform = `scale(${scale})`;
+			});
 		},
 
 		getBattleImg(cropId) {
@@ -2450,6 +2505,7 @@ function farmCalculator() {
 				if (item) {
 					this.simSelectedCell = cellId;
 					this.simPendingCell = cellId;
+
 					// 回填重量与突变
 					this.weightInput = item.weight;
 					this.currentCrop = itemsData.find(c => c.id === item.cropId);
@@ -2460,12 +2516,18 @@ function farmCalculator() {
 						if (this.checkedTags.has(tid)) this.checkedTags.set(tid, true);
 					});
 					this.renderUnselectedTags();
-					this.drawRangeCircle(cellId, item);
-					// 自动退出全屏
-					this.closeSimFullscreen();
-					this.$nextTick(() => {
-						this.setupIntersectionObserver();
-					});
+
+					// 立即退出全屏（同步设置状态，确保 UI 马上切换）
+					this.simFullscreenOpen = false;
+					document.body.style.overflow = '';
+					try {
+						if (document.fullscreenElement && document.exitFullscreen) {
+							document.exitFullscreen();
+						}
+						if (screen.orientation && screen.orientation.unlock) {
+							screen.orientation.unlock();
+						}
+					} catch (e) {}
 				}
 				return;
 			}

@@ -457,7 +457,7 @@ const levelConfigs = {
 };
 */
 const categories = [
-	{ id: 'cat_putong', name: '≤ 2026.11.07' },
+	{ id: 'cat_putong', name: '经济作物' },
 	{ id: 'cat_attack', name: '攻击作物' },
 ];
 

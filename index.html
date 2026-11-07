@@ -467,154 +467,173 @@
 		.btn-outline.border-gray-200 { border-color: #e5e7eb !important; }
 		.btn-outline.border-indigo-100 { border-color: #e0e7ff !important; }
 
-		/* ========== 手机端三栏平铺布局 ========== */
-		.mobile-battle-layout {
-			display: none;
+		/* ========== 手机端内嵌横屏战斗布局 ========== */
+		.mobile-battle-wrapper {
+			display: none; /* 桌面端隐藏 */
 		}
+
 		@media (max-width: 768px) {
-			/* 手机端隐藏桌面端的战场与输出面板 */
+			/* 隐藏桌面端的战场与输出面板 */
 			.sim-desktop-area { display: none !important; }
-			/* 显示手机端三栏布局 */
-			.mobile-battle-layout {
-				display: flex !important;
+			/* 隐藏桌面端的操作按钮行和提示（手机端用旋转区内的按钮） */
+			.sim-desktop-toolbar { display: none !important; }
+
+			/* 手机端内嵌横屏战斗布局 */
+			.mobile-battle-wrapper {
+				display: block !important;
+				position: relative;
+				width: 100%;
+				/* 旋转前容器宽=视口高（横屏后的宽），高=视口宽（横屏后的高）。
+				   但在页面流中，我们用 height = 100vw 来占位，宽度用视口宽。
+				   为了让旋转后的内容完整落在视口宽度内，外层做一个固定视口宽、视口高的占位。
+				   由于页面本身有 padding，这里用负 margin 撑满。 */
+				margin-left: calc(-1 * (100vw - 100%) / 2);
+				margin-right: calc(-1 * (100vw - 100%) / 2);
+				height: 100vw; /* 旋转后内容的高度 = 原宽度 */
+				overflow: hidden;
+				background: #0b1020;
+				border-radius: 0;
+			}
+
+			.mobile-battle-rotate {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				/* 宽 = 视口高（横屏后宽），高 = 视口宽（横屏后高） */
+				width: 100vh;
+				height: 100vw;
+				transform: translate(-50%, -50%) rotate(90deg);
+				transform-origin: center center;
+				background: #fefef7;
+				display: flex;
 				flex-direction: row;
+				overflow: hidden;
+			}
+
+			/* 左：按钮栏（从上到下） */
+			.mobile-battle-left {
+				width: 96px;
+				flex-shrink: 0;
+				background: #1e1b4b;
+				display: flex;
+				flex-direction: column;
 				align-items: stretch;
 				gap: 6px;
-				width: 100%;
-				margin-top: 8px;
+				padding: 8px 6px;
+				overflow-y: auto;
 			}
-		}
+			.mobile-battle-left button {
+				width: 100%;
+				padding: 6px 4px;
+				border-radius: 8px;
+				font-size: 12px;
+				font-weight: 600;
+				border: none;
+				cursor: pointer;
+				line-height: 1.2;
+			}
+			.mobile-battle-left .mb-place { background: #6366f1; color: #fff; }
+			.mobile-battle-left .mb-delete { background: #f43f5e; color: #fff; }
+			.mobile-battle-left .mb-edit { background: #f59e0b; color: #fff; }
+			.mobile-battle-left .mb-save { background: #10b981; color: #fff; }
+			.mobile-battle-left .mb-save-layout { background: #64748b; color: #fff; }
+			.mobile-battle-left .mb-clear { background: #475569; color: #fff; }
+			.mobile-battle-left button:disabled { opacity: .4; cursor: not-allowed; }
+			.mobile-battle-left button.active-mode {
+				outline: 2px solid #fff;
+				outline-offset: -2px;
+			}
 
-		/* 左栏按钮 */
-		.mobile-battle-left {
-			width: 88px;
-			flex-shrink: 0;
-			display: flex;
-			flex-direction: column;
-			gap: 5px;
-		}
-		.mobile-battle-left button {
-			width: 100%;
-			padding: 6px 4px;
-			border-radius: 8px;
-			font-size: 11px;
-			font-weight: 600;
-			border: none;
-			cursor: pointer;
-			line-height: 1.2;
-			color: #fff;
-		}
-		.mobile-battle-left .mb-place { background: #6366f1; }
-		.mobile-battle-left .mb-delete { background: #f43f5e; }
-		.mobile-battle-left .mb-edit { background: #f59e0b; }
-		.mobile-battle-left .mb-save { background: #10b981; }
-		.mobile-battle-left .mb-save-layout { background: #64748b; }
-		.mobile-battle-left .mb-clear { background: #475569; }
-		.mobile-battle-left button:disabled { opacity: .4; cursor: not-allowed; }
-		.mobile-battle-left button.active-mode {
-			outline: 2px solid #fff;
-			outline-offset: -2px;
-		}
+			/* 中：战场 */
+			.mobile-battle-center {
+				flex: 1;
+				min-width: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				overflow: auto;
+				padding: 8px;
+			}
+			.mobile-battle-center .sim-container {
+				padding: 1.5rem;
+			}
+			.mobile-battle-center .sim-grid {
+				grid-template-columns: repeat(8, 44px);
+				grid-template-rows: repeat(4, 44px);
+			}
+			.mobile-battle-center .sim-path {
+				height: 36px;
+				margin: 0 -1.5rem;
+				width: calc(100% + 3rem);
+			}
 
-		/* 中栏战场 */
-		.mobile-battle-center {
-			flex: 1;
-			min-width: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			overflow: auto;
-			background: #8fbf68;
-			border-radius: 8px;
-			padding: 4px;
-		}
-		.mobile-battle-center .sim-container {
-			padding: 1rem;
-		}
-		.mobile-battle-center .sim-grid {
-			grid-template-columns: repeat(8, 34px);
-			grid-template-rows: repeat(4, 34px);
-		}
-		.mobile-battle-center .sim-path {
-			height: 28px;
-			margin: 0 -1rem;
-			width: calc(100% + 2rem);
-		}
-		.mobile-battle-center .sim-cell img {
-			width: 80%;
-			height: 80%;
-		}
-
-		/* 右栏输出信息 */
-		.mobile-battle-right {
-			width: 92px;
-			flex-shrink: 0;
-			display: flex;
-			flex-direction: column;
-			border: 1px solid #c7d2fe;
-			border-radius: 8px;
-			overflow: hidden;
-			background: #fff;
-		}
-		.mobile-battle-right .mb-right-top {
-			flex: 1;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			text-align: center;
-			padding: 4px;
-			background: #eef2ff;
-			border-bottom: 1px dashed #c7d2fe;
-		}
-		.mobile-battle-right .mb-right-bottom {
-			flex: 1;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			text-align: center;
-			padding: 4px;
-			background: #fff;
-		}
-		.mobile-battle-right .mb-name {
-			font-size: 10px;
-			font-weight: 700;
-			color: #4338ca;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			width: 100%;
-			margin-bottom: 2px;
-		}
-		.mobile-battle-right .mb-big {
-			font-size: 14px;
-			font-weight: 800;
-			color: #4f46e5;
-			line-height: 1.1;
-		}
-		.mobile-battle-right .mb-small {
-			font-size: 11px;
-			font-weight: 700;
-			color: #6366f1;
-			line-height: 1.2;
-		}
-		.mobile-battle-right .mb-label {
-			font-size: 10px;
-			color: #64748b;
-			font-weight: 500;
-		}
-		.mobile-battle-right .mb-total-big {
-			font-size: 14px;
-			font-weight: 800;
-			color: #e11d48;
-			line-height: 1.1;
-		}
-		.mobile-battle-right .mb-total-small {
-			font-size: 11px;
-			font-weight: 700;
-			color: #f43f5e;
-			line-height: 1.2;
+			/* 右：输出信息（上：当前作物，下：已放置） */
+			.mobile-battle-right {
+				width: 150px;
+				flex-shrink: 0;
+				background: #f1f5f9;
+				display: flex;
+				flex-direction: column;
+				border-left: 2px solid #cbd5e1;
+			}
+			.mobile-battle-right .mb-right-top {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				padding: 8px;
+				border-bottom: 2px dashed #cbd5e1;
+			}
+			.mobile-battle-right .mb-right-bottom {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				padding: 8px;
+			}
+			.mobile-battle-right .mb-name {
+				font-size: 12px;
+				font-weight: 700;
+				color: #4338ca;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 100%;
+				margin-bottom: 4px;
+			}
+			.mobile-battle-right .mb-big {
+				font-size: 18px;
+				font-weight: 800;
+				color: #4f46e5;
+				line-height: 1.1;
+			}
+			.mobile-battle-right .mb-small {
+				font-size: 14px;
+				font-weight: 700;
+				color: #6366f1;
+				line-height: 1.2;
+			}
+			.mobile-battle-right .mb-label {
+				font-size: 11px;
+				color: #64748b;
+				font-weight: 500;
+			}
+			.mobile-battle-right .mb-total-big {
+				font-size: 18px;
+				font-weight: 800;
+				color: #e11d48;
+				line-height: 1.1;
+			}
+			.mobile-battle-right .mb-total-small {
+				font-size: 14px;
+				font-weight: 700;
+				color: #f43f5e;
+				line-height: 1.2;
+			}
 		}
 	</style>
 </head>
@@ -717,17 +736,23 @@
 
 			<div class="mb-6 pb-4 border-b border-blue-200">
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
-				<div class="flex flex-wrap items-center gap-3">
-					<template x-for="cat in categories" :key="cat.id">
-						<button @click="selectCategory(cat.id)" 
-								:class="(selectedCategory === cat.id && selectedCropId === null) ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
-								class="px-5 py-2.5 rounded-full font-bold text-sm transition-all btn-outline hover:scale-105">
-							<span x-text="(selectedCropId !== null && cat.id === selectedCategory) ? '返回作物选择' : cat.name"></span>
-						</button>
-						</template>
 			
+				<!-- 手机端：版本按钮与“计算历史”同一行，计算历史贴右；桌面端保持原样 -->
+				<div class="flex flex-wrap items-center gap-3">
+					<!-- 版本按钮组：手机上占满可用宽度，允许内部换行 -->
+					<div class="flex flex-wrap items-center gap-3 flex-1 min-w-0">
+						<template x-for="cat in categories" :key="cat.id">
+							<button @click="selectCategory(cat.id)" 
+									:class="(selectedCategory === cat.id && selectedCropId === null) ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
+									class="px-5 py-2.5 rounded-full font-bold text-sm transition-all btn-outline hover:scale-105">
+								<span x-text="(selectedCropId !== null && cat.id === selectedCategory) ? '返回作物选择' : cat.name"></span>
+							</button>
+						</template>
+					</div>
+			
+					<!-- 计算历史：桌面端在 ml-auto 推到最右；手机端同样贴右，不单独占行 -->
 					<button @click="openHistory()" 
-							class="bg-indigo-50 text-indigo-600 px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm hover:bg-indigo-100 transition-all btn-outline flex items-center gap-1 border border-indigo-100 ml-auto">
+							class="bg-indigo-50 text-indigo-600 px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm hover:bg-indigo-100 transition-all btn-outline flex items-center gap-1 border border-indigo-100 flex-shrink-0 ml-auto">
 						<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 						</svg>
@@ -742,7 +767,7 @@
 					<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
 						<span>星标作物</span>
 					</div>
-						<div class="flex flex-wrap gap-3 justify-center">
+					<div class="flex flex-wrap gap-3 justify-center">
 						<template x-for="crop in starredCrops" :key="'star_' + crop.id">
 							<button @click="selectCrop(crop)"
 									class="starred-crop-item flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-amber-50/70 hover:bg-amber-50 border border-amber-200/60">
@@ -1017,11 +1042,11 @@
 
 			<!-- ========== 实战模拟区域（仅攻击作物） ========== -->
 			<div x-show="selectedCropId !== null && currentCrop?.combat" x-transition class="w-full mt-2 border-t border-indigo-100 pt-4 relative">
-				<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+				<div class="flex flex-wrap items-center justify-between gap-2 mb-3 sim-desktop-toolbar">
 					<div class="text-sm font-bold text-indigo-700 flex items-center gap-2">
 						输出推演(施工中)
 					</div>
-					<!-- 桌面端操作按钮（手机端隐藏） -->
+					<!-- 桌面端操作按钮 -->
 					<div class="hidden md:flex flex-wrap gap-2">
 						<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'" class="px-2 py-1 rounded text-xs transition">放置</button>
 						<button @click="toggleSimMode('delete')" :class="simMode === 'delete' ? 'bg-rose-500 text-white' : 'bg-rose-50 text-rose-600 hover:bg-rose-100'" class="px-2 py-1 rounded text-xs transition">铲除</button>
@@ -1032,7 +1057,7 @@
 					</div>
 				</div>
 
-				<!-- 桌面端操作提示（手机端隐藏） -->
+				<!-- 桌面端操作提示 -->
 				<div class="hidden md:block text-xs mb-2 font-bold" 
 					 x-show="simMode !== 'none'"
 					 :class="{
@@ -1045,7 +1070,7 @@
 					<span x-show="simMode === 'edit'">已开启修改模式：点击战场上的作物，可在上方输入框修改其重量与突变，并点击「保存修改」。</span>
 				</div>
 
-				<!-- ========== 桌面端战场与输出（手机端隐藏） ========== -->
+				<!-- ========== 桌面端战场与输出 ========== -->
 				<div class="sim-desktop-area">
 					<div class="w-full flex justify-center bg-[#8fbf68] rounded-xl overflow-visible relative" @click.self="clearSelection()">
 						<div class="sim-container relative">
@@ -1121,94 +1146,98 @@
 					</div>
 				</div>
 
-				<!-- ========== 手机端三栏平铺布局（桌面端隐藏） ========== -->
-				<div class="mobile-battle-layout">
-					<!-- 左：竖排按钮 -->
-					<div class="mobile-battle-left">
-						<button class="mb-place" :class="{'active-mode': simMode==='place'}" @click="toggleSimMode('place')">放置</button>
-						<button class="mb-delete" :class="{'active-mode': simMode==='delete'}" @click="toggleSimMode('delete')">铲除</button>
-						<button class="mb-edit" :class="{'active-mode': simMode==='edit'}" @click="toggleSimMode('edit')">修改</button>
-						<button class="mb-save" :disabled="!(simMode==='edit' && simSelectedCell)" @click="saveSimEdit()">保存修改</button>
-						<button class="mb-save-layout" @click="saveSimLayout()">保存布局</button>
-						<button class="mb-clear" @click="clearSimLayout()">清空战场</button>
-					</div>
+				<!-- ========== 手机端内嵌横屏战斗布局 ========== -->
+				<div class="mobile-battle-wrapper">
+					<div class="mobile-battle-rotate">
 
-					<!-- 中：战场 -->
-					<div class="mobile-battle-center">
-						<div class="sim-container relative" style="padding:1rem;">
-							<svg class="sim-svg-overlay" id="simSvgMobile" xmlns="http://www.w3.org/2000/svg"
-								style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index:999;"></svg>
-
-							<!-- 上方网格 -->
-							<div class="sim-board-wrapper relative z-10">
-								<div class="sim-grid">
-									<template x-for="i in 32" :key="'m_top_'+i">
-										<div class="sim-cell" :data-id="'m_top_' + i"
-											:class="{'selected': simSelectedCell === 'top_' + i}"
-											@click="handleCellClick('top_' + i)">
-											<template x-if="simBoard['top_' + i]">
-												<img :src="getBattleImg(simBoard['top_' + i].cropId)" alt="">
-											</template>
-										</div>
-									</template>
-								</div>
-							</div>
-
-							<!-- 中间路径 -->
-							<div class="sim-path relative z-10"></div>
-
-							<!-- 下方网格 -->
-							<div class="sim-board-wrapper relative z-10">
-								<div class="sim-grid">
-									<template x-for="i in 32" :key="'m_bottom_'+i">
-										<div class="sim-cell" :data-id="'m_bottom_' + i"
-											:class="{'selected': simSelectedCell === 'bottom_' + i}"
-											@click="handleCellClick('bottom_' + i)">
-											<template x-if="simBoard['bottom_' + i]">
-												<img :src="getBattleImg(simBoard['bottom_' + i].cropId)" alt="">
-											</template>
-										</div>
-									</template>
-								</div>
-							</div>
+						<!-- 左：竖排按钮 -->
+						<div class="mobile-battle-left">
+							<button class="mb-place" :class="{'active-mode': simMode==='place'}" @click="toggleSimMode('place')">放置</button>
+							<button class="mb-delete" :class="{'active-mode': simMode==='delete'}" @click="toggleSimMode('delete')">铲除</button>
+							<button class="mb-edit" :class="{'active-mode': simMode==='edit'}" @click="toggleSimMode('edit')">修改</button>
+							<button class="mb-save" :disabled="!(simMode==='edit' && simSelectedCell)" @click="saveSimEdit()">保存修改</button>
+							<button class="mb-save-layout" @click="saveSimLayout()">保存布局</button>
+							<button class="mb-clear" @click="clearSimLayout()">清空战场</button>
 						</div>
-					</div>
 
-					<!-- 右：输出信息（上：当前作物，下：已放置） -->
-					<div class="mobile-battle-right">
-						<!-- 上部分 -->
-						<div class="mb-right-top">
-							<div class="mb-name" x-text="simSelectedCell && simBoard[simSelectedCell]
-								? (itemsData.find(c => c.id === simBoard[simSelectedCell]?.cropId)?.name || '')
-								: '未选中'"></div>
-							<template x-if="simSelectedCell && simBoard[simSelectedCell]">
-								<div>
-									<div class="mb-big">
-										<span x-text="getSimCellDamage(simSelectedCell, 'round')"></span>
-										<span class="mb-label">/波</span>
-									</div>
-									<div class="mb-small mt-0.5">
-										<span x-text="getSimCellDamage(simSelectedCell, 'total')"></span>
-										<span class="mb-label">/场</span>
+						<!-- 中：战场 -->
+						<div class="mobile-battle-center">
+							<div class="sim-container relative" style="padding:1.5rem;">
+								<svg class="sim-svg-overlay" id="simSvgMobile" xmlns="http://www.w3.org/2000/svg"
+									style="position:absolute; top:-500px; left:-500px; width:calc(100% + 1000px); height:calc(100% + 1000px); pointer-events:none; z-index:999;"></svg>
+
+								<!-- 上方网格 -->
+								<div class="sim-board-wrapper relative z-10">
+									<div class="sim-grid">
+										<template x-for="i in 32" :key="'m_top_'+i">
+											<div class="sim-cell" :data-id="'m_top_' + i"
+												:class="{'selected': simSelectedCell === 'top_' + i}"
+												@click="handleCellClick('top_' + i)">
+												<template x-if="simBoard['top_' + i]">
+													<img :src="getBattleImg(simBoard['top_' + i].cropId)" alt="">
+												</template>
+											</div>
+										</template>
 									</div>
 								</div>
-							</template>
-							<template x-if="!(simSelectedCell && simBoard[simSelectedCell])">
-								<div class="mb-label">点击格子查看</div>
-							</template>
-						</div>
-						<!-- 下部分 -->
-						<div class="mb-right-bottom">
-							<div class="mb-label mb-0.5">已放置</div>
-							<div class="mb-total-big">
-								<span x-text="simRoundDamage"></span>
-								<span class="mb-label">/波</span>
+
+								<!-- 中间路径 -->
+								<div class="sim-path relative z-10"></div>
+
+								<!-- 下方网格 -->
+								<div class="sim-board-wrapper relative z-10">
+									<div class="sim-grid">
+										<template x-for="i in 32" :key="'m_bottom_'+i">
+											<div class="sim-cell" :data-id="'m_bottom_' + i"
+												:class="{'selected': simSelectedCell === 'bottom_' + i}"
+												@click="handleCellClick('bottom_' + i)">
+												<template x-if="simBoard['bottom_' + i]">
+													<img :src="getBattleImg(simBoard['bottom_' + i].cropId)" alt="">
+												</template>
+											</div>
+										</template>
+									</div>
+								</div>
 							</div>
-							<div class="mb-total-small mt-0.5">
-								<span x-text="simTotalDamage"></span>
-								<span class="mb-label">/场</span>
+						</div>
+
+						<!-- 右：输出信息（上：当前作物，下：已放置） -->
+						<div class="mobile-battle-right">
+							<!-- 上部分 -->
+							<div class="mb-right-top">
+								<div class="mb-name" x-text="simSelectedCell && simBoard[simSelectedCell]
+									? (itemsData.find(c => c.id === simBoard[simSelectedCell]?.cropId)?.name || '')
+									: '未选中'"></div>
+								<template x-if="simSelectedCell && simBoard[simSelectedCell]">
+									<div>
+										<div class="mb-big">
+											<span x-text="getSimCellDamage(simSelectedCell, 'round')"></span>
+											<span class="mb-label">/波</span>
+										</div>
+										<div class="mb-small mt-0.5">
+											<span x-text="getSimCellDamage(simSelectedCell, 'total')"></span>
+											<span class="mb-label">/场</span>
+										</div>
+									</div>
+								</template>
+								<template x-if="!(simSelectedCell && simBoard[simSelectedCell])">
+									<div class="mb-label">点击格子查看</div>
+								</template>
+							</div>
+							<!-- 下部分 -->
+							<div class="mb-right-bottom">
+								<div class="mb-label mb-0.5">已放置</div>
+								<div class="mb-total-big">
+									<span x-text="simRoundDamage"></span>
+									<span class="mb-label">/波</span>
+								</div>
+								<div class="mb-total-small mt-0.5">
+									<span x-text="simTotalDamage"></span>
+									<span class="mb-label">/场</span>
+								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
@@ -2450,8 +2479,8 @@ function farmCalculator() {
 		// ========== 实战模拟状态与方法 ==========
 		simBoard: {},
 		simSelectedCell: null,
-		simSeconds: 80,
-		simRounds: 15,
+		simSeconds: 30,
+		simRounds: 10,
 		simRoundDamage: '0',
 		simTotalDamage: 0,
 		simCellSize: 48,
@@ -2570,39 +2599,43 @@ function farmCalculator() {
 			const crop = itemsData.find(c => c.id === item.cropId);
 			if (!crop?.combat) return;
 
-			// 判断是桌面端还是手机端：桌面端 cell id 为 top_x/bottom_x，手机端也是 top_x/bottom_x（但 DOM 属性是 m_top_x）
-			// 由于手机端和桌面端同时存在（一个隐藏），需要根据视口宽度选择正确的 SVG 和单元格。
+			// 手机端用 mobile-battle-center 内的 SVG 和 m_ 前缀单元格；桌面端用 simSvg 和普通单元格
 			const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-			const svgId = isMobile ? 'simSvgMobile' : 'simSvg';
-			const containerSelector = isMobile ? '.mobile-battle-center .sim-container' : '.sim-container';
-			const cellSelector = isMobile
-				? `[data-id="m_${cellId}"]`
-				: `[data-id="${cellId}"]`;
+			if (isMobile) {
+				const svg = document.getElementById('simSvgMobile');
+				const container = document.querySelector('.mobile-battle-center .sim-container');
+				const cellEl = document.querySelector(`[data-id="m_${cellId}"]`);
+				if (!svg || !container || !cellEl) return;
 
-			const container = document.querySelector(containerSelector);
-			const svg = document.getElementById(svgId);
-			if (!svg || !container) return;
+				// 用 offsetLeft/offsetTop 相对容器计算（不受 rotate 影响）
+				let el = cellEl;
+				let cx = el.offsetWidth / 2;
+				let cy = el.offsetHeight / 2;
+				while (el && el !== container) {
+					cx += el.offsetLeft;
+					cy += el.offsetTop;
+					el = el.offsetParent;
+				}
+				const finalCx = cx + 500;
+				const finalCy = cy + 500;
+				const r = (crop.combat.rangeRadius || 0) * this.simRangeScale;
+				svg.innerHTML = `<circle cx="${finalCx}" cy="${finalCy}" r="${r}" class="sim-range-circle"></circle>`;
+			} else {
+				const svg = document.getElementById('simSvg');
+				const container = document.querySelector('.sim-container');
+				const cellEl = document.querySelector(`[data-id="${cellId}"]`);
+				if (!svg || !container || !cellEl) return;
 
-			const cellEl = document.querySelector(cellSelector);
-			if (!cellEl) return;
-
-			// 用 offsetLeft/offsetTop 相对容器计算，避免任何 transform 干扰
-			let cx, cy;
-			let el = cellEl;
-			cx = el.offsetWidth / 2;
-			cy = el.offsetHeight / 2;
-			while (el && el !== container) {
-				cx += el.offsetLeft;
-				cy += el.offsetTop;
-				el = el.offsetParent;
+				const containerRect = container.getBoundingClientRect();
+				const cellRect = cellEl.getBoundingClientRect();
+				const cx = (cellRect.left + cellRect.width / 2) - containerRect.left;
+				const cy = (cellRect.top + cellRect.height / 2) - containerRect.top;
+				const finalCx = cx + 500;
+				const finalCy = cy + 500;
+				const r = (crop.combat.rangeRadius || 0) * this.simRangeScale;
+				svg.innerHTML = `<circle cx="${finalCx}" cy="${finalCy}" r="${r}" class="sim-range-circle"></circle>`;
 			}
-
-			const finalCx = cx + 500;
-			const finalCy = cy + 500;
-			const r = (crop.combat.rangeRadius || 0) * this.simRangeScale;
-
-			svg.innerHTML = `<circle cx="${finalCx}" cy="${finalCy}" r="${r}" class="sim-range-circle"></circle>`;
 		},
 
 		clearRangeCircle() {

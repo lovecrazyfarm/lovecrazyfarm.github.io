@@ -404,12 +404,9 @@
 		.btn-outline.border-indigo-100 { border-color: #e0e7ff !important; }
 
 		/* ========== 手机端全屏战斗布局（强制横屏） ========== */
-		.sim-fullscreen-btn { display: none; }
-
 		@media (max-width: 768px) {
 			.sim-desktop-area { display: none !important; }
 			.sim-desktop-toolbar { display: none !important; }
-			.sim-fullscreen-btn { display: inline-flex !important; }
 		}
 
 		.sim-fs-overlay {
@@ -920,17 +917,12 @@
 
 			<!-- ========== 实战模拟区域（仅攻击作物） ========== -->
 			<div x-show="selectedCropId !== null && currentCrop?.combat" x-transition class="w-full mt-2 border-t border-indigo-100 pt-4 relative">
+				<!-- 标题 + 桌面端工具栏（手机端隐藏这个容器） -->
 				<div class="flex flex-wrap items-center justify-between gap-2 mb-3 sim-desktop-toolbar">
 					<div class="text-sm font-bold text-indigo-700 flex items-center gap-2">
-						输出推演(施工中)
+						输出推演(长期施工中)
 					</div>
 					<div class="flex flex-wrap gap-2 items-center">
-						<!-- 手机端进入战斗布局按钮 -->
-						<button @click="openSimFullscreen()" class="sim-fullscreen-btn px-3 py-1.5 bg-indigo-500 text-white rounded-full text-xs font-bold shadow hover:bg-indigo-600 transition items-center gap-1">
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-							进入战斗布局
-						</button>
-
 						<!-- 桌面端操作按钮 -->
 						<div class="hidden md:flex flex-wrap gap-2">
 							<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'" class="px-2 py-1 rounded text-xs transition">放置</button>
@@ -941,6 +933,23 @@
 							<button @click="clearSimLayout()" class="px-2 py-1 bg-white border border-gray-200 text-gray-500 rounded text-xs hover:bg-gray-50 transition">清空战场</button>
 						</div>
 					</div>
+				</div>
+
+				<!-- 手机端：进入战斗布局（独立于 sim-desktop-toolbar，所以不会被隐藏） -->
+				<div class="md:hidden flex items-center justify-between gap-2 mb-3">
+					<div class="text-sm font-bold text-indigo-700">输出推演(长期施工中)</div>
+					<button @click="openSimFullscreen()"
+							class="px-3 py-1.5 bg-indigo-500 text-white rounded-full text-xs font-bold shadow hover:bg-indigo-600 transition inline-flex items-center gap-1">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+						进入战斗布局
+					</button>
+				</div>
+
+				<!-- 全屏外“保存修改”按钮（手机端可见，桌面端也在工具栏里有） -->
+				<div x-show="simPendingCell" class="md:hidden mb-2">
+					<button @click="saveSimEditFromPage()" class="w-full px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-semibold hover:bg-emerald-100 transition border border-emerald-200">
+						保存修改到战场
+					</button>
 				</div>
 
 				<!-- 桌面端操作提示 -->
@@ -2544,7 +2553,6 @@ function farmCalculator() {
 
 			let cx, cy;
 			if (isFs) {
-				// 全屏容器被 rotate(90deg)，用 offset 计算
 				let el = cellEl;
 				cx = el.offsetWidth / 2;
 				cy = el.offsetHeight / 2;

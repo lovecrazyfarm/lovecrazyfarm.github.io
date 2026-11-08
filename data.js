@@ -381,21 +381,21 @@ const battleItemsData = [
 		}
 	},
 	{
-		id: 'item_yaoyaofengling', name: '摇摇风铃', basePrice: 0, maxWeight: 1.68, growthSpeed: 0,
+		id: 'item_yaoyaofengling', name: '摇摇风铃', basePrice: 0, maxWeight: 1.68, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 11,
 			baseCooldown: 4,
-			cooldownWeightBonus: 0.1,
+			cooldownWeightBonus: 0.196752,
 			attackType: 'single',
 			rangeRadius: 13.5,
 			story: '发射音符子弹。伤害值为最大生命值百分比',
-			attackPowerK: 0, attackPowerExp: 0,
+			attackPowerK: 6.59,  attackPowerExp: 2.6,
 		}
 	},
 	{
-		id: 'item_zhamaopupu', name: '炸毛蒲蒲', basePrice: 0, maxWeight: 1.47, growthSpeed: 0,
+		id: 'item_zhamaopupu', name: '炸毛蒲蒲', basePrice: 0, maxWeight: 1.47, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
 		combat: {
 			baseWeight: 1.05,
@@ -405,7 +405,7 @@ const battleItemsData = [
 			attackType: 'range',
 			rangeRadius: 12.5,
 			story: '收获触发爆炸',
-			attackPowerK: 0, attackPowerExp: 0,
+			attackPowerK: 532.954283,  attackPowerExp: 2.488798,
 		}
 	},
 	{
@@ -419,7 +419,7 @@ const battleItemsData = [
 			attackType: 'single',
 			rangeRadius: 8,
 			story: '使用藤蔓抽打前方敌人。面对面种植可形成绊索',
-			attackPowerK: 0, attackPowerExp: 0,
+			attackPowerK: 0.001, attackPowerExp: 0.001,
 		}
 	},
 	{
@@ -433,7 +433,7 @@ const battleItemsData = [
 			attackType: 'single',
 			rangeRadius: 6,
 			story: '给范围内一株作物提供攻击力&速度加成',
-			attackPowerK: 0, attackPowerExp: 0,
+			attackPowerK: 0.001, attackPowerExp: 0.001,
 		}
 	},
 ];

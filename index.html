@@ -11,7 +11,7 @@
 	<script src="data.js" defer></script>
 	<script src="modals.js" defer></script>
 	<script>
-		window.CHANGELOG_VERSION = '2026-11-07-1';
+		window.CHANGELOG_VERSION = '2026-11-08-1';
 	</script>
 	
 	<script src="tailwind-3.4.17.min.js"></script>
@@ -27,7 +27,6 @@
 		})();
 	</script>
 
-	
 	<script>
 		tailwind.config = {
 			theme: {
@@ -1468,6 +1467,13 @@ function farmCalculator() {
 				: Math.min(weight, maxW);
 				
 			const ratio = span > 0 ? (effective - baseW) / span : 0;
+
+			// 幂函数模型：attackPowerK × weight^attackPowerExp（实测拟合, 如委屈掌掌）
+			if (c.attackPowerK != null && c.attackPowerExp != null) {
+				return c.attackPowerK * Math.pow(effective, c.attackPowerExp);
+			}
+
+			// 线性模型：baseAttack × (1 + attackWeightBonus × ratio)
 			return c.baseAttack * (1 + (c.attackWeightBonus || 0) * ratio);
 		},
 
@@ -1506,7 +1512,7 @@ function farmCalculator() {
 		get formattedAttack() {
 			if (!this.currentCrop?.combat) return '—';
 			const total = Math.max(0, this.attackBaseWithWeight * (1 + this.attackRateSum));
-			const v = Math.floor(total);
+			const v = Math.round(total);
 			return v >= 10000 ? (v / 10000).toFixed(2) + '万' : v.toString();
 		},
 
@@ -1515,8 +1521,8 @@ function farmCalculator() {
 			if (this.currentCrop.combat.baseCooldown === -666) return '无';
 			let cd = this.cooldownBaseWithWeight * (1 + this.cooldownRateSum);
 			if (cd < 0.05) cd = 0.05;
-			const truncated = Math.floor(cd * 10) / 10;
-			return truncated.toFixed(1) + 's';
+			const rounded = Math.round(cd * 10) / 10;
+			return rounded.toFixed(1) + 's';
 		},
 
 		get formattedRange() {
@@ -1543,6 +1549,11 @@ function farmCalculator() {
 				: Math.min(weight, maxW);
 				
 			const ratio = span > 0 ? (effective - baseW) / span : 0;
+			if (c.attackPowerK != null && c.attackPowerExp != null) {
+				const v = Math.round(c.attackPowerK * Math.pow(effective, c.attackPowerExp) - c.baseAttack);
+				return v > 0 ? '+' + v : String(v);
+			}
+
 			const bonus = c.baseAttack * (c.attackWeightBonus || 0) * ratio;
 			return (bonus >= 0 ? '+' : '') + bonus.toFixed(0);
 		},
@@ -2668,8 +2679,8 @@ function farmCalculator() {
 			const hitsPerRound = Math.floor(this.simSeconds / cd) + 1;
 			const roundDmg = atk * hitsPerRound;
 			
-			if (type === 'round') return Math.floor(roundDmg).toLocaleString();
-			if (type === 'total') return Math.floor(roundDmg * this.simRounds).toLocaleString();
+			if (type === 'round') return Math.round(roundDmg).toLocaleString();
+			if (type === 'total') return Math.round(roundDmg * this.simRounds).toLocaleString();
 			return '0';
 		},
 
@@ -2691,8 +2702,8 @@ function farmCalculator() {
 					total += atk * hitsPerRound * this.simRounds;
 				}
 			}
-			this.simRoundDamage = Math.floor(perRound).toLocaleString();
-			this.simTotalDamage = Math.floor(total).toLocaleString();
+			this.simRoundDamage = Math.round(perRound).toLocaleString();
+			this.simTotalDamage = Math.round(total).toLocaleString();
 		},
 
 		calcAttackForSim(crop, weight, tagIds) {
@@ -2703,8 +2714,13 @@ function farmCalculator() {
 			const minW = maxW * 0.03;
 			const effective = Math.min(Math.max(weight, minW), maxW);
 			const ratio = span > 0 ? (effective - baseW) / span : 0;
-			
-			let atk = c.baseAttack * (1 + (c.attackWeightBonus || 0) * ratio);
+
+			let atk;
+			if (c.attackPowerK != null && c.attackPowerExp != null) {
+				atk = c.attackPowerK * Math.pow(effective, c.attackPowerExp);
+			} else {
+				atk = c.baseAttack * (1 + (c.attackWeightBonus || 0) * ratio);
+			}
 			let rate = 0;
 			tagIds.forEach(id => {
 				if (battleTagLibrary[id]?.combat?.attackRate) rate += battleTagLibrary[id].combat.attackRate;

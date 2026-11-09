@@ -787,7 +787,7 @@
 				<!-- 图片 + 信息 + 输入框: 手机分上下两部分(上=图片+价格/评级, 下=输入框), 桌面端保持三列 -->
 				<div class="p-4 pt-10 pb-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 order-1">
 					<!-- 上部分: 左图片 + 右价格/评级, 整体下移不挤占右上角星标按钮与左上角果王徽章; sm:contents 使桌面端拆回三列 -->
-					<div class="flex flex-row items-center justify-center gap-3 w-full sm:contents">
+					<div class="flex flex-row items-center justify-center gap-2 w-full sm:contents">
 					<div class="w-16 h-16 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden relative"
 						:style="currentCrop ? 'background:' + currentCrop.fillColor : 'background:#e5e7eb'">
 						<span class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-white"
@@ -809,7 +809,7 @@
 							<div class="text-3xl font-extrabold text-indigo-600 leading-tight" x-text="formattedPrice"></div>
 						</div>
 						<!-- 重量评级 + 介绍(仅攻击作物): 类似作战卡片的包裹式区域 — 上评级文本、下介绍按钮 -->
-						<div x-show="currentCrop?.combat" class="rating-region w-fit mx-auto sm:w-auto mt-1">
+						<div x-show="currentCrop?.combat" class="rating-region w-fit sm:w-auto mt-1">
 							<div class="rating-region-top">
 								<template x-if="weightRating">
 									<span :class="weightRatingClass"

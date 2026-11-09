@@ -337,7 +337,8 @@
 			color: #334155;
 			line-height: 1.45;
 		}
-		/* 评级 + 介绍 组合区域: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底) */
+		/* 评级 + 介绍 组合区域: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底)
+		   桌面端竖排(上评级下介绍); 手机端上部改横排 [字母|分隔线|按钮], 更紧凑平衡 */
 		.rating-region {
 			border: 1px solid #c7d2fe;
 			border-radius: 0.9rem;
@@ -346,6 +347,28 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+		}
+		.rating-region-top {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		.rating-divider { display: none; }
+		@media (max-width: 639.98px) {
+			.rating-region { padding: 0.3rem 0.7rem 0.35rem; }
+			.rating-region-top {
+				flex-direction: row;
+				align-items: center;
+				gap: 0.55rem;
+			}
+			.rating-divider {
+				display: block;
+				width: 1px;
+				height: 1.5rem;
+				background: #c7d2fe;
+				border-radius: 1px;
+				flex-shrink: 0;
+			}
 		}
 		
 		/* ========== 实战模拟样式 ========== */
@@ -787,14 +810,17 @@
 						</div>
 						<!-- 重量评级 + 介绍(仅攻击作物): 类似作战卡片的包裹式区域 — 上评级文本、下介绍按钮 -->
 						<div x-show="currentCrop?.combat" class="rating-region w-fit mx-auto sm:w-auto mt-1">
-							<template x-if="weightRating">
-								<span :class="weightRatingClass"
-									class="text-2xl font-black leading-none select-none"
-									x-text="weightRating"></span>
-							</template>
-							<button @click="toggleIntro()" class="mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.65rem] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors">
-								<span class="text-[0.6rem]" x-text="introOpen ? '▲' : '▼'"></span>
-							</button>
+							<div class="rating-region-top">
+								<template x-if="weightRating">
+									<span :class="weightRatingClass"
+										class="text-2xl font-black leading-none select-none"
+										x-text="weightRating"></span>
+								</template>
+								<span class="rating-divider" x-show="weightRating"></span>
+								<button @click="toggleIntro()" class="sm:mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.65rem] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+									<span class="text-[0.6rem]" x-text="introOpen ? '▲' : '▼'"></span>
+								</button>
+							</div>
 							<div x-show="introOpen" x-transition class="intro-pop">
 								<div class="font-semibold text-indigo-600 mb-0.5" x-text="currentCrop?.combat?.attackType === 'range' ? '范围攻击' : '单体攻击'"></div>
 								<div x-text="currentCrop?.combat?.story || '暂无介绍'"></div>

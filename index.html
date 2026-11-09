@@ -332,10 +332,7 @@
 		}
 		.intro-pop {
 			margin-top: 0.4rem;
-			background: #f8fafc;
-			border: 1px solid #c7d2fe;
-			border-radius: 0.6rem;
-			padding: 0.45rem 0.6rem;
+			padding: 0.1rem 0.4rem 0;
 			font-size: 0.7rem;
 			color: #334155;
 			line-height: 1.45;
@@ -789,7 +786,7 @@
 							<div class="text-3xl font-extrabold text-indigo-600 leading-tight" x-text="formattedPrice"></div>
 						</div>
 						<!-- 重量评级 + 介绍(仅攻击作物): 类似作战卡片的包裹式区域 — 上评级文本、下介绍按钮 -->
-						<div x-show="currentCrop?.combat" class="rating-region mt-1">
+						<div x-show="currentCrop?.combat" class="rating-region w-fit mx-auto sm:w-auto mt-1">
 							<template x-if="weightRating">
 								<span :class="weightRatingClass"
 									class="text-2xl font-black leading-none select-none"

@@ -764,8 +764,10 @@
 					</svg>
 				</button>
 
-				<!-- 图片 + 信息 + 输入框 -->
-				<div class="p-4 pb-2 flex flex-col sm:flex-row items-center justify-center gap-4 order-1">
+				<!-- 图片 + 信息 + 输入框: 手机分上下两部分(上=图片+价格/评级, 下=输入框), 桌面端保持三列 -->
+				<div class="p-4 pt-10 pb-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 order-1">
+					<!-- 上部分: 左图片 + 右价格/评级, 整体下移不挤占右上角星标按钮与左上角果王徽章; sm:contents 使桌面端拆回三列 -->
+					<div class="flex flex-row items-center justify-center gap-3 w-full sm:contents">
 					<div class="w-16 h-16 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden relative"
 						:style="currentCrop ? 'background:' + currentCrop.fillColor : 'background:#e5e7eb'">
 						<span class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-white"
@@ -779,7 +781,7 @@
 						</template>
 					</div>
 				
-					<div class="flex-shrink-0 min-w-0 text-left">
+					<div class="flex-1 sm:flex-none min-w-0 text-left">
 						<div class="text-base font-bold text-gray-800 truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></div>
 						
 						<div x-show="!currentCrop?.combat" class="flex items-center gap-0.5">
@@ -803,6 +805,8 @@
 						</div>
 					</div>
 				
+					</div>
+
 					<div class="flex-shrink-0 flex flex-col gap-2 w-full sm:w-44 order-4 sm:order-none mt-2 sm:mt-0">
 						<div class="flex flex-row items-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">重量</label>

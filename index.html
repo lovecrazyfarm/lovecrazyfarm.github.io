@@ -490,7 +490,7 @@
 		.sim-fs-left button {
 			width: 100%;
 			padding: 5px 3px;
-			border-radius: 7px;
+			border-radius: 24px;
 			font-size: 11px;
 			font-weight: 600;
 			border: none;
@@ -588,7 +588,7 @@
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-1 sm:p-6">
 
 <div x-data="farmCalculator()" x-init="init()" class="max-w-[950px] w-full mx-auto relative z-10">
-	<div class="rounded-2xl shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)] overflow-hidden">
+	<div class="rounded-3xl shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)] overflow-hidden">
 		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-5 px-7 text-center border-b border-white/20">
 			<div class="absolute inset-0 overflow-hidden pointer-events-none">
 				<div class="meteor" style="top: -10%; left: 10%; animation-delay: 0s;"></div>
@@ -651,17 +651,17 @@
 		
 		<div class="p-6 md:p-8 content-bg">
 			<div class="flex flex-wrap gap-2 mb-4">
-				<button @click="openModal('changelog'); markChangelogRead()" 
-						class="relative bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">
+				<button @click="openModal('changelog'); markChangelogRead()"
+						class="relative bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">
 					更新日志
 					<span x-show="hasUnreadChangelog" 
 						class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white animate-pulse"
 						style="display:none;"></span>
 				</button>
-				<button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">免责声明</button>
-				<button @click="openModal('contact')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">联系作者</button>
-				<button @click="openModal('originality')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">原创性声明</button>
-				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1.5">
+				<button @click="openModal('disclaimer')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">免责声明</button>
+				<button @click="openModal('contact')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">联系作者</button>
+				<button @click="openModal('originality')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline">原创性声明</button>
+				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1.5">
 					不烧心的提醒群
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 inline-block">
 						<style>
@@ -682,7 +682,7 @@
 					</svg>
 				</button>
 				<button @click="openModal('support')"
-						class="relative bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline inline-flex items-center">
+						class="relative bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline inline-flex items-center">
 					请我吃薯片
 					<img src="img/misc/shupian.png" alt="" style="position:absolute; width:48px; height:48px; border-radius:8px; object-fit:cover; right:-24px; top:60%; transform:translateY(-50%); pointer-events:none;">
 				</button>
@@ -696,14 +696,14 @@
 						<template x-for="cat in categories" :key="cat.id">
 							<button @click="selectCategory(cat.id)" 
 									:class="(selectedCategory === cat.id && selectedCropId === null) ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
-									class="px-5 py-2.5 rounded-full font-bold text-sm transition-all btn-outline hover:scale-105">
+									class="px-5 py-1.5 rounded-3xl font-bold text-sm transition-all btn-outline hover:scale-105">
 								<span x-text="(selectedCropId !== null && cat.id === selectedCategory) ? '返回作物选择' : cat.name"></span>
 							</button>
 						</template>
 					</div>
 
 					<button @click="openHistory()" 
-							class="bg-indigo-50 text-indigo-600 px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm hover:bg-indigo-100 transition-all btn-outline flex items-center gap-1 border border-indigo-100 flex-shrink-0 ml-auto">
+							class="bg-indigo-50 text-indigo-600 px-3.5 py-1.5 rounded-3xl text-xs font-semibold shadow-sm hover:bg-indigo-100 transition-all btn-outline flex items-center gap-1 border border-indigo-100 flex-shrink-0 ml-auto">
 						<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 						</svg>
@@ -721,7 +721,7 @@
 					<div class="flex flex-wrap gap-3 justify-center">
 						<template x-for="crop in starredCrops" :key="'star_' + crop.id">
 							<button @click="selectCrop(crop)"
-									class="starred-crop-item flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-amber-50/70 hover:bg-amber-50 border border-amber-200/60">
+									class="starred-crop-item flex flex-col items-center w-20 p-1.5 rounded-3xl transition-all hover:scale-105 hover:shadow-md bg-amber-50/70 hover:bg-amber-50 border border-amber-200/60">
 								<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
 									<img :src="'img/crops/' + crop.id + '.png'" loading="lazy" decoding="async"
 										:alt="crop.name"
@@ -752,7 +752,7 @@
 				<div class="flex flex-wrap gap-3 justify-center">
 					<template x-for="crop in filteredCrops" :key="crop.id">
 						<button @click="selectCrop(crop)"
-								class="flex flex-col items-center w-20 p-1.5 rounded-xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
+								class="flex flex-col items-center w-20 p-1.5 rounded-3xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
 							<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
 								<img :src="'img/crops/' + crop.id + '.png'" loading="lazy" decoding="async"
 									:alt="crop.name"
@@ -777,7 +777,7 @@
 				
 				<!-- 右上角星标按钮 -->
 				<button x-show="currentCrop" @click="toggleStar(currentCrop.id)"
-						class="star-btn absolute top-2.5 right-2.5 z-20 p-1 rounded-full bg-white/70 backdrop-blur-sm shadow-sm hover:bg-white"
+						class="star-btn absolute top-2.5 right-2.5 z-20 p-1 rounded-3xl bg-white/70 backdrop-blur-sm shadow-sm hover:bg-white"
 						:class="isStarred(currentCrop?.id) ? 'star-filled' : 'star-empty'"
 						:title="isStarred(currentCrop?.id) ? '取消星标' : '添加星标'">
 					<svg class="w-5 h-5" viewBox="0 0 24 24" :fill="isStarred(currentCrop?.id) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.8">
@@ -818,7 +818,7 @@
 										x-text="weightRating"></span>
 								</template>
 								<span class="rating-divider" x-show="weightRating"></span>
-								<button @click="toggleIntro()" class="sm:mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.65rem] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+								<button @click="toggleIntro()" class="sm:mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-3xl text-[0.65rem] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors">
 									<span class="text-[0.6rem]" x-text="introOpen ? '▲' : '▼'"></span>
 								</button>
 							</div>
@@ -1004,12 +1004,12 @@
 					</div>
 					<div class="flex flex-wrap gap-2 items-center">
 						<div class="hidden md:flex flex-wrap gap-2">
-							<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'" class="px-2 py-1 rounded text-xs transition">放置</button>
-							<button @click="toggleSimMode('delete')" :class="simMode === 'delete' ? 'bg-rose-500 text-white' : 'bg-rose-50 text-rose-600 hover:bg-rose-100'" class="px-2 py-1 rounded text-xs transition">铲除</button>
-							<button @click="toggleSimMode('edit')" :class="simMode === 'edit' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-600 hover:bg-amber-100'" class="px-2 py-1 rounded text-xs transition">修改</button>
-							<button x-show="simPendingCell" @click="saveSimEditFromPage()" class="px-2 py-1 bg-emerald-50 text-emerald-600 rounded text-xs hover:bg-emerald-100 transition border border-emerald-200">保存修改</button>
-							<button @click="saveSimLayout()" class="px-2 py-1 bg-gray-50 text-gray-700 rounded text-xs hover:bg-gray-200 transition border border-gray-200">保存布局</button>
-							<button @click="clearSimLayout()" class="px-2 py-1 bg-white border border-gray-200 text-gray-500 rounded text-xs hover:bg-gray-50 transition">清空战场</button>
+							<button @click="toggleSimMode('place')" :class="simMode === 'place' ? 'bg-indigo-500 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'" class="px-2 py-1 rounded-3xl text-xs transition">放置</button>
+							<button @click="toggleSimMode('delete')" :class="simMode === 'delete' ? 'bg-rose-500 text-white' : 'bg-rose-50 text-rose-600 hover:bg-rose-100'" class="px-2 py-1 rounded-3xl text-xs transition">铲除</button>
+							<button @click="toggleSimMode('edit')" :class="simMode === 'edit' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-600 hover:bg-amber-100'" class="px-2 py-1 rounded-3xl text-xs transition">修改</button>
+							<button x-show="simPendingCell" @click="saveSimEditFromPage()" class="px-2 py-1 bg-emerald-50 text-emerald-600 rounded-3xl text-xs hover:bg-emerald-100 transition border border-emerald-200">保存修改</button>
+							<button @click="saveSimLayout()" class="px-2 py-1 bg-gray-50 text-gray-700 rounded-3xl text-xs hover:bg-gray-200 transition border border-gray-200">保存布局</button>
+							<button @click="clearSimLayout()" class="px-2 py-1 bg-white border border-gray-200 text-gray-500 rounded-3xl text-xs hover:bg-gray-50 transition">清空战场</button>
 						</div>
 					</div>
 				</div>
@@ -1018,7 +1018,7 @@
 				<div class="md:hidden flex items-center justify-between gap-2 mb-3">
 					<div class="text-sm font-bold text-indigo-700">输出推演(长期施工中)</div>
 					<button @click="openSimFullscreen()"
-							class="px-3 py-1.5 bg-indigo-500 text-white rounded-full text-xs font-bold shadow hover:bg-indigo-600 transition inline-flex items-center gap-1">
+							class="px-3 py-1.5 bg-indigo-500 text-white rounded-3xl text-xs font-bold shadow hover:bg-indigo-600 transition inline-flex items-center gap-1">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
 						进入战斗布局
 					</button>
@@ -1026,7 +1026,7 @@
 
 				<!-- 手机端：全屏外保存修改 -->
 				<div x-show="simPendingCell" class="md:hidden mb-2">
-					<button @click="saveSimEditFromPage()" class="w-full px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-semibold hover:bg-emerald-100 transition border border-emerald-200">
+					<button @click="saveSimEditFromPage()" class="w-full px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-3xl text-xs font-semibold hover:bg-emerald-100 transition border border-emerald-200">
 						保存修改到战场
 					</button>
 				</div>
@@ -1209,7 +1209,7 @@
 		</div>
 	</div>
 
-	<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-2xl w-full max-w-full">
+	<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-3xl w-full max-w-full">
 		<div class="absolute inset-0 overflow-hidden pointer-events-none">
 			<div class="meteor" style="top: 5%; left: 15%; animation-delay: 0.1s;"></div>
 			<div class="meteor" style="top: 10%; left: 30%; animation-delay: 0.5s;"></div>
@@ -2173,7 +2173,7 @@ function farmCalculator() {
 				titleHtml += `<span>${title}</span>`;
 				if (showQuickSelect) {
 					titleHtml += `
-						<button @click="quickSelectLevel2()" class="px-2 py-0.5 text-xs bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-colors">一键优选</button>
+						<button @click="quickSelectLevel2()" class="px-2 py-0.5 text-xs bg-indigo-500 text-white rounded-3xl hover:bg-indigo-600 transition-colors">一键优选</button>
 						<label class="flex items-center gap-1 text-xs text-indigo-500 cursor-pointer">
 							<input type="checkbox" x-model="quickSelectMax" class="w-3.5 h-3.5 text-indigo-500 rounded border-indigo-300 focus:ring-indigo-400 cursor-pointer">
 							<span>拉满</span>

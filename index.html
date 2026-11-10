@@ -343,8 +343,7 @@
 		.rating-region {
 			border: 1px solid #dfe6fd;
 			border-radius: 0.9rem;
-			background: linear-gradient(180deg, #ffffff 0%, #f6f7ff 100%);
-			box-shadow: 0 2px 10px rgba(99, 102, 241, 0.10);
+			background: #fff;
 			padding: 0.4rem 0.5rem 0.45rem;
 			display: flex;
 			flex-direction: column;
@@ -586,10 +585,10 @@
 		.sim-fs-right .mb-total-small { font-size: 12px; font-weight: 700; color: #f43f5e; line-height: 1.2; }
 	</style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-6">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased overflow-y-auto overflow-x-hidden p-1 sm:p-6">
 
 <div x-data="farmCalculator()" x-init="init()" class="max-w-[950px] w-full mx-auto relative z-10">
-	<div class="rounded-[68px] shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)] overflow-hidden">
+	<div class="rounded-2xl shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)] overflow-hidden">
 		<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-5 px-7 text-center border-b border-white/20">
 			<div class="absolute inset-0 overflow-hidden pointer-events-none">
 				<div class="meteor" style="top: -10%; left: 10%; animation-delay: 0s;"></div>
@@ -1210,7 +1209,7 @@
 		</div>
 	</div>
 
-	<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-[68px] w-full max-w-full">
+	<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-3 px-7 text-center rounded-b-2xl w-full max-w-full">
 		<div class="absolute inset-0 overflow-hidden pointer-events-none">
 			<div class="meteor" style="top: 5%; left: 15%; animation-delay: 0.1s;"></div>
 			<div class="meteor" style="top: 10%; left: 30%; animation-delay: 0.5s;"></div>

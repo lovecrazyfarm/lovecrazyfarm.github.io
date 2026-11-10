@@ -336,13 +336,15 @@
 			font-size: 0.7rem;
 			color: #334155;
 			line-height: 1.45;
+			text-align: center;
 		}
 		/* 评级 + 介绍 组合区域: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底)
 		   桌面端竖排(上评级下介绍); 手机端上部改横排 [字母|分隔线|按钮], 更紧凑平衡 */
 		.rating-region {
-			border: 1px solid #c7d2fe;
+			border: 1px solid #dfe6fd;
 			border-radius: 0.9rem;
-			background: #fff;
+			background: linear-gradient(180deg, #ffffff 0%, #f6f7ff 100%);
+			box-shadow: 0 2px 10px rgba(99, 102, 241, 0.10);
 			padding: 0.4rem 0.5rem 0.45rem;
 			display: flex;
 			flex-direction: column;
@@ -365,7 +367,7 @@
 				display: block;
 				width: 1px;
 				height: 1.5rem;
-				background: #c7d2fe;
+				background: linear-gradient(to bottom, rgba(199,210,254,0), #c7d2fe 30%, #c7d2fe 70%, rgba(199,210,254,0));
 				border-radius: 1px;
 				flex-shrink: 0;
 			}
@@ -813,7 +815,7 @@
 							<div class="rating-region-top">
 								<template x-if="weightRating">
 									<span :class="weightRatingClass"
-										class="text-2xl font-black leading-none select-none"
+										class="text-2xl font-black italic leading-none select-none transition-all duration-300"
 										x-text="weightRating"></span>
 								</template>
 								<span class="rating-divider" x-show="weightRating"></span>
@@ -1640,8 +1642,9 @@ function farmCalculator() {
 			return (bonus >= 0 ? '+' : '') + bonus.toFixed(2) + 's';
 		},
 		// 重量评级(仅攻击作物): 以基础重量为原点
-		// 右侧三段: S 占最右 maxWeight×5% 的长度, 剩余由 B/A 平分; 左侧两段: C 与 A/B 等长, 其余全为 D
-		// 从左到右 D / C / B / A / S, 只返回单个字母
+		// 右侧: S 占最右 maxWeight×5%, 剩余总段中 B 与 A 平分 80%(各 40%), A+ 占 20%
+		// 左侧 C 与 B 等长(40%), 其余全为 D
+		// 从左到右 D / C / B / A / A+ / S, 只返回评级字符
 		get weightRating() {
 			const c = this.currentCrop?.combat;
 			if (!c) return null;
@@ -1650,26 +1653,29 @@ function farmCalculator() {
 			const span = Math.max(maxW - baseW, 0);
 			if (span <= 0) return null;
 			const weight = parseFloat(this.weightInput);
-			const effective = (isNaN(weight) || weight <= 0) ? baseW : Math.min(weight, maxW);
-			const sLen = maxW * 0.05;                   // S 段长 = 最大重量的 5%
-			const baLen = Math.max(span - sLen, 0) / 2; // B/A 平分右侧剩余, 左侧 C 与其等长
+			if (isNaN(weight) || weight <= 0) return null; // 未输入重量 → 不显示默认评级
+			const effective = Math.min(weight, maxW);
+			const sLen = maxW * 0.05;               // S 段长 = 最大重量的 5%
+			const zone = Math.max(span - sLen, 0);  // B~A+ 共占的总段长
 			// 容差 1e-9 抵消浮点误差: 输入恰好等于段边界时按更高一段评级
 			const EPS = 1e-9;
 			if (effective >= maxW - sLen - EPS) return 'S';
-			if (effective >= baseW + baLen - EPS) return 'A';
-			if (effective >= baseW - EPS) return 'B';
-			if (effective >= baseW - baLen - EPS) return 'C';
+			if (effective >= baseW + zone * 0.8 - EPS) return 'A+'; // 20%
+			if (effective >= baseW + zone * 0.4 - EPS) return 'A';  // 40%
+			if (effective >= baseW - EPS) return 'B';               // 40%
+			if (effective >= baseW - zone * 0.4 - EPS) return 'C';  // C 与 B 等长
 			return 'D';
 		},
 
 		get weightRatingClass() {
-			// 无背景色, 仅文字颜色区分: 灰 → 绿 → 蓝 → 紫 → 金
+			// 无背景色, 文字颜色 + 同色系柔光区分: 灰 → 绿 → 蓝 → 紫 → 品红 → 金(S 最亮)
 			return {
-				'D': 'text-stone-400',
-				'C': 'text-emerald-500',
-				'B': 'text-sky-500',
-				'A': 'text-violet-500',
-				'S': 'text-amber-500'
+				'D': 'text-stone-400 drop-shadow-[0_0_5px_rgba(168,162,158,0.30)]',
+				'C': 'text-emerald-500 drop-shadow-[0_0_5px_rgba(16,185,129,0.30)]',
+				'B': 'text-sky-500 drop-shadow-[0_0_5px_rgba(14,165,233,0.30)]',
+				'A': 'text-violet-500 drop-shadow-[0_0_6px_rgba(139,92,246,0.35)]',
+				'A+': 'text-fuchsia-500 drop-shadow-[0_0_7px_rgba(217,70,239,0.40)]',
+				'S': 'text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.55)]'
 			}[this.weightRating] || '';
 		},
 

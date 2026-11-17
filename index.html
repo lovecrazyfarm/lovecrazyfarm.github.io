@@ -11,7 +11,7 @@
 	<script src="data.js" defer></script>
 	<script src="modals.js" defer></script>
 	<script>
-		window.CHANGELOG_VERSION = '2026-11-10-1';
+		window.CHANGELOG_VERSION = '2026-11-17-1';
 	</script>
 	
 	<script src="tailwind-3.4.17.min.js"></script>
@@ -1511,6 +1511,8 @@ function farmCalculator() {
 
 			// 幂函数模型：attackPowerK × weight^attackPowerExp（实测拟合, 如委屈掌掌）
 			if (c.attackPowerK != null && c.attackPowerExp != null) {
+				// 基准点按定义精确等于基础攻击力(拟合曲线未必恰好经过基准点)
+				if (Math.abs(effective - baseW) < 1e-9) return c.baseAttack;
 				return c.attackPowerK * Math.pow(effective, c.attackPowerExp);
 			}
 
@@ -1591,6 +1593,8 @@ function farmCalculator() {
 				
 			const ratio = span > 0 ? (effective - baseW) / span : 0;
 			if (c.attackPowerK != null && c.attackPowerExp != null) {
+				// 基准点加成为 0(与基础攻击力定义一致)
+				if (Math.abs(effective - baseW) < 1e-9) return '0';
 				const v = Math.round(c.attackPowerK * Math.pow(effective, c.attackPowerExp) - c.baseAttack);
 				return v > 0 ? '+' + v : String(v);
 			}
@@ -2809,7 +2813,10 @@ function farmCalculator() {
 
 			let atk;
 			if (c.attackPowerK != null && c.attackPowerExp != null) {
-				atk = c.attackPowerK * Math.pow(effective, c.attackPowerExp);
+				// 基准点按定义精确等于基础攻击力
+				atk = (Math.abs(effective - baseW) < 1e-9)
+					? c.baseAttack
+					: c.attackPowerK * Math.pow(effective, c.attackPowerExp);
 			} else {
 				atk = c.baseAttack * (1 + (c.attackWeightBonus || 0) * ratio);
 			}

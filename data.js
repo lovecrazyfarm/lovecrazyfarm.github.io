@@ -409,17 +409,17 @@ const battleItemsData = [
 		}
 	},
 	{
-		id: 'item_youyameimei', name: '优雅玫玫', basePrice: 0, maxWeight: 1.89, growthSpeed: 0,
+		id: 'item_youyameimei', name: '优雅玫玫', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 45,
 			baseCooldown: 5,
-			cooldownWeightBonus: 0.1,
+			cooldownWeightBonus: 0.19,
 			attackType: 'single',
 			rangeRadius: 8,
 			story: '使用藤蔓抽打前方敌人。面对面种植可形成绊索',
-			attackPowerK: 0.001, attackPowerExp: 0.001,
+			attackPowerK: 22.42, attackPowerExp: 2.4,
 		}
 	},
 	{

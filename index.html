@@ -1230,7 +1230,7 @@
 				<span class="font-semibold text-indigo-600" x-text="modalTitle"></span>
 				<button @click="modalOpen = false" class="text-indigo-400 hover:text-indigo-600 text-2xl leading-none">&times;</button>
 			</div>
-			<div class="p-4 text-sm text-indigo-700 leading-relaxed overflow-y-auto flex-1" x-html="modalContent"></div>
+			<div class="p-4 text-sm text-indigo-700 leading-relaxed overflow-y-auto flex-1" x-html="modalContent" x-ref="modalScroll"></div>
 		</div>
 	</div>
 	
@@ -2865,6 +2865,13 @@ function farmCalculator() {
 				this.modalTitle = modal.title;
 				this.modalContent = modal.content;
 				this.modalOpen = true;
+				// 每次打开弹窗都强制从头浏览
+				this.$nextTick(() => {
+					const el = this.$refs.modalScroll;
+					if (!el) return;
+					el.scrollTop = 0;
+					requestAnimationFrame(() => { el.scrollTop = 0; });
+				});
 			}
 		},
 	}

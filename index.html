@@ -945,7 +945,7 @@
 				<div x-show="selectedTags.length > 0" class="px-4 pt-1 pb-3 order-3 sm:order-none">
 					<div class="flex flex-wrap gap-2 justify-center">
 						<template x-for="tag in selectedTags" :key="tag.id">
-							<div @click="toggleTag(tag.id)" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md tag-transition" :style="`background: ${tag.fillColor}; color: white; text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;`">
+							<div @click="toggleTag(tag.id)" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md tag-transition" :style="`background: ${tag.fillColor}; color: white; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000;`">
 								<span x-text="tag.name"></span>
 								<span x-show="tag.combat" class="text-[0.6rem]">⚔</span>
 							</div>
@@ -2246,14 +2246,14 @@ function farmCalculator() {
 				html += `<div class="flex flex-wrap gap-2">`;
 				for (let tag of tags) {
 					const badge = tag.combat ? '<span class="ml-0.5 text-[0.6rem] opacity-90">⚔</span>' : '';
-					html += `<div @click="toggleTag('${tag.id}')" 
-					class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md" 
+					html += `<div @click="toggleTag('${tag.id}')"
+					class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md"
 					style="
-						background: ${tag.fillColor}; 
+						background: ${tag.fillColor};
 						background-clip: padding-box;
 						border: 2px solid rgba(255,255,255,0.3);
-						color: white; 
-						text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+						color: white;
+						text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000;
 					">${tag.name}${badge}</div>`;
 				}
 				html += `</div>`;

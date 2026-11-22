@@ -828,27 +828,34 @@
 				
 					</div>
 
-					<div class="flex-shrink-0 flex flex-col gap-2 w-full sm:w-44 order-4 sm:order-none mt-2 sm:mt-0">
+					<div class="flex-shrink-0 flex flex-col gap-2 w-full sm:w-60 order-4 sm:order-none mt-2 sm:mt-0">
 						<div class="flex flex-row items-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">重量</label>
-							<input type="text" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur"
+							<input type="text" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur" x-ref="weightInputEl"
 								class="flex-1 min-w-0 px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
 								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 								:placeholder="weightPlaceholder">
 						</div>
 						<div class="flex flex-row items-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">占比</label>
-							<input type="text" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur"
+							<input type="text" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur" x-ref="percentInputEl"
 								class="flex-1 min-w-0 px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
 								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 								:placeholder="percentPlaceholder">
 						</div>
 						<div x-show="!currentCrop?.combat && currentCrop?.growthSpeed !== 0" class="flex flex-row items-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">时间</label>
-							<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur"
-								class="flex-1 min-w-0 px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
-								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
-								placeholder="+1%的秒数(无加速)">
+							<div class="flex-1 min-w-0 flex flex-row items-stretch" x-ref="timeGroup">
+								<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur" x-ref="timeInput"
+									class="flex-1 min-w-0 px-2 py-1 border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+									:class="canViewMaturity ? 'rounded-l-full border-r-0' : 'rounded-full'"
+									oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
+									placeholder="+1%的秒数(无加速)">
+								<button type="button" @click="showMaturity = !showMaturity" x-show="canViewMaturity"
+									class="px-2.5 py-1 rounded-r-full border border-l-0 border-blue-200 text-xs font-semibold flex-shrink-0 transition-colors"
+									:class="showMaturity ? 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200 cursor-pointer' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100 cursor-pointer'"
+									x-text="showMaturity ? '收起' : '查看'">查看</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -921,13 +928,13 @@
 						<span>该攻击作物数据尚未完成</span>
 					</div>
 
-					<div x-show="!currentCrop?.combat && currentCrop?.growthSpeed !== 0 && weightInput">
+					<div x-show="showMaturity && canViewMaturity && maturityTimeDisplay">
 						<span class="text-sm text-gray-600">
 							从0%开始，约 <span class="text-indigo-600 font-bold" x-text="maturityTimeDisplay"></span> 内成熟
 						</span>
 					</div>
 
-					<div x-show="!weightInput" class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded-full text-sm font-medium">
+					<div x-show="!weightInput || !percentInput || !timeInput" class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded-full text-sm font-medium">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
 						</svg>
@@ -1314,6 +1321,7 @@ function farmCalculator() {
 		weightInput: '',
 		percentInput: '',
 		timeInput: '',
+		showMaturity: false,
 		checkedTags: new Map(),
 		modalOpen: false,
 		modalTitle: '',
@@ -1681,6 +1689,12 @@ function farmCalculator() {
 
 		// ========== 作战属性 getter 结束 ==========
 
+		get canViewMaturity() {
+			if (!this.currentCrop || this.currentCrop.combat) return false;
+			if (this.currentCrop.growthSpeed === 0) return false;
+			return !!(this.weightInput && this.percentInput && this.timeInput);
+		},
+
 		get maturityTimeDisplay() {
 			if (!this.currentCrop) return '';
 			if (this.currentCrop.growthSpeed == 0) {
@@ -1736,6 +1750,12 @@ function farmCalculator() {
 			this.setupIntersectionObserver();
 			this.loadHistory();
 			this.loadStars();
+			// 清空任意输入框 → 查看按钮与提示回到默认状态(不提示、不可查看)
+			['weightInput', 'percentInput', 'timeInput'].forEach(key => {
+				this.$watch(key, () => {
+					if (!this.weightInput || !this.percentInput || !this.timeInput) this.showMaturity = false;
+				});
+			});
 			
 			try {
 				const savedBoard = localStorage.getItem('farmSimLayout');
@@ -1877,13 +1897,37 @@ function farmCalculator() {
 				});
 			}
 			this.isPriceFloating = false;
+			this.$nextTick(() => {
+				if (this.selectedCropId !== null) this.fitTimeInputs();
+			});
 			this.renderUnselectedTags();
+		},
+
+		fitTimeInputs() {
+			// 三个输入框统一为贴合时间占位文本的宽度; 查看按钮紧随时间输入框之后(不留空白)
+			const tInput = this.$refs.timeInput;
+			const tGroup = this.$refs.timeGroup;
+			const wEl = this.$refs.weightInputEl;
+			const pEl = this.$refs.percentInputEl;
+			if (!tInput || !tGroup || !wEl || !pEl) return;
+			const probe = document.createElement('span');
+			probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:12px;line-height:1;';
+			probe.textContent = tInput.placeholder || '';
+			document.body.appendChild(probe);
+			const phW = Math.ceil(probe.getBoundingClientRect().width);
+			probe.remove();
+			const inputW = (phW + 18) + 'px';
+			[tInput, wEl, pEl].forEach(el => {
+				el.style.flex = '0 0 auto';
+				el.style.width = inputW;
+			});
 		},
 
 		clearAllInputs() {
 			this.weightInput = '';
 			this.percentInput = '';
 			this.timeInput = '';
+			this.showMaturity = false;
 			this.isPriceFloating = false;
 		},
 
@@ -1910,7 +1954,12 @@ function farmCalculator() {
 		updateFromWeight() {
 			if (!this.currentCrop) return;
 			let val = parseFloat(this.weightInput);
-			if (isNaN(val)) return;
+			if (isNaN(val)) {
+				// 清空重量 → 同步清空另外两个输入框
+				this.percentInput = '';
+				this.timeInput = '';
+				return;
+			}
 			
 			const minW = this.minWeight;
 			const maxW = this.currentCrop.maxWeight;
@@ -1925,7 +1974,12 @@ function farmCalculator() {
 		updateFromPercent() {
 			if (!this.currentCrop) return;
 			let pct = parseFloat(this.percentInput);
-			if (isNaN(pct)) return;
+			if (isNaN(pct)) {
+				// 清空占比 → 同步清空另外两个输入框
+				this.weightInput = '';
+				this.timeInput = '';
+				return;
+			}
 			
 			if (pct < 3 || pct > 100) return;
 			
@@ -1938,7 +1992,12 @@ function farmCalculator() {
 		updateFromTime() {
 			if (!this.currentCrop) return;
 			let time = parseFloat(this.timeInput);
-			if (isNaN(time)) return;
+			if (isNaN(time)) {
+				// 清空时间 → 同步清空另外两个输入框
+				this.weightInput = '';
+				this.percentInput = '';
+				return;
+			}
 
 			const weight = (time * 100) / this.currentCrop.growthSpeed;
 			const minW = this.minWeight;

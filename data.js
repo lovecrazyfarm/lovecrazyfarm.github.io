@@ -208,45 +208,58 @@ const itemsData = [
 
 // ==================== 攻击作物模拟数据 ====================
 const battleTagLibrary = {
-	'liuguang0': { id: 'liuguang0', name: '流光', times: 1, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority + 0.2, synthesis: [], synDel: [], desc: '攻击力 +240%，冷却时间 -43%', combat: { attackRate: 2.4, cooldownRate: -0.43 } },
-
+	'liuguang0': {
+		id: 'liuguang0', name: '流光', times: 1, level: 2,
+		fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority + 0.2, synthesis: [], synDel: [],
+		desc: '作物攻击力+240%，冷却-43%',
+		combat: { attackRate: 2.4, cooldownRate: -0.43 }
+	},
 	'liuhuo2': {
 		id: 'liuhuo2', name: '流火', times: 1, level: 2,
 		fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [],
-		desc: '命中后每秒造成 0.36% 最大生命值的伤害，持续 3 秒',
+		desc: '被命中的敌人将每秒损失0.36%的最大生命值，持续3秒',
 		combat: { dotRate: 0.0036, dotDuration: 3 } // 每秒掉 0.36%，持续 3 秒
 	},
-
-	'shuijing0':  { id: 'shuijing0',  name: '水晶', times: 1, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [], desc: '攻击力 +160%', combat: { attackRate: 1.6 } },
-
+	'shuijing0':  {
+		id: 'shuijing0',  name: '水晶', times: 1, level: 2,
+		fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [],
+		desc: '作物攻击力+160%',
+		combat: { attackRate: 1.6 }
+	},
 	'cihua2': {
 		id: 'cihua2', name: '瓷化', times: 1, level: 2,
 		fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [],
-		desc: '命中后每秒造成 0.33% 最大生命值的伤害，持续 3 秒',
+		desc: '被命中的敌人将每秒损失0.33%的最大生命值，持续3秒',
 		combat: { dotRate: 0.0033, dotDuration: 3 }
+	},
+	'luolei2': {
+		id: 'luolei2', name: '落雷', times: 1, level: 2,
+		fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [],
+		desc: '被命中的敌人身边的敌人将受到15点伤害',
+		combat: { }
 	},
 	'bingdong2': {
 		id: 'bingdong2', name: '冰冻', times: 1, level: 2,
 		fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [],
-		desc: '命中后 15% 概率定身目标，持续 2 秒',
-		combat: { stunChance: 0.15, stunDuration: 2 } // 15% 概率定身，持续 1 秒
+		desc: '被命中的敌人有15%的概率被冰冻，在2秒内无法移动',
+		combat: { stunChance: 0.15, stunDuration: 2 }
 	},
 	'jieshuang2': {
 		id: 'jieshuang2', name: '结霜', times: 1, level: 2,
 		fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [],
-		desc: '命中后使目标减速 15%，持续 2 秒',
-		combat: { slowRate: 0.15, slowDuration: 2 } // 减速 15%，持续 3 秒
+		desc: '被命中的敌人将被减速15%，持续3秒',
+		combat: { slowRate: 0.15, slowDuration: 3 } // 减速 15%，持续 3 秒
 	},
 	'zhuore2': {
 		id: 'zhuore2', name: '灼热', times: 1, level: 2,
 		fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [],
-		desc: '命中后每秒造成 0.33% 最大生命值的伤害，持续 3 秒',
+		desc: '被命中的敌人将每秒损失0.33%的最大生命值，持续3秒',
 		combat: { dotRate: 0.0033, dotDuration: 3 }
 	},
 };
 
 const battleTagGroups = {
-	'group_basic': { tags: ['liuguang0', 'shuijing0', 'liuhuo2', 'cihua2', 'bingdong2', 'jieshuang2', 'zhuore2']},
+	'group_basic': { tags: ['liuguang0', 'shuijing0', 'liuhuo2', 'cihua2', 'luolei2', 'bingdong2', 'jieshuang2', 'zhuore2']},
 };
 
 // growthSpeed=0为施工中, =1为正常.

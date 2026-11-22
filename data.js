@@ -1,7 +1,7 @@
 // 颜色常量库
-const FC = {
+/*const FC = {
 	LIUGUANG: { color: 'linear-gradient(90deg, #2BFEFF, #B9B6FF 25%, #FF93FF 50%, #BEA4FF 75%, #49C3FF)', priority: 1 },
-	SHUIJING: { color: 'linear-gradient(225deg, #FDC830, #F37335, #F15F79)', priority: 2 },
+	SHUIJING: { color: 'linear-gradient(90deg, #EC7843, #EF8C5D 25%, #F0AD75 50%, #EDBD62 75%, #EABF4D)', priority: 2 },
 	CIHUA: { color: '#b25bd7', priority: 3 },
 	JIN: { color: '#3b95de', priority: 4 },
 	LUOLEI: { color: '#178128', priority: 5 },
@@ -12,6 +12,21 @@ const FC = {
 	YM: { color: 'linear-gradient(to bottom, #E5D0FF, #D6BAF2, #C5A0E5, #B285D9, #9F6ACC, #8C4FB5)', priority: 4 },
 	YHS: { color: 'linear-gradient(to bottom, #FFD4A3, #F9A26C, #E2712E, #B8420C)', priority: 5 },
 	HYH: { color: 'linear-gradient(to bottom, #C6E6FF, #A5ADFF, #BBA5FF, #D2A9FF, #B386FF)', priority: 6 },
+};*/
+
+const FC = {
+  LIUGUANG: { color: 'linear-gradient(90deg, #29f1f2, #b0adf2 25%, #f28cf2 50%, #b59cf2 75%, #45b9f2)', priority: 1 },
+  SHUIJING: { color: 'linear-gradient(90deg, #e07240, #e38558 25%, #e4a46f 50%, #e1b45d 75%, #deb549)', priority: 2 },
+  CIHUA: { color: '#bb60e2', priority: 3 },
+  JIN: { color: '#3e9ce9', priority: 4 },
+  LUOLEI: { color: '#18872a', priority: 5 },
+  MIWU: { color: '#789ab9', priority: 6 },
+  YGC: { color: 'linear-gradient(to bottom, #f4fcff, #d9e7f4, #bfd0e1, #a2b4c9)', priority: 1 },
+  YDC: { color: 'linear-gradient(to bottom, #e3fcdd, #b9e4b0, #96ca91, #6fae70)', priority: 2 },
+  YHT: { color: 'linear-gradient(to bottom, #c1ecff, #96d3fc, #70b9e5, #4e96ca)', priority: 3 },
+  YM: { color: 'linear-gradient(to bottom, #f0daff, #e1c3fe, #cfa8f0, #bb8ce4, #a76fd6, #9353be)', priority: 4 },
+  YHS: { color: 'linear-gradient(to bottom, #ffdfab, #ffaa71, #ed7730, #c1450d)', priority: 5 },
+  HYH: { color: 'linear-gradient(to bottom, #d0f2ff, #adb6ff, #c4adff, #ddb1ff, #bc8dff)', priority: 6 },
 };
 
 // 标签库

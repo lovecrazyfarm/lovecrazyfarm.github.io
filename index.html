@@ -11,7 +11,7 @@
 	<script src="data.js" defer></script>
 	<script src="modals.js" defer></script>
 	<script>
-		window.CHANGELOG_VERSION = '2026-11-17-1';
+		window.CHANGELOG_VERSION = '2026-11-22-1';
 	</script>
 	
 	<script src="tailwind-3.4.17.min.js"></script>
@@ -999,6 +999,24 @@
 				<div id="unselectedTagsContainer" class="space-y-4"></div>
 			</div>
 
+			<!-- 突变说明（默认收起, 仅攻击作物） -->
+			<div x-show="selectedCropId !== null && currentCrop?.combat" x-transition.duration.200ms class="w-full mt-1 mb-2">
+				<button type="button" @click="mutationDescOpen = !mutationDescOpen"
+						class="inline-flex items-center gap-1 px-2.5 py-1 rounded-3xl border border-indigo-200 bg-indigo-50 text-xs font-semibold text-indigo-600 hover:bg-indigo-100 transition-colors">
+					突变说明
+					<span class="text-[0.6rem]" x-text="mutationDescOpen ? '▲' : '▼'"></span>
+				</button>
+				<div x-show="mutationDescOpen" x-transition class="mt-2 px-4 py-3 rounded-xl border border-indigo-100 bg-white/70 space-y-1.5">
+					<template x-for="tag in Object.values(battleTagLibrary).sort((a, b) => (a.priority || 0) - (b.priority || 0))" :key="tag.id">
+						<div class="flex items-start gap-2 text-xs">
+							<span class="mt-0.5 inline-block w-2.5 h-2.5 rounded-full flex-shrink-0 border border-white/70" :style="`background: ${tag.fillColor};`"></span>
+							<span class="font-bold text-gray-700 flex-shrink-0" x-text="tag.name"></span>
+							<span class="text-slate-600" x-text="tag.desc || ''"></span>
+						</div>
+					</template>
+				</div>
+			</div>
+
 			<!-- ========== 实战模拟区域（仅攻击作物） ========== -->
 			<div x-show="selectedCropId !== null && currentCrop?.combat" x-transition class="w-full mt-2 border-t border-indigo-100 pt-4 relative">
 				<!-- 标题 + 桌面端工具栏 -->
@@ -1322,6 +1340,7 @@ function farmCalculator() {
 		percentInput: '',
 		timeInput: '',
 		showMaturity: false,
+		mutationDescOpen: false,
 		checkedTags: new Map(),
 		modalOpen: false,
 		modalTitle: '',

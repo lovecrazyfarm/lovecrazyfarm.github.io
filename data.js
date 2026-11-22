@@ -208,34 +208,39 @@ const itemsData = [
 
 // ==================== 攻击作物模拟数据 ====================
 const battleTagLibrary = {
-	'liuguang0': { id: 'liuguang0', name: '流光', times: 1, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority + 0.2, synthesis: [], synDel: [], combat: { attackRate: 2.4, cooldownRate: -0.43 } },
+	'liuguang0': { id: 'liuguang0', name: '流光', times: 1, level: 2, fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority + 0.2, synthesis: [], synDel: [], desc: '攻击力 +240%，冷却时间 -43%', combat: { attackRate: 2.4, cooldownRate: -0.43 } },
 
-	'liuhuo2': { 
-		id: 'liuhuo2', name: '流火', times: 1, level: 2, 
-		fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [], 
+	'liuhuo2': {
+		id: 'liuhuo2', name: '流火', times: 1, level: 2,
+		fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [],
+		desc: '命中后每秒造成 0.36% 最大生命值的伤害，持续 3 秒',
 		combat: { dotRate: 0.0036, dotDuration: 3 } // 每秒掉 0.36%，持续 3 秒
 	},
 
-	'shuijing0':  { id: 'shuijing0',  name: '水晶', times: 1, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [], combat: { attackRate: 1.6 } },
+	'shuijing0':  { id: 'shuijing0',  name: '水晶', times: 1, level: 2, fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [], desc: '攻击力 +160%', combat: { attackRate: 1.6 } },
 
-	'cihua2': { 
-		id: 'cihua2', name: '瓷化', times: 1, level: 2, 
-		fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [], 
+	'cihua2': {
+		id: 'cihua2', name: '瓷化', times: 1, level: 2,
+		fillColor: FC.CIHUA.color, priority: FC.CIHUA.priority, synthesis: [], synDel: [],
+		desc: '命中后每秒造成 0.33% 最大生命值的伤害，持续 3 秒',
 		combat: { dotRate: 0.0033, dotDuration: 3 }
 	},
-	'bingdong2': { 
-		id: 'bingdong2', name: '冰冻', times: 1, level: 2, 
-		fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [], 
+	'bingdong2': {
+		id: 'bingdong2', name: '冰冻', times: 1, level: 2,
+		fillColor: FC.LUOLEI.color, priority: FC.LUOLEI.priority, synthesis: [], synDel: [],
+		desc: '命中后 15% 概率定身目标，持续 2 秒',
 		combat: { stunChance: 0.15, stunDuration: 2 } // 15% 概率定身，持续 1 秒
 	},
-	'jieshuang2': { 
-		id: 'jieshuang2', name: '结霜', times: 1, level: 2, 
-		fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [], 
+	'jieshuang2': {
+		id: 'jieshuang2', name: '结霜', times: 1, level: 2,
+		fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [],
+		desc: '命中后使目标减速 15%，持续 2 秒',
 		combat: { slowRate: 0.15, slowDuration: 2 } // 减速 15%，持续 3 秒
 	},
-	'zhuore2': { 
-		id: 'zhuore2', name: '灼热', times: 1, level: 2, 
-		fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [], 
+	'zhuore2': {
+		id: 'zhuore2', name: '灼热', times: 1, level: 2,
+		fillColor: FC.MIWU.color, priority: FC.MIWU.priority, synthesis: [], synDel: [],
+		desc: '命中后每秒造成 0.33% 最大生命值的伤害，持续 3 秒',
 		combat: { dotRate: 0.0033, dotDuration: 3 }
 	},
 };

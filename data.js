@@ -113,7 +113,7 @@ const exclusiveGroups = [
 const itemsData = [
 	// 幻彩
 	{ id: 'item_xuelian', name: '雪莲', basePrice: 57010.64, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_yinxing', name: '银杏', basePrice: 96760.6, maxWeight: 5.1, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yinxing', name: '银杏', basePrice: 93750.6, maxWeight: 5.1, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_chenjingdefengxiangnangua', name: '沉静的疯象南瓜', basePrice: 8781.526, maxWeight: 45.2, growthSpeed: 799.12, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	
 	{ id: 'item_qiushuixian', name: '秋水仙', basePrice: 10342.25, maxWeight: 34, growthSpeed: 705.8824, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },

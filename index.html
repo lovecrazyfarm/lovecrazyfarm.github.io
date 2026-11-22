@@ -829,25 +829,27 @@
 					</div>
 
 					<div class="flex-shrink-0 flex flex-col gap-2 w-full sm:w-60 order-4 sm:order-none mt-2 sm:mt-0">
-						<div class="flex flex-row items-center gap-2">
+						<div class="w-full sm:flex sm:flex-col sm:gap-2" :class="currentCrop?.combat ? 'grid grid-cols-2 gap-2' : 'flex flex-col gap-2'">
+						<div class="flex flex-row items-center justify-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">重量</label>
 							<input type="text" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur" x-ref="weightInputEl"
 								class="flex-1 min-w-0 px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
 								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 								:placeholder="weightPlaceholder">
 						</div>
-						<div class="flex flex-row items-center gap-2">
+						<div class="flex flex-row items-center justify-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">占比</label>
 							<input type="text" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur" x-ref="percentInputEl"
 								class="flex-1 min-w-0 px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
 								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 								:placeholder="percentPlaceholder">
 						</div>
-						<div x-show="!currentCrop?.combat && currentCrop?.growthSpeed !== 0" class="flex flex-row items-center gap-2">
+						</div>
+						<div x-show="!currentCrop?.combat && currentCrop?.growthSpeed !== 0" class="flex flex-row items-center justify-center gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">时间</label>
-							<div class="flex-1 min-w-0 flex flex-row items-stretch" x-ref="timeGroup">
+							<div class="min-w-0 flex flex-row items-stretch" x-ref="timeGroup">
 								<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur" x-ref="timeInput"
-									class="flex-1 min-w-0 px-2 py-1 border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+									class="min-w-0 px-2 py-1 border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
 									:class="canViewMaturity ? 'rounded-l-full border-r-0' : 'rounded-full'"
 									oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 									placeholder="+1%的秒数(无加速)">
@@ -1007,7 +1009,7 @@
 					<span class="text-[0.6rem]" x-text="mutationDescOpen ? '▲' : '▼'"></span>
 				</button>
 				<div x-show="mutationDescOpen" x-transition class="mt-2 px-4 py-3 rounded-xl border border-indigo-100 bg-white/70 space-y-1.5">
-					<template x-for="tag in Object.values(battleTagLibrary).sort((a, b) => (a.priority || 0) - (b.priority || 0))" :key="tag.id">
+					<template x-for="tag in mutationDescList" :key="tag.id">
 						<div class="flex items-start gap-2 text-xs">
 							<span class="mt-0.5 inline-block w-2.5 h-2.5 rounded-full flex-shrink-0 border border-white/70" :style="`background: ${tag.fillColor};`"></span>
 							<span class="font-bold text-gray-700 flex-shrink-0" x-text="tag.name"></span>
@@ -1708,6 +1710,22 @@ function farmCalculator() {
 
 		// ========== 作战属性 getter 结束 ==========
 
+		get mutationDescList() {
+			// 以"可选攻击突变"的展示顺序(基础→专属→常规→活动, 组内按优先级)排列全部攻击突变
+			const allTags = this.getAllTags();
+			const sortFn = (a, b) => {
+				if (a.priority !== b.priority) return a.priority - b.priority;
+				return b.times - a.times;
+			};
+			const level0 = allTags.filter(t => t.level === 0).sort(sortFn);
+			const level1 = allTags.filter(t => t.level === 1).sort(sortFn);
+			const level2 = allTags.filter(t => t.level === 2).sort(sortFn);
+			const activityTagIds = this.activeTagGroups['group_activity']?.tags || [];
+			const activity = level2.filter(t => activityTagIds.includes(t.id));
+			const normal = level2.filter(t => !activityTagIds.includes(t.id));
+			return [...level0, ...level1, ...normal, ...activity];
+		},
+
 		get canViewMaturity() {
 			if (!this.currentCrop || this.currentCrop.combat) return false;
 			if (this.currentCrop.growthSpeed === 0) return false;
@@ -1929,6 +1947,11 @@ function farmCalculator() {
 			const wEl = this.$refs.weightInputEl;
 			const pEl = this.$refs.percentInputEl;
 			if (!tInput || !tGroup || !wEl || !pEl) return;
+			// 攻击作物/施工中: 时间行隐藏 → 重量/占比恢复弹性宽度, 不做时间贴合
+			if (this.currentCrop?.combat || this.currentCrop?.growthSpeed === 0) {
+				[tInput, wEl, pEl].forEach(el => { el.style.flex = ''; el.style.width = ''; });
+				return;
+			}
 			const probe = document.createElement('span');
 			probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:12px;line-height:1;';
 			probe.textContent = tInput.placeholder || '';

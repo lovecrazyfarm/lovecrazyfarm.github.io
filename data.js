@@ -1,6 +1,6 @@
 // 颜色常量库
 const FC = {
-	LIUGUANG: { color: 'linear-gradient(135deg, #1A2980, #FF69B4, #26D0CE, #00B4DB)', priority: 1 },
+	LIUGUANG: { color: 'linear-gradient(90deg, #2BFEFF, #B9B6FF 25%, #FF93FF 50%, #BEA4FF 75%, #49C3FF)', priority: 1 },
 	SHUIJING: { color: 'linear-gradient(225deg, #FDC830, #F37335, #F15F79)', priority: 2 },
 	CIHUA: { color: '#b25bd7', priority: 3 },
 	JIN: { color: '#3b95de', priority: 4 },

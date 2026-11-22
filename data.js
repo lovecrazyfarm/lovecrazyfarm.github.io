@@ -226,7 +226,7 @@ const battleTagLibrary = {
 	'liuguang0': {
 		id: 'liuguang0', name: '流光', times: 1, level: 2,
 		fillColor: FC.LIUGUANG.color, priority: FC.LIUGUANG.priority + 0.2, synthesis: [], synDel: [],
-		desc: '作物攻击力+240%，冷却-43%',
+		desc: '作物攻击+240%，冷却-43%',
 		combat: { attackRate: 2.4, cooldownRate: -0.43 }
 	},
 	'liuhuo2': {
@@ -238,7 +238,7 @@ const battleTagLibrary = {
 	'shuijing0':  {
 		id: 'shuijing0',  name: '水晶', times: 1, level: 2,
 		fillColor: FC.SHUIJING.color, priority: FC.SHUIJING.priority, synthesis: [], synDel: [],
-		desc: '作物攻击力+160%',
+		desc: '作物攻击+160%',
 		combat: { attackRate: 1.6 }
 	},
 	'cihua2': {

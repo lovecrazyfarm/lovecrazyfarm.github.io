@@ -830,14 +830,14 @@
 
 					<div class="flex-shrink-0 flex flex-col gap-2 w-full sm:w-60 order-4 sm:order-none mt-2 sm:mt-0">
 						<div class="w-full flex flex-col gap-2">
-						<div class="flex flex-row items-center justify-center sm:justify-start gap-2">
+						<div class="flex flex-row items-center justify-start gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">重量</label>
 							<input type="text" x-model="weightInput" @input="updateFromWeight" @blur="handleWeightBlur" x-ref="weightInputEl"
 								class="flex-1 min-w-0 px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
 								oninput="this.value = this.value.replace(/[^\d.]/g, '').replace(/^\./, '0.').replace(/\.{2,}/g, '.').replace(/(\..*)\./g, '$1').replace(/(\.\d{2})\d+/, '$1')"
 								:placeholder="weightPlaceholder">
 						</div>
-						<div class="flex flex-row items-center justify-center sm:justify-start gap-2">
+						<div class="flex flex-row items-center justify-start gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">占比</label>
 							<input type="text" x-model="percentInput" @input="updateFromPercent" @blur="handlePercentBlur" x-ref="percentInputEl"
 								class="flex-1 min-w-0 px-2 py-1 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
@@ -845,7 +845,7 @@
 								:placeholder="percentPlaceholder">
 						</div>
 						</div>
-						<div x-show="!currentCrop?.combat && currentCrop?.growthSpeed !== 0" class="flex flex-row items-center justify-center sm:justify-start gap-2">
+						<div x-show="!currentCrop?.combat && currentCrop?.growthSpeed !== 0" class="flex flex-row items-center justify-start gap-2">
 							<label class="text-xs font-semibold text-indigo-500 mb-0.5 text-left sm:mb-0 sm:w-10 sm:text-right">时间</label>
 							<div class="min-w-0 flex flex-row items-stretch" x-ref="timeGroup">
 								<input type="text" x-model="timeInput" @input="updateFromTime" @blur="handleTimeBlur" x-ref="timeInput"
@@ -1941,45 +1941,39 @@ function farmCalculator() {
 		},
 
 		fitTimeInputs() {
-			// 经济作物(含growthSpeed=0): 时间输入框贴合占位文本, 重量/占比与"输入框+查看"总宽对齐(三行左右边缘一致)
-			// 攻击作物: 时间行隐藏 → 重量/占比恢复弹性拉伸(flex-1), 时间输入框样式还原
+			// 重量/占比: 各作物统一为 [时间输入框+查看] 的总宽(三行左右边缘一致)
+			// 时间输入框: 经济作物贴合占位文本; 攻击作物(时间行隐藏)恢复默认样式
 			const tInput = this.$refs.timeInput;
 			const tGroup = this.$refs.timeGroup;
 			const wEl = this.$refs.weightInputEl;
 			const pEl = this.$refs.percentInputEl;
 			if (!tInput || !tGroup || !wEl || !pEl) return;
-			if (this.currentCrop?.combat) {
-				[wEl, pEl].forEach(el => { el.style.flex = '1 1 0%'; el.style.width = ''; });
-				tInput.style.flex = '';
-				tInput.style.width = '';
-				return;
-			}
 			const probe = document.createElement('span');
-			probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:12px;line-height:1;';
-			probe.textContent = tInput.placeholder || '';
-			document.body.appendChild(probe);
-			const phW = Math.ceil(probe.getBoundingClientRect().width);
-			probe.remove();
-			const inputW = (phW + 18) + 'px';
-			tInput.style.flex = '0 0 auto';
-			tInput.style.width = inputW;
-			// 重量/占比 = 时间输入框 + 查看按钮 的总宽; growthSpeed=0(时间行隐藏)时按钮宽度用同款探针推算
-			let groupW;
-			if (this.currentCrop?.growthSpeed !== 0) {
-				groupW = tGroup.offsetWidth;
-			} else {
-				const btnProbe = document.createElement('button');
-				btnProbe.type = 'button';
-				btnProbe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:0.75rem;font-weight:600;padding:0.25rem 0.625rem;border-width:1px;line-height:1.5;';
-				btnProbe.textContent = '查看';
-				document.body.appendChild(btnProbe);
-				groupW = Math.ceil(inputW) + Math.ceil(btnProbe.getBoundingClientRect().width);
-				btnProbe.remove();
-			}
-			[wEl, pEl].forEach(el => {
-				el.style.flex = '0 0 auto';
-				el.style.width = groupW + 'px';
-			});
+				probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:12px;line-height:1;';
+				probe.textContent = tInput.placeholder || '';
+				document.body.appendChild(probe);
+				const phW = Math.ceil(probe.getBoundingClientRect().width);
+				probe.remove();
+				const inputW = (phW + 18) + 'px';
+				tInput.style.flex = '0 0 auto';
+				tInput.style.width = inputW;
+				// 查看按钮宽度: 时间行可见时实测; 隐藏时(攻击/施工中)用同款样式探针推算 → 各作物重量/占比同宽
+				let groupW;
+				if (!this.currentCrop?.combat && this.currentCrop?.growthSpeed !== 0) {
+					groupW = tGroup.offsetWidth;
+				} else {
+					const btnProbe = document.createElement('button');
+					btnProbe.type = 'button';
+					btnProbe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:0.75rem;font-weight:600;padding:0.25rem 0.625rem;border-width:1px;line-height:1.5;';
+					btnProbe.textContent = '查看';
+					document.body.appendChild(btnProbe);
+					groupW = Math.ceil(inputW) + Math.ceil(btnProbe.getBoundingClientRect().width);
+					btnProbe.remove();
+				}
+				[wEl, pEl].forEach(el => {
+					el.style.flex = '0 0 auto';
+					el.style.width = groupW + 'px';
+				});
 		},
 
 		clearAllInputs() {

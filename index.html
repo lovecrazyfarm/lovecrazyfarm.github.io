@@ -11,7 +11,7 @@
 	<script src="data.js" defer></script>
 	<script src="modals.js" defer></script>
 	<script>
-		window.CHANGELOG_VERSION = '2026-11-22-1';
+		window.CHANGELOG_VERSION = '2026-11-23-1';
 	</script>
 	
 	<script src="tailwind-3.4.17.min.js"></script>
@@ -582,7 +582,7 @@
 					<div x-show="guowangOpen" x-transition class="mt-1 w-64 max-w-[75vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left">
 					<template x-if="currentCrop?.guowangInfo">
 						<div class="space-y-1">
-							<div class="text-[0.65rem] font-bold text-amber-700">截止日期 国1 国100</div>
+							<div class="text-[0.65rem] font-bold text-amber-700">截止日期 &nbsp; &nbsp; &nbsp; &nbsp; 国1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 国100</div>
 							<template x-for="(line, idx) in currentCrop.guowangInfo.lines" :key="idx">
 								<div class="flex items-center gap-2 text-[0.65rem] text-amber-800 leading-snug">
 									<span x-text="line.date"></span>
@@ -642,7 +642,7 @@
 								<template x-if="weightRating">
 									<span :class="weightRatingClass"
 										class="text-2xl font-black italic leading-none select-none transition-all duration-300"
-										x-text="weightRating"></span>
+										x-text="weightRatingLabel"></span>
 								</template>
 								<span class="rating-divider" x-show="weightRating"></span>
 								<button @click="toggleIntro()" class="sm:mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-3xl text-[0.65rem] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors">
@@ -808,8 +808,8 @@
 					<div class="text-center mt-0.5 flex items-center justify-center gap-1">
 						<template x-if="currentCrop?.combat && weightRating">
 							<span :class="weightRatingClass"
-								class="inline-flex items-center justify-center w-7 h-7 rounded-md text-lg font-black leading-none select-none bg-white border border-indigo-100 shadow-sm"
-								x-text="weightRating"></span>
+								class="inline-flex items-center justify-center min-w-[28px] px-1 h-7 rounded-md text-lg font-black leading-none select-none bg-white border border-indigo-100 shadow-sm"
+								x-text="weightRatingLabel"></span>
 						</template>
 						<template x-if="!currentCrop?.combat">
 							<span class="text-2xl font-extrabold text-indigo-600" x-text="formattedPrice"></span>
@@ -1305,11 +1305,23 @@ function farmCalculator() {
 			// 容差 1e-9 抵消浮点误差: 输入恰好等于段边界时按更高一段评级
 			const EPS = 1e-9;
 			if (effective >= maxW - sLen - EPS) return 'S';
-			if (effective >= baseW + zone * 0.8 - EPS) return 'A+'; // 20%
-			if (effective >= baseW + zone * 0.4 - EPS) return 'A';  // 40%
-			if (effective >= baseW - EPS) return 'B';               // 40%
-			if (effective >= baseW - zone * 0.4 - EPS) return 'C';  // C 与 B 等长
+			if (effective >= baseW + zone * 0.85 - EPS) return 'A+'; // 顶级 15%
+			if (effective >= baseW + zone * 0.6 - EPS) return 'A';   // 人上人 25%
+			if (effective >= baseW - EPS) return 'B';                // NPC 60%
+			if (effective >= baseW - zone * 0.4 - EPS) return 'C';   // C 段(基础下方)
 			return 'D';
+		},
+
+		get weightRatingLabel() {
+			// 评级趣味文案: S夯 / A+顶级 / A人上人 / B NPC / C·D拉完了(C/D 同文案, 配色仍分档)
+			return {
+				'S': '夯',
+				'A+': '顶级',
+				'A': '人上人',
+				'B': 'NPC',
+				'C': '拉完了',
+				'D': '拉完了'
+			}[this.weightRating] || '';
 		},
 
 		get weightRatingClass() {

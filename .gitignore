@@ -3,3 +3,5 @@ datalog.txt
 
 .DS_Store
 *.log
+
+_*

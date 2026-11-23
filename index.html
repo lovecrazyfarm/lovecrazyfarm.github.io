@@ -571,10 +571,35 @@
 
 			<!-- 作物基础信息和输入 -->
 			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="relative backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
-				<!-- 左上角果王次数（仅普通作物） -->
-				<div x-show="currentCrop && currentCrop.guowangCount != null"
-					 class="absolute top-2.5 left-2.5 z-20 px-2 py-0.5 rounded-full text-[0.65rem] font-semibold text-amber-700 bg-amber-50 border border-amber-200 shadow-sm">
-					果王参赛 <span x-text="currentCrop?.guowangCount ?? 0"></span> 次
+				<!-- 左上角果王次数（仅普通作物）: 点击展开/收起参赛详情 -->
+				<div x-show="currentCrop?.guowangInfo"
+					class="absolute top-2.5 left-2.5 z-30 w-fit">
+					<button type="button" @click="guowangOpen = !guowangOpen"
+						class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-semibold text-amber-700 bg-amber-50 border border-amber-200 shadow-sm hover:bg-amber-100 transition-colors">
+						果王参赛 <span x-text="currentCrop?.guowangInfo?.lines?.length ?? 0"></span> 次
+						<span class="text-[0.55rem]" x-text="guowangOpen ? '▲' : '▼'"></span>
+					</button>
+					<div x-show="guowangOpen" x-transition class="mt-1 w-64 max-w-[75vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left">
+					<template x-if="currentCrop?.guowangInfo">
+						<div class="space-y-1">
+							<div class="text-[0.65rem] font-bold text-amber-700">截止日期 国1 国100</div>
+							<template x-for="(line, idx) in currentCrop.guowangInfo.lines" :key="idx">
+								<div class="flex items-center gap-2 text-[0.65rem] text-amber-800 leading-snug">
+									<span x-text="line.date"></span>
+									<span class="inline-flex items-center flex-shrink-0">
+										<img :src="guowangImgSrc(line)" class="w-5 h-5 object-contain" @error="$event.target.style.display='none'">
+										<span class="-ml-0.5" x-text="line.t1"></span>
+									</span>
+									<span class="inline-flex items-center flex-shrink-0">
+										<img :src="guowangImgSrc(line)" class="w-5 h-5 object-contain" @error="$event.target.style.display='none'">
+										<span class="-ml-0.5" x-text="line.t2"></span>
+									</span>
+								</div>
+							</template>
+						</div>
+					</template>
+					<div x-show="!currentCrop?.guowangInfo" class="text-[0.65rem] text-amber-600/70">暂无参赛详情</div>
+					</div>
 				</div>
 				
 				<!-- 右上角星标按钮 -->
@@ -933,6 +958,7 @@ function farmCalculator() {
 		timeInput: '',
 		showMaturity: false,
 		mutationDescOpen: false,
+		guowangOpen: false,
 		checkedTags: new Map(),
 		modalOpen: false,
 		modalTitle: '',
@@ -1517,6 +1543,11 @@ function farmCalculator() {
 			this.renderUnselectedTags();
 		},
 
+		guowangImgSrc(line) {
+			// 图片类型: 全局 GUOWANG_IMGS 路径数组, 行内 img 为索引, 为空/不填/越界时回退首个
+			return GUOWANG_IMGS[line?.img ?? 0] || GUOWANG_IMGS[0] || '';
+		},
+
 		fitTimeInputs() {
 			// 重量/占比: 各作物统一为 [时间输入框+查看] 的总宽(三行左右边缘一致)
 			// 时间输入框: 经济作物贴合占位文本; 攻击作物(时间行隐藏)恢复默认样式
@@ -1559,6 +1590,7 @@ function farmCalculator() {
 			this.timeInput = '';
 			this.showMaturity = false;
 			this.isPriceFloating = false;
+			this.guowangOpen = false;
 		},
 
 		initCheckedTags() {

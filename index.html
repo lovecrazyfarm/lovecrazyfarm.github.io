@@ -502,7 +502,7 @@
 							<button @click="selectCategory(cat.id)" 
 									:class="(selectedCategory === cat.id && selectedCropId === null) ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-white/80 text-indigo-600 shadow-sm hover:bg-white'" 
 									class="px-5 py-1.5 rounded-3xl font-bold text-sm transition-all btn-outline hover:scale-105">
-								<span x-text="(selectedCropId !== null && cat.id === selectedCategory) ? '返回作物选择' : cat.name"></span>
+								<span x-text="(selectedCropId !== null && cat.id === selectedCategory) ? '返回' : cat.name"></span>
 							</button>
 						</template>
 					</div>

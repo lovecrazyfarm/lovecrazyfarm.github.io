@@ -1308,27 +1308,24 @@ function farmCalculator() {
 			if (effective >= baseW + zone * 0.85 - EPS) return 'A+'; // 顶级 15%
 			if (effective >= baseW + zone * 0.6 - EPS) return 'A';   // 人上人 25%
 			if (effective >= baseW - EPS) return 'B';                // NPC 60%
-			if (effective >= baseW - zone * 0.4 - EPS) return 'C';   // C 段(基础下方)
 			return 'D';
 		},
 
 		get weightRatingLabel() {
-			// 评级趣味文案: S夯 / A+顶级 / A人上人 / B NPC / C·D拉完了(C/D 同文案, 配色仍分档)
+			// 评级趣味文案: S夯 / A+顶级 / A人上人 / B NPC / C并D拉完了(统一用D样式)
 			return {
 				'S': '夯',
 				'A+': '顶级',
 				'A': '人上人',
 				'B': 'NPC',
-				'C': '拉完了',
 				'D': '拉完了'
 			}[this.weightRating] || '';
 		},
 
 		get weightRatingClass() {
-			// 无背景色, 文字颜色 + 同色系柔光区分: 灰 → 绿 → 蓝 → 紫 → 品红 → 金(S 最亮)
+			// 无背景色, 文字颜色 + 同色系柔光区分: 灰 → 蓝 → 紫 → 品红 → 金(S 最亮)
 			return {
 				'D': 'text-stone-400 drop-shadow-[0_0_5px_rgba(168,162,158,0.30)]',
-				'C': 'text-emerald-500 drop-shadow-[0_0_5px_rgba(16,185,129,0.30)]',
 				'B': 'text-sky-500 drop-shadow-[0_0_5px_rgba(14,165,233,0.30)]',
 				'A': 'text-violet-500 drop-shadow-[0_0_6px_rgba(139,92,246,0.35)]',
 				'A+': 'text-fuchsia-500 drop-shadow-[0_0_7px_rgba(217,70,239,0.40)]',

@@ -579,7 +579,7 @@
 						果王参赛 <span x-text="currentCrop?.guowangInfo?.lines?.length ?? 0"></span> 次
 						<span class="text-[0.55rem]" x-text="guowangOpen ? '▲' : '▼'"></span>
 					</button>
-					<div x-show="guowangOpen" x-transition class="mt-1 w-64 max-w-[75vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left">
+					<div x-show="guowangOpen" x-transition class="mt-1 w-fit max-w-[70vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left">
 					<template x-if="currentCrop?.guowangInfo">
 						<div class="space-y-1">
 							<div class="text-[0.65rem] font-bold text-amber-700">截止日期 &nbsp; &nbsp; &nbsp; &nbsp; 国1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 国100</div>

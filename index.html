@@ -317,6 +317,14 @@
 			font-weight: 700;
 			font-variant-numeric: tabular-nums;
 		}
+		/* 价格卡: 整圈描边(顶部也包裹) + 底部立体厚边 + 柔和投影 */
+		.price-card-3d {
+			border: 1px solid #c7d2fe;
+			box-shadow:
+				0 3px 0 0 #c7d2fe,
+				0 2px 6px rgba(99, 102, 241, 0.08),
+				0 8px 18px rgba(99, 102, 241, 0.16);
+		}
 		/* 评级框: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底), 固定尺寸按最宽文案预留, 评级变化不抖动 */
 		.rating-region {
 			border: 1px solid #dfe6fd;
@@ -541,7 +549,7 @@
 			</div>
 
 			<!-- 作物基础信息和输入 -->
-			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="relative backdrop-blur-sm rounded-2xl overflow-hidden shadow-md mb-6">
+			<div x-show="selectedCropId !== null" x-transition.duration.200ms><div id="priceCardPlaceholder" class="price-card-3d relative backdrop-blur-sm rounded-2xl overflow-hidden mb-6">
 				<!-- 左上角果王次数（仅普通作物）: 点击展开/收起参赛详情 -->
 				<div x-show="currentCrop?.guowangInfo"
 					class="absolute top-2.5 left-2.5 z-30 w-fit">

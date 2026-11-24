@@ -456,7 +456,31 @@
 				</div>
 			</div>
 
-			<div class="mb-6 pb-4 border-b border-blue-200">
+			<!-- 星标作物栏 -->
+			<div x-show="selectedCropId === null && starredCrops.length > 0" class="mb-3">
+				<button type="button" @click="toggleStarredOpen()"
+						class="text-xs font-semibold uppercase tracking-wider text-indigo-500 flex items-center gap-1.5 hover:text-indigo-600 transition-colors">
+					<span>星标作物</span>
+					<span class="text-[0.6rem]" x-text="starredOpen ? '▲' : '▼'"></span>
+				</button>
+				<div x-show="starredOpen" x-ref="starredGrid" class="grid grid-cols-[repeat(auto-fill,minmax(4.5rem,1fr))] gap-2">
+					<template x-for="crop in starredCrops" :key="'star_' + crop.id">
+						<button @click="selectCrop(crop)"
+								class="flex flex-col items-center w-full p-1.5 rounded-3xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
+							<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
+								<img :src="'img/crops/' + crop.id + '.png'" loading="lazy" decoding="async"
+									:alt="crop.name"
+									class="w-full h-full object-contain"
+									@error="$event.target.style.display='none'">
+							</div>
+							<span class="mt-1 text-xs font-semibold text-gray-700 text-center leading-tight"
+								x-text="crop.name"></span>
+						</button>
+					</template>
+				</div>
+			</div>
+
+			<div class="mb-4 pb-2">
 				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
 
 				<div class="flex flex-wrap items-center gap-3">
@@ -477,31 +501,7 @@
 				</div>
 			</div>
 
-			<div x-show="selectedCropId === null" class="mb-6 pb-4 border-b border-blue-200">
-				<!-- 星标作物栏 -->
-				<div x-show="starredCrops.length > 0" class="mb-4">
-					<button type="button" @click="toggleStarredOpen()"
-							class="text-xs font-semibold uppercase tracking-wider text-indigo-500 flex items-center gap-1.5 hover:text-indigo-600 transition-colors">
-						<span>星标作物</span>
-						<span class="text-[0.6rem]" x-text="starredOpen ? '▲' : '▼'"></span>
-					</button>
-					<div x-show="starredOpen" class="grid grid-cols-[repeat(auto-fill,minmax(4.5rem,1fr))] gap-2">
-						<template x-for="crop in starredCrops" :key="'star_' + crop.id">
-							<button @click="selectCrop(crop)"
-									class="flex flex-col items-center w-full p-1.5 rounded-3xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
-								<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
-									<img :src="'img/crops/' + crop.id + '.png'" loading="lazy" decoding="async"
-										:alt="crop.name"
-										class="w-full h-full object-contain"
-										@error="$event.target.style.display='none'">
-								</div>
-								<span class="mt-1 text-xs font-semibold text-gray-700 text-center leading-tight"
-									x-text="crop.name"></span>
-							</button>
-						</template>
-					</div>
-				</div>
-
+			<div x-show="selectedCropId === null" class="mb-4 pb-2">
 				<div x-ref="cropScroll" class="max-h-96 overflow-y-auto">
 					<div class="sticky top-0 z-10 bg-[#fefef7] py-2 text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-start gap-3">
 					<span x-text="selectedCategory === 'cat_attack' ? '攻击作物' : '经济作物'"></span>
@@ -1569,9 +1569,26 @@ function farmCalculator() {
 		},
 
 		toggleStarredOpen() {
+			const collapsing = this.starredOpen;
+			if (collapsing) {
+				// 收起时先同步预填作物区高度(按收起后的位置计算),
+				// 使页面总高度在收起前后保持不变, 避免底部流星区瞬间闪现
+				const el = this.$refs.cropScroll;
+				const grid = this.$refs.starredGrid;
+				if (el && grid && grid.offsetHeight > 0) {
+					const top = el.getBoundingClientRect().top;
+					const h = Math.max(window.innerHeight - (top - grid.offsetHeight), 240);
+					el.style.maxHeight = h + 'px';
+				}
+			}
 			this.starredOpen = !this.starredOpen;
 			try { localStorage.setItem('farmStarredOpen', this.starredOpen ? '1' : '0'); } catch (e) {}
-			this.$nextTick(() => this.fitCropScrollArea());
+			if (!collapsing) {
+				// 展开时交由 nextTick 重算(测量值与展开后终态一致);
+				// 收起时不能再调 fitCropScrollArea: nextTick 回调会在栅格隐藏前测量,
+				// 算出偏小的高度覆盖上面的预填值, 导致底部流星区闪现
+				this.$nextTick(() => this.fitCropScrollArea());
+			}
 		},
 
 		fitCropScrollArea() {

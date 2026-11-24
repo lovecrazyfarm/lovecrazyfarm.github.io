@@ -330,18 +330,18 @@
 			font-weight: 700;
 			font-variant-numeric: tabular-nums;
 		}
-		/* 评级框: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底), 仅包裹评级字母; 介绍按钮与悬浮面板见标记 */
+		/* 评级框: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底), 固定尺寸按最宽文案预留, 评级变化不抖动 */
 		.rating-region {
 			border: 1px solid #dfe6fd;
 			border-radius: 0.9rem;
 			background: #fff;
 			padding: 0.4rem 0.5rem 0.45rem;
+			width: 6rem;
+			height: 2.4rem;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-		}
-		@media (max-width: 639.98px) {
-			.rating-region { padding: 0.3rem 0.7rem 0.35rem; }
+			justify-content: center;
 		}
 		
 		/* ========== 按钮轮廓 ========== */

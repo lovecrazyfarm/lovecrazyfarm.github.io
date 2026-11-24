@@ -1,6 +1,6 @@
 const modals = {
 	changelog: { 
-		title: '更新日志 (开源、免费、无广告)', 
+		title: '更新日志', 
 		lines: [
 			'2026.11.24',
 			'• 优化了页面布局。',

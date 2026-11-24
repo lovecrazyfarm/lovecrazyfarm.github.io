@@ -242,16 +242,6 @@
 		}
 		.star-empty { color: #9ca3af; }
 		.star-empty:hover { color: #fbbf24; }
-		.starred-crop-item { position: relative; }
-		.starred-crop-item::after {
-			content: '★';
-			position: absolute;
-			top: 2px;
-			right: 4px;
-			font-size: 0.6rem;
-			color: #fbbf24;
-			text-shadow: 0 0 4px rgba(251, 191, 36, 0.8);
-		}
 
 		/* 作战属性卡片 */
 		.combat-card {
@@ -498,7 +488,7 @@
 					<div x-show="starredOpen" class="grid grid-cols-[repeat(auto-fill,minmax(4.5rem,1fr))] gap-2">
 						<template x-for="crop in starredCrops" :key="'star_' + crop.id">
 							<button @click="selectCrop(crop)"
-									class="starred-crop-item flex flex-col items-center w-full p-1.5 rounded-3xl transition-all hover:scale-105 hover:shadow-md bg-amber-50/70 hover:bg-amber-50 border border-amber-200/60">
+									class="flex flex-col items-center w-full p-1.5 rounded-3xl transition-all hover:scale-105 hover:shadow-md bg-white/60 hover:bg-white">
 								<div class="w-16 h-16 flex items-center justify-center rounded-lg overflow-hidden">
 									<img :src="'img/crops/' + crop.id + '.png'" loading="lazy" decoding="async"
 										:alt="crop.name"
@@ -622,7 +612,7 @@
 							<template x-if="!hasCropIntro">
 								<div class="text-base font-bold text-gray-800 truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></div>
 							</template>
-							<div x-show="introOpen && hasCropIntro" x-transition class="absolute top-full left-0 mt-1 w-64 max-w-[75vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-indigo-200 shadow-lg z-30 text-left">
+							<div x-show="introOpen && hasCropIntro" x-transition x-ref="introPop" @resize.window="if (introOpen) fitIntroBox()" class="absolute top-full left-0 mt-1 w-64 max-w-[75vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-indigo-200 shadow-lg z-30 text-left">
 								<div x-show="cropIntroTitle" class="font-semibold text-indigo-600 mb-0.5" x-text="cropIntroTitle"></div>
 								<div class="text-xs text-slate-600 leading-relaxed" x-text="cropIntroBody"></div>
 							</div>
@@ -1023,7 +1013,24 @@ function farmCalculator() {
 
 		toggleIntro() {
 			this.introOpen = !this.introOpen;
-			if (this.introOpen) this.detailOpenAll = false;
+			if (this.introOpen) {
+				this.detailOpenAll = false;
+				this.$nextTick(() => this.fitIntroBox());
+			}
+		},
+
+		// 介绍(story)框尺寸自适应: 限制在价格卡片内部, 不超出卡片边界
+		fitIntroBox() {
+			const box = this.$refs.introPop;
+			const card = document.getElementById('priceCardPlaceholder');
+			if (!box || !card) return;
+			const cardRect = card.getBoundingClientRect();
+			const anchor = box.parentElement.getBoundingClientRect();
+			const safe = 8; // 与卡片边缘保留的安全间距
+			const availW = cardRect.right - anchor.left - safe;
+			const availH = cardRect.bottom - (anchor.bottom + 4) - safe; // 4 = mt-1
+			box.style.maxWidth = Math.max(120, availW) + 'px';
+			box.style.maxHeight = Math.max(60, availH) + 'px';
 		},
 
 		toggleAllDetails() {

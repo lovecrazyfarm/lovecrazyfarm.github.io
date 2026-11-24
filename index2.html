@@ -117,107 +117,7 @@
 			.time-input-group { min-width: 100%; }
 		}
 
-		.ufo-dome {
-			position: absolute;
-			top: 0; left: 50%;
-			transform: translateX(-50%);
-			width: 18px;
-			height: 6px;
-			background: #a78bfa;
-			box-shadow: 
-				-4px 6px 0 #a78bfa, 4px 6px 0 #a78bfa,
-				-8px 12px 0 #8b5cf6, 8px 12px 0 #8b5cf6;
-			z-index: 3;
-		}
-		.ufo-dome::before {
-			content: '';
-			position: absolute;
-			top: 0; left: 4px;
-			width: 10px; height: 2px;
-			background: #c4b5fd;
-		}
 		
-		.ufo-body {
-			position: absolute;
-			top: 12px; left: 0;
-			width: 100%;
-			height: 14px;
-			background: #6d28d9;
-			clip-path: polygon(
-				10% 0, 90% 0, 
-				100% 30%, 100% 70%, 
-				90% 100%, 10% 100%, 
-				0 70%, 0 30%
-			);
-			z-index: 4;
-			box-shadow: inset 0 -4px 0 #4c1d95;
-		}
-		
-		.ufo-lights {
-			position: absolute;
-			top: 18px; left: 50%;
-			transform: translateX(-50%);
-			width: 28px;
-			height: 2px;
-			background: transparent;
-			z-index: 5;
-			display: flex;
-			justify-content: space-between;
-		}
-		.ufo-lights::before,
-		.ufo-lights::after,
-		.ufo-lights span {
-			content: '';
-			display: block;
-			width: 3px; height: 2px;
-		}
-		.ufo-lights::before { background: #f87171; box-shadow: 0 0 4px #f87171; }
-		.ufo-lights::after { background: #22d3ee; box-shadow: 0 0 4px #22d3ee; }
-		.ufo-lights span { background: #fbbf24; box-shadow: 0 0 4px #fbbf24; }
-		
-		.ufo-beam {
-			position: absolute;
-			top: 26px; left: 50%;
-			transform: translateX(-50%);
-			width: 36px;
-			height: 20px;
-			background: rgba(167, 139, 250, 0.5);
-			clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
-			z-index: 2;
-			animation: ufo-beam-pulse 1s steps(2) infinite;
-		}
-		.ufo-beam::before {
-			content: '';
-			position: absolute;
-			inset: 0;
-			background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px);
-		}
-		
-		.mini-ufo {
-			position: absolute;
-			top: 10px;
-			right: 20px;
-			width: 60px;
-			height: 40px;
-			z-index: 20;
-			pointer-events: none;
-			transform-origin: top right;
-			animation: ufo-wander 12s ease-in-out infinite alternate;
-		}
-		
-		@keyframes ufo-wander {
-			0% { transform: translate(0, 0) scale(0.8) rotate(0deg); }
-			25% { transform: translate(-100px, -10px) scale(0.8) rotate(-5deg); }
-			50% { transform: translate(-200px, 15px) scale(0.8) rotate(5deg); }
-			75% { transform: translate(-80px, -5px) scale(0.8) rotate(-3deg); }
-			100% { transform: translate(0, 0) scale(0.8) rotate(0deg); }
-		}
-		
-		@keyframes ufo-beam-pulse {
-			0%, 100% { opacity: 0.4; }
-			50% { opacity: 1; }
-		}
-
 		/* 星标按钮样式 */
 		.star-btn {
 			transition: transform 0.15s ease, color 0.15s ease;
@@ -470,12 +370,6 @@
 				疯狂农场作物价格计算器
 			</h2>
 			
-			<div class="mini-ufo">
-				<div class="ufo-dome"></div>
-				<div class="ufo-body"></div>
-				<div class="ufo-lights"></div>
-				<div class="ufo-beam"></div>
-			</div>
 		</div>
 
 		<div class="p-6 md:p-8 content-bg">

@@ -150,7 +150,7 @@ const itemsData = [
 		story:{body:'曾经的常驻种子，于 2026.10.29 下线，据说后来能在种子合成概率获得'},
 	},
 	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10881.881, maxWeight: 34, growthSpeed: 990, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
-		story:{body:'是挺值钱的，但非的非完了，欧的欧麻了，这**合成爆率'},
+		story:{body:'据说有人从上线至今合成出过0个狗'},
 	},
 	
 	{ id: 'item_yuechanchu', name: '月蟾蜍', basePrice: 9797.8, maxWeight: 34, growthSpeed: 990, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },

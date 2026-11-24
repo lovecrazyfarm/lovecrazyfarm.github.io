@@ -520,11 +520,15 @@
 							x-model="cropSearch" 
 							placeholder="搜索作物" 
 							class="px-3 py-1.5 pr-8 rounded-full border border-blue-200 bg-white text-xs outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200 w-48 sm:w-64 transition-all">
-						<button x-show="cropSearch" @click="cropSearch = ''" 
+						<button x-show="cropSearch" @click="cropSearch = ''"
 								class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
 							&times;
 						</button>
 					</div>
+					<label class="flex items-center gap-1 flex-shrink-0 cursor-pointer">
+						<span class="text-[0.65rem] text-indigo-500">高价优先</span>
+						<input type="checkbox" x-model="highPriceFirst" class="w-3.5 h-3.5 text-indigo-500 rounded border-indigo-300 focus:ring-indigo-400 cursor-pointer">
+					</label>
 				</div>
 
 				<div class="grid grid-cols-[repeat(auto-fill,minmax(4.5rem,1fr))] gap-2">
@@ -955,6 +959,7 @@ function farmCalculator() {
 		lastPrice: 0,
 		_clearTimer: null,
 		quickSelectMax: false,
+		highPriceFirst: false,
 
 		historyOpen: false,
 		historyList: [],
@@ -1074,6 +1079,11 @@ function farmCalculator() {
 			return { level0, level1, level2 };
 		},
 
+		cropMaxPrice(crop) {
+			// 果实在最大重量时的价格(不计突变): basePrice × maxWeight^1.5
+			return (crop.basePrice || 0) * Math.pow(crop.maxWeight || 0, 1.5);
+		},
+
 		get filteredCrops() {
 			let crops = itemsData.filter(c => c.categories.includes(this.selectedCategory));
 			
@@ -1094,6 +1104,10 @@ function farmCalculator() {
 		
 			if (this.focusMode && this.selectedCropId) {
 				crops = crops.filter(c => c.id === this.selectedCropId);
+			}
+			if (this.highPriceFirst) {
+				// 勾选高价优先: 按果实在最大重量时的价格从高到低
+				return crops.sort((a, b) => this.cropMaxPrice(b) - this.cropMaxPrice(a));
 			}
 			return crops.sort((b, a) => (a.priority || 999) - (b.priority || 999));
 		},

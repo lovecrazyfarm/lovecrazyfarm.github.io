@@ -509,7 +509,8 @@
 					</div>
 				</div>
 
-				<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-start gap-3">
+				<div x-ref="cropScroll" class="max-h-96 overflow-y-auto">
+					<div class="sticky top-0 z-10 bg-white py-2 text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-start gap-3">
 					<span x-text="selectedCategory === 'cat_attack' ? '攻击作物' : '经济作物'"></span>
 					<div class="relative">
 						<input type="text" 
@@ -538,6 +539,7 @@
 						</button>
 					</template>
 					<div x-show="filteredCrops.length === 0" class="w-full text-center py-6 text-indigo-400 text-sm">无可选作物</div>
+					</div>
 				</div>
 			</div>
 
@@ -1000,6 +1002,7 @@ function farmCalculator() {
 				this.starredCropIds.splice(idx, 1);
 			}
 			this.saveStars();
+			this.$nextTick(() => this.fitCropScrollArea());
 		},
 
 		saveStars() {
@@ -1397,6 +1400,8 @@ function farmCalculator() {
 					if (!this.weightInput || !this.percentInput || !this.timeInput) this.showMaturity = false;
 				});
 			});
+			this.$nextTick(() => this.fitCropScrollArea());
+			window.addEventListener('resize', () => this.fitCropScrollArea());
 			
 
 			
@@ -1499,6 +1504,7 @@ function farmCalculator() {
 			this.introOpen = false;
 			this.detailOpenAll = false;
 			this.renderUnselectedTags();
+			this.$nextTick(() => this.fitCropScrollArea());
 		},
 
 		selectCrop(crop) {
@@ -1552,6 +1558,15 @@ function farmCalculator() {
 		guowangImgSrc(line) {
 			// 图片类型: 全局 GUOWANG_IMGS 路径数组, 行内 img 为索引, 为空/不填/越界时回退首个
 			return GUOWANG_IMGS[line?.img ?? 0] || GUOWANG_IMGS[0] || '';
+		},
+
+		fitCropScrollArea() {
+			// 作物选择区高度自适应: 铺满视口剩余空间(电脑/手机通用), 底部留 12px 呼吸, 最小 240px
+			const el = this.$refs.cropScroll;
+			if (!el) return;
+			const top = el.getBoundingClientRect().top;
+			const h = Math.max(window.innerHeight - top - 12, 240);
+			el.style.maxHeight = h + 'px';
 		},
 
 		fitTimeInputs() {

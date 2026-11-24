@@ -330,16 +330,7 @@
 			font-weight: 700;
 			font-variant-numeric: tabular-nums;
 		}
-		.intro-pop {
-			margin-top: 0.4rem;
-			padding: 0.1rem 0.4rem 0;
-			font-size: 0.7rem;
-			color: #334155;
-			line-height: 1.45;
-			text-align: center;
-		}
-		/* 评级 + 介绍 组合区域: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底)
-		   桌面端竖排(上评级下介绍); 手机端上部改横排 [字母|分隔线|按钮], 更紧凑平衡 */
+		/* 评级框: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底), 仅包裹评级字母; 介绍按钮与悬浮面板见标记 */
 		.rating-region {
 			border: 1px solid #dfe6fd;
 			border-radius: 0.9rem;
@@ -349,27 +340,8 @@
 			flex-direction: column;
 			align-items: center;
 		}
-		.rating-region-top {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-		.rating-divider { display: none; }
 		@media (max-width: 639.98px) {
 			.rating-region { padding: 0.3rem 0.7rem 0.35rem; }
-			.rating-region-top {
-				flex-direction: row;
-				align-items: center;
-				gap: 0.55rem;
-			}
-			.rating-divider {
-				display: block;
-				width: 1px;
-				height: 1.5rem;
-				background: linear-gradient(to bottom, rgba(199,210,254,0), #c7d2fe 30%, #c7d2fe 70%, rgba(199,210,254,0));
-				border-radius: 1px;
-				flex-shrink: 0;
-			}
 		}
 		
 		/* ========== 按钮轮廓 ========== */
@@ -630,28 +602,35 @@
 					</div>
 				
 					<div class="flex-1 sm:flex-none min-w-0 text-left">
-						<div class="text-base font-bold text-gray-800 truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></div>
+						<div class="relative w-fit max-w-full">
+							<template x-if="hasCropIntro">
+								<button type="button" @click="toggleIntro()"
+										class="inline-flex items-center gap-1 max-w-full text-base font-bold text-gray-800 hover:text-indigo-600 transition-colors">
+									<span class="truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></span>
+									<span class="text-[0.6rem] flex-shrink-0" x-text="introOpen ? '▲' : '▼'"></span>
+								</button>
+							</template>
+							<template x-if="!hasCropIntro">
+								<div class="text-base font-bold text-gray-800 truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></div>
+							</template>
+							<div x-show="introOpen && hasCropIntro" x-transition class="absolute top-full left-0 mt-1 w-64 max-w-[75vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-indigo-200 shadow-lg z-30 text-left">
+								<div x-show="cropIntroTitle" class="font-semibold text-indigo-600 mb-0.5" x-text="cropIntroTitle"></div>
+								<div class="text-xs text-slate-600 leading-relaxed" x-text="cropIntroBody"></div>
+							</div>
+						</div>
 						
 						<div x-show="!currentCrop?.combat" class="flex items-center gap-0.5">
 							<img src="img/misc/fengkuangbi.png" alt="icon" class="w-10 h-10 object-contain flex-shrink-0 drop-shadow-sm">
 							<div class="text-3xl font-extrabold text-indigo-600 leading-tight" x-text="formattedPrice"></div>
 						</div>
-						<!-- 重量评级 + 介绍(仅攻击作物): 类似作战卡片的包裹式区域 — 上评级文本、下介绍按钮 -->
-						<div x-show="currentCrop?.combat" class="rating-region w-fit sm:w-auto mt-1">
-							<div class="rating-region-top">
+						<!-- 重量评级(仅攻击作物): 评级框只包字母; 介绍已移入作物名称的展开面板 -->
+						<div x-show="currentCrop?.combat" class="w-fit mt-1">
+							<div class="rating-region">
 								<template x-if="weightRating">
 									<span :class="weightRatingClass"
 										class="text-2xl font-black italic leading-none select-none transition-all duration-300"
-										x-text="weightRatingLabel"></span>
+									x-text="weightRatingLabel"></span>
 								</template>
-								<span class="rating-divider" x-show="weightRating"></span>
-								<button @click="toggleIntro()" class="sm:mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-3xl text-[0.65rem] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors">
-									<span class="text-[0.6rem]" x-text="introOpen ? '▲' : '▼'"></span>
-								</button>
-							</div>
-							<div x-show="introOpen" x-transition class="intro-pop">
-								<div class="font-semibold text-indigo-600 mb-0.5" x-text="currentCrop?.combat?.attackType === 'range' ? '范围攻击' : '单体攻击'"></div>
-								<div x-text="currentCrop?.combat?.story || '暂无介绍'"></div>
 							</div>
 						</div>
 					</div>
@@ -1323,13 +1302,13 @@ function farmCalculator() {
 		},
 
 		get weightRatingClass() {
-			// 无背景色, 文字颜色 + 同色系柔光区分: 灰 → 蓝 → 紫 → 品红 → 金(S 最亮)
+			// 无背景色, 文字颜色 + 同色系柔光: 夯红 → 顶级橙 → 人上人黄 → NPC紫(原A色) → 拉完了灰
 			return {
-				'D': 'text-stone-400 drop-shadow-[0_0_5px_rgba(168,162,158,0.30)]',
-				'B': 'text-sky-500 drop-shadow-[0_0_5px_rgba(14,165,233,0.30)]',
-				'A': 'text-violet-500 drop-shadow-[0_0_6px_rgba(139,92,246,0.35)]',
-				'A+': 'text-fuchsia-500 drop-shadow-[0_0_7px_rgba(217,70,239,0.40)]',
-				'S': 'text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.55)]'
+				'S': 'text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.55)]',
+				'A+': 'text-orange-500 drop-shadow-[0_0_7px_rgba(249,115,22,0.40)]',
+				'A': 'text-yellow-500 drop-shadow-[0_0_6px_rgba(234,179,8,0.35)]',
+				'B': 'text-violet-500 drop-shadow-[0_0_6px_rgba(139,92,246,0.35)]',
+				'D': 'text-stone-400 drop-shadow-[0_0_5px_rgba(168,162,158,0.30)]'
 			}[this.weightRating] || '';
 		},
 
@@ -1550,6 +1529,24 @@ function farmCalculator() {
 				if (this.selectedCropId !== null) this.fitTimeInputs();
 			});
 			this.renderUnselectedTags();
+		},
+
+		get hasCropIntro() {
+			// 介绍数据存在(有正文或自定义标题)时名称才可展开, 否则保持纯文本旧样式
+			const s = this.currentCrop?.story;
+			return !!(s && (s.body || s.title));
+		},
+
+		get cropIntroTitle() {
+			// 标题: story.title 自定义优先; 缺省时攻击作物由 attackType 赋默认文本, 经济作物无标题
+			const s = this.currentCrop?.story;
+			if (s && s.title) return s.title;
+			const c = this.currentCrop?.combat;
+			return c ? (c.attackType === 'range' ? '范围攻击' : '单体攻击') : '';
+		},
+
+		get cropIntroBody() {
+			return this.currentCrop?.story?.body || '';
 		},
 
 		guowangImgSrc(line) {

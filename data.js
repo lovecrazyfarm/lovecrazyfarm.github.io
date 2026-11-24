@@ -332,6 +332,7 @@ const battleItemsData = [
 	{
 		id: 'item_weiquzhangzhang', name: '委屈掌掌', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+		story: { body: '向前发射突刺' },
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 27,
@@ -339,7 +340,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.193,
 			attackType: 'range',
 			rangeRadius: 8,
-			story: '向前发射突刺',
 			attackPowerK: 12.38,
 			attackPowerExp: 2.55,
 		}
@@ -347,6 +347,7 @@ const battleItemsData = [
 	{
 		id: 'item_jianjiaohuahua', name: '尖叫花花', basePrice: 0, maxWeight: 1.47, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '发射声波造成群体眩晕' },
 		combat: {
 			baseWeight: 1.05,
 			baseAttack: 17,
@@ -354,7 +355,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.194,
 			attackType: 'range',
 			rangeRadius: 10.5,
-			story: '发射声波造成群体眩晕',
 			attackPowerK: 15.1,
 			attackPowerExp: 2.5,
 		}
@@ -362,6 +362,7 @@ const battleItemsData = [
 	{
 		id: 'item_duqijiaojiao', name: '赌气椒椒', basePrice: 0, maxWeight: 1.68, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '朝前方扇形范围喷火。伤害值为最大生命值百分比' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 14,
@@ -369,7 +370,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.202315,
 			attackType: 'range',
 			rangeRadius: 10.5,
-			story: '朝前方扇形范围喷火。伤害值为最大生命值百分比',
 			attackPowerK: 8.8,
 			attackPowerExp: 2.5,
 		}
@@ -377,6 +377,7 @@ const battleItemsData = [
 	{
 		id: 'item_pengpengshiliu', name: '砰砰石榴', basePrice: 0, maxWeight: 2.31, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '投掷石榴籽。蛋仔可靠近成为炮弹' },
 		combat: {
 			baseWeight: 1.65,
 			baseAttack: 30,
@@ -384,7 +385,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.19,
 			attackType: 'single',
 			rangeRadius: 16,
-			story: '投掷石榴籽。蛋仔可靠近成为炮弹',
 			attackPowerK: 8.55,
 			attackPowerExp: 2.5,
 		}
@@ -392,6 +392,7 @@ const battleItemsData = [
 	{
 		id: 'item_dongdongnangua', name: '咚咚南瓜', basePrice: 0, maxWeight: 1.68, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '拳法攻击' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 36,
@@ -399,13 +400,13 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.21,
 			attackType: 'range',
 			rangeRadius: 10.5,
-			story: '拳法攻击',
 			attackPowerK: 22.800631,  attackPowerExp: 2.470816,
 		}
 	},
 	{
 		id: 'item_dundundaxiang', name: '墩墩大象', basePrice: 0, maxWeight: 2.31, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '拖鞋拍击' },
 		combat: {
 			baseWeight: 1.65,
 			baseAttack: 22,
@@ -413,7 +414,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.204,
 			attackType: 'range',
 			rangeRadius: 16,
-			story: '拖鞋拍击',
 			attackPowerK: 6.3,
 			attackPowerExp: 2.5,
 		}
@@ -421,6 +421,7 @@ const battleItemsData = [
 	{
 		id: 'item_baobaoyumi', name: '爆爆玉米', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '朝正前方发射玉米粒' },
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 55,
@@ -428,7 +429,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.19758,
 			attackType: 'single',
 			rangeRadius: 16,
-			story: '朝正前方发射玉米粒',
 			attackPowerK: 25.756809,
 			attackPowerExp: 2.529811,
 		}
@@ -436,6 +436,7 @@ const battleItemsData = [
 	{
 		id: 'item_niuniuhuangguashe', name: '扭扭黄瓜蛇', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '使用身体进行拍打' },
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 39,
@@ -443,7 +444,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.21,
 			attackType: 'single',
 			rangeRadius: 4,
-			story: '使用身体进行拍打',
 			attackPowerK: 18.22099,
 			attackPowerExp: 2.51791,
 		}
@@ -451,6 +451,7 @@ const battleItemsData = [
 	{
 		id: 'item_pipixiangjiaohou', name: '皮皮香蕉猴', basePrice: 0, maxWeight: 2.1, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '投掷回旋镖。回旋镖会在相邻敌方间弹跳' },
 		combat: {
 			baseWeight: 1.5,
 			baseAttack: 18,
@@ -458,13 +459,13 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.22,
 			attackType: 'range',
 			rangeRadius: 16,
-			story: '投掷回旋镖。回旋镖会在相邻敌方间弹跳',
 			attackPowerK: 6.616951,  attackPowerExp: 2.477939,
 		}
 	},
 	{
 		id: 'item_yaoyaofengling', name: '摇摇风铃', basePrice: 0, maxWeight: 1.68, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '发射音符子弹。伤害值为最大生命值百分比' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 11,
@@ -472,13 +473,13 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.196752,
 			attackType: 'single',
 			rangeRadius: 13.5,
-			story: '发射音符子弹。伤害值为最大生命值百分比',
 			attackPowerK: 6.59,  attackPowerExp: 2.6,
 		}
 	},
 	{
 		id: 'item_zhamaopupu', name: '炸毛蒲蒲', basePrice: 0, maxWeight: 1.47, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '收获触发爆炸' },
 		combat: {
 			baseWeight: 1.05,
 			baseAttack: 600,
@@ -486,13 +487,13 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.1,
 			attackType: 'range',
 			rangeRadius: 12.5,
-			story: '收获触发爆炸',
 			attackPowerK: 532.954283,  attackPowerExp: 2.488798,
 		}
 	},
 	{
 		id: 'item_youyameimei', name: '优雅玫玫', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '使用藤蔓抽打前方敌人。面对面种植可形成绊索' },
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 45,
@@ -500,13 +501,13 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.19,
 			attackType: 'single',
 			rangeRadius: 8,
-			story: '使用藤蔓抽打前方敌人。面对面种植可形成绊索',
 			attackPowerK: 21.19, attackPowerExp: 2.5,
 		}
 	},
 	{
 		id: 'item_mimihongzhang', name: '蜜蜜红掌', basePrice: 0, maxWeight: 1.68, growthSpeed: 0,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
+	story: { body: '给范围内一株作物提供攻击力&速度加成' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 1,
@@ -514,7 +515,6 @@ const battleItemsData = [
 			cooldownWeightBonus: 0.1,
 			attackType: 'single',
 			rangeRadius: 6,
-			story: '给范围内一株作物提供攻击力&速度加成',
 			attackPowerK: 0.001, attackPowerExp: 0.001,
 		}
 	},

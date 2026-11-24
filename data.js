@@ -86,7 +86,7 @@ const tagLibrary = {
 	'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.4, synthesis: [], synDel: [] },
 	'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.51, synthesis: [], synDel: [] },
 	
-	'youyounangua2': { id: 'youyounangua2', name: '幽幽南瓜', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.7, synthesis: [], synDel: [] },
+	'youyounangua2': { id: 'youyounangua2', name: '幽幽南瓜', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.91, synthesis: [], synDel: [] },
 	'guzhang2': { id: 'guzhang2', name: '故障', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.7, synthesis: [], synDel: [] },
 	'hajimi2': { id: 'hajimi2', name: '哈基咪', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.9, synthesis: [], synDel: [] },
 	'jinbi2': { id: 'jinbi2', name: '金币', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.6, synthesis: [], synDel: [] },
@@ -134,21 +134,26 @@ const exclusiveGroups = [
 const itemsData = [
 	// 幻彩
 	{ id: 'item_xuelian', name: '雪莲', basePrice: 56996.64, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_yinxing', name: '银杏', basePrice: 93750.6, maxWeight: 5.1, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yinxing', name: '银杏', basePrice: 93750.6, maxWeight: 5.1, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority, },
 	{ id: 'item_chenjingdefengxiangnangua', name: '沉静的疯象南瓜', basePrice: 8781.526, maxWeight: 45.2, growthSpeed: 799.12, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	
-	{ id: 'item_qiushuixian', name: '秋水仙', basePrice: 10342.25, maxWeight: 34, growthSpeed: 705.8824, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_qiushuixian', name: '秋水仙', basePrice: 10342.25, maxWeight: 34, growthSpeed: 705.8824, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
+	},
 	{ id: 'item_tiaowudeshidaila', name: '跳舞的柿黛拉', basePrice: 8781.526, maxWeight: 45.2, growthSpeed: 799.12, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
-	{ id: 'item_linglanyouyou', name: '铃兰幽幽', basePrice: 12082.314, maxWeight: 23.8, growthSpeed: 1399.16, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_linglanyouyou', name: '铃兰幽幽', basePrice: 12082.314, maxWeight: 23.8, growthSpeed: 1399.16, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
+		story:{body:'第3届果王争霸赛奖励种子'} },
 	{ id: 'item_matilian', name: '马蹄莲', basePrice: 5081.2, maxWeight: 17, growthSpeed: 571.77, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_luhui', name: '芦荟', basePrice: 54636.33, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
-		guowangInfo:{lines:[{date:'2026-07-26', t1:'54.6亿', t2:'33亿'}]}},
+		guowangInfo:{lines:[{date:'2026-07-26', t1:'54.6亿', t2:'33亿'}]},
+		story:{body:'曾经的常驻种子，于 2026.10.29 下线，据说后来能在种子合成概率获得'},
+	},
 	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10881.881, maxWeight: 34, growthSpeed: 990, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	
 	{ id: 'item_yuechanchu', name: '月蟾蜍', basePrice: 9797.8, maxWeight: 34, growthSpeed: 990, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_bianhua', name: '彼岸花', basePrice: 49684.72, maxWeight: 10.2, growthSpeed: 2908.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-08-02', t1:'66.9亿', t2:'36.2亿'}]}},
-	{ id: 'item_yuetu', name: '月兔', basePrice: 11154.54, maxWeight: 23.8, growthSpeed: 1523, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_yuetu', name: '月兔', basePrice: 11154.54, maxWeight: 23.8, growthSpeed: 1523, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
+		story:{body:'第2届果王争霸赛奖励种子'} },
 	{ id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 5125, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_xingkongmeigui', name: '星空玫瑰', basePrice: 33134.09, maxWeight: 10.2, growthSpeed: 2966.6, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-08-09', t1:'47.9亿', t2:'27.9亿'}]}},
@@ -156,7 +161,8 @@ const itemsData = [
 		guowangInfo:{lines:[{date:'2026-04-12', img:1, t1:'35.8亿', t2:'19.9亿'}]}},
 	{ id: 'item_yueyingmei', name: '月影梅', basePrice: 75418, maxWeight: 3.4, growthSpeed: 4022.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	
-	{ id: 'item_moguichaotianjiao', name: '魔鬼朝天椒', basePrice: 33143.6022, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_moguichaotianjiao', name: '魔鬼朝天椒', basePrice: 33143.6022, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
+		story:{body:'第1届果王争霸赛奖励种子'} },
 	{ id: 'item_pantao', name: '蟠桃', basePrice: 8780.9359, maxWeight: 20.4, growthSpeed: 1332.353, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-01-25', t1:'19.4亿', t2:'12.3亿'}]}},
 	{ id: 'item_xianrenzhangxiang', name: '仙人掌象', basePrice: 9525.0487, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
@@ -170,7 +176,8 @@ const itemsData = [
 	{ id: 'item_songguo', name: '松果', basePrice: 4614.5318, maxWeight: 17, growthSpeed: 570, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-01-11', t1:'8.1亿', t2:'4.9亿'}]}},
 	{ id: 'item_xiangrikui', name: '向日葵', basePrice: 370.3206, maxWeight: 51, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangrikui', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
-		guowangInfo: { lines: [{ date: '2026-01-18', t1: '12.9亿', t2: '3.8亿' }, { date: '2026-08-16', t1: '24.7亿', t2: '6.9亿' }] } },
+		guowangInfo:{lines: [{ date: '2026-01-18', t1: '12.9亿', t2: '3.8亿' }, { date: '2026-08-16', t1: '24.7亿', t2: '6.9亿' }]},
+	},
 
 	// 橙
 	{ id: 'item_zanghonghua', name: '藏红花', basePrice: 4286.443, maxWeight: 20.4,  growthSpeed: 571.77, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.YHS.color, priority: FC.YHS.priority },
@@ -347,7 +354,7 @@ const battleItemsData = [
 	{
 		id: 'item_jianjiaohuahua', name: '尖叫花花', basePrice: 0, maxWeight: 1.47, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '发射声波造成群体眩晕' },
+		story: { body: '发射声波造成群体眩晕' },
 		combat: {
 			baseWeight: 1.05,
 			baseAttack: 17,
@@ -362,7 +369,7 @@ const battleItemsData = [
 	{
 		id: 'item_duqijiaojiao', name: '赌气椒椒', basePrice: 0, maxWeight: 1.68, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '朝前方扇形范围喷火。伤害值为最大生命值百分比' },
+		story: { body: '朝前方扇形范围喷火。伤害值为最大生命值百分比' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 14,
@@ -377,7 +384,7 @@ const battleItemsData = [
 	{
 		id: 'item_pengpengshiliu', name: '砰砰石榴', basePrice: 0, maxWeight: 2.31, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '投掷石榴籽。蛋仔可靠近成为炮弹' },
+		story: { body: '投掷石榴籽。蛋仔可靠近成为炮弹' },
 		combat: {
 			baseWeight: 1.65,
 			baseAttack: 30,
@@ -392,7 +399,7 @@ const battleItemsData = [
 	{
 		id: 'item_dongdongnangua', name: '咚咚南瓜', basePrice: 0, maxWeight: 1.68, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '拳法攻击' },
+		story: { body: '拳法攻击' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 36,
@@ -406,7 +413,7 @@ const battleItemsData = [
 	{
 		id: 'item_dundundaxiang', name: '墩墩大象', basePrice: 0, maxWeight: 2.31, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '拖鞋拍击' },
+		story: { body: '拖鞋拍击' },
 		combat: {
 			baseWeight: 1.65,
 			baseAttack: 22,
@@ -421,7 +428,7 @@ const battleItemsData = [
 	{
 		id: 'item_baobaoyumi', name: '爆爆玉米', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '朝正前方发射玉米粒' },
+		story: { body: '朝正前方发射玉米粒' },
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 55,
@@ -436,7 +443,7 @@ const battleItemsData = [
 	{
 		id: 'item_niuniuhuangguashe', name: '扭扭黄瓜蛇', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '使用身体进行拍打' },
+		story: { body: '使用身体进行拍打' },
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 39,
@@ -451,7 +458,7 @@ const battleItemsData = [
 	{
 		id: 'item_pipixiangjiaohou', name: '皮皮香蕉猴', basePrice: 0, maxWeight: 2.1, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '投掷回旋镖。回旋镖会在相邻敌方间弹跳' },
+		story: { body: '投掷回旋镖。回旋镖会在相邻敌方间弹跳' },
 		combat: {
 			baseWeight: 1.5,
 			baseAttack: 18,
@@ -465,7 +472,7 @@ const battleItemsData = [
 	{
 		id: 'item_yaoyaofengling', name: '摇摇风铃', basePrice: 0, maxWeight: 1.68, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '发射音符子弹。伤害值为最大生命值百分比' },
+		story: { body: '发射音符子弹。伤害值为最大生命值百分比' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 11,
@@ -479,7 +486,7 @@ const battleItemsData = [
 	{
 		id: 'item_zhamaopupu', name: '炸毛蒲蒲', basePrice: 0, maxWeight: 1.47, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '收获触发爆炸' },
+		story: { body: '收获触发爆炸' },
 		combat: {
 			baseWeight: 1.05,
 			baseAttack: 600,
@@ -493,7 +500,7 @@ const battleItemsData = [
 	{
 		id: 'item_youyameimei', name: '优雅玫玫', basePrice: 0, maxWeight: 1.89, growthSpeed: 1,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '使用藤蔓抽打前方敌人。面对面种植可形成绊索' },
+		story: { body: '使用藤蔓抽打前方敌人。面对面种植可形成绊索' },
 		combat: {
 			baseWeight: 1.35,
 			baseAttack: 45,
@@ -507,7 +514,7 @@ const battleItemsData = [
 	{
 		id: 'item_mimihongzhang', name: '蜜蜜红掌', basePrice: 0, maxWeight: 1.68, growthSpeed: 0,
 		categories: ['cat_attack'], tagGroups: ['group_basic'], fillColor: '#f97316', priority: 1,
-	story: { body: '给范围内一株作物提供攻击力&速度加成' },
+		story: { body: '给范围内一株作物提供攻击力&速度加成' },
 		combat: {
 			baseWeight: 1.2,
 			baseAttack: 1,

@@ -10,9 +10,6 @@
 
 	<script src="data.js" defer></script>
 	<script src="modals.js" defer></script>
-	<script>
-		window.CHANGELOG_VERSION = '2026-11-24-1';
-	</script>
 	
 	<script src="tailwind-3.4.17.min.js"></script>
 	<script src="alpine-3.17.1.min.js" defer></script>
@@ -433,9 +430,6 @@
 					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
 						<path d="M4 6h16M4 12h16M4 18h16"/>
 					</svg>
-					<span x-show="hasUnreadChangelog"
-						class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white animate-pulse"
-						style="display:none;"></span>
 				</button>
 				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1 whitespace-nowrap">
 					不烧心的提醒群
@@ -459,12 +453,9 @@
 					<button @click="sideMenuOpen = false" class="text-indigo-400 hover:text-indigo-600 text-xl leading-none">&times;</button>
 				</div>
 				<div class="p-3 flex flex-col gap-2">
-					<button @click="openModal('changelog'); markChangelogRead(); sideMenuOpen = false"
+					<button @click="openModal('changelog'); sideMenuOpen = false"
 							class="relative w-full px-4 py-2 rounded-3xl text-sm text-indigo-700 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors text-left">
 						更新日志
-						<span x-show="hasUnreadChangelog"
-							  class="absolute top-1.5 right-2.5 w-2.5 h-2.5 bg-rose-500 rounded-full animate-pulse"
-							  style="display:none;"></span>
 					</button>
 					<button @click="openModal('contact'); sideMenuOpen = false"
 							class="w-full px-4 py-2 rounded-3xl text-sm text-indigo-700 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors text-left">联系作者</button>
@@ -499,10 +490,12 @@
 			<div x-show="selectedCropId === null" class="mb-6 pb-4 border-b border-blue-200">
 				<!-- 星标作物栏 -->
 				<div x-show="starredCrops.length > 0" class="mb-4">
-					<div class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
+					<button type="button" @click="toggleStarredOpen()"
+							class="text-xs font-semibold uppercase tracking-wider text-indigo-500 flex items-center gap-1.5 hover:text-indigo-600 transition-colors">
 						<span>星标作物</span>
-					</div>
-					<div class="flex flex-wrap gap-3 justify-center">
+						<span class="text-[0.6rem]" x-text="starredOpen ? '▲' : '▼'"></span>
+					</button>
+					<div x-show="starredOpen" x-transition class="flex flex-wrap gap-3 justify-center">
 						<template x-for="crop in starredCrops" :key="'star_' + crop.id">
 							<button @click="selectCrop(crop)"
 									class="starred-crop-item flex flex-col items-center w-20 p-1.5 rounded-3xl transition-all hover:scale-105 hover:shadow-md bg-amber-50/70 hover:bg-amber-50 border border-amber-200/60">
@@ -969,29 +962,9 @@ function farmCalculator() {
 
 		cropSearch: '',
 		
-		// ========== 更新日志红点 ==========
-		hasUnreadChangelog: false,
 		sideMenuOpen: false,
+		starredOpen: (function () { try { return localStorage.getItem('farmStarredOpen') === '1'; } catch (e) { return false; } })(),
 		
-		loadChangelogReadState() {
-			try {
-				const readVersion = localStorage.getItem('farmChangelogReadVersion');
-				const currentVersion = window.CHANGELOG_VERSION || '0';
-				this.hasUnreadChangelog = readVersion !== currentVersion;
-			} catch (e) {
-				this.hasUnreadChangelog = true;
-			}
-		},
-		
-		markChangelogRead() {
-			try {
-				const currentVersion = window.CHANGELOG_VERSION || '0';
-				localStorage.setItem('farmChangelogReadVersion', currentVersion);
-			} catch (e) {}
-			this.hasUnreadChangelog = false;
-		},
-		// ========== 更新日志红点结束 ==========
-
 		// ========== 星标相关 ==========
 		starredCropIds: [],
 
@@ -1400,7 +1373,6 @@ function farmCalculator() {
 		},
 
 		init() {
-			this.loadChangelogReadState();
 			this.renderUnselectedTags();
 			this.setupIntersectionObserver();
 			this.loadHistory();
@@ -1569,6 +1541,12 @@ function farmCalculator() {
 		guowangImgSrc(line) {
 			// 图片类型: 全局 GUOWANG_IMGS 路径数组, 行内 img 为索引, 为空/不填/越界时回退首个
 			return GUOWANG_IMGS[line?.img ?? 0] || GUOWANG_IMGS[0] || '';
+		},
+
+		toggleStarredOpen() {
+			this.starredOpen = !this.starredOpen;
+			try { localStorage.setItem('farmStarredOpen', this.starredOpen ? '1' : '0'); } catch (e) {}
+			this.$nextTick(() => this.fitCropScrollArea());
 		},
 
 		fitCropScrollArea() {

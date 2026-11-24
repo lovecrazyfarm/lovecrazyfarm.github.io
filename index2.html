@@ -1952,7 +1952,7 @@ function farmCalculator() {
 			
 			let html  = renderGroup(level0, '基础突变', false);
 			html     += renderGroup(level1, '专属突变', false);
-			html     += renderGroup(normalLevel2, '战斗突变', true);
+			html     += renderGroup(normalLevel2, this.currentCrop?.combat ? '战斗突变' : '常规突变', !this.currentCrop?.combat);
 			if (activityTags.length > 0) {
 				html += renderGroup(activityTags, '活动突变', false);
 			}

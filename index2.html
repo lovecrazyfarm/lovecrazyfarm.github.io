@@ -525,7 +525,7 @@
 							&times;
 						</button>
 					</div>
-					<label class="flex items-center gap-1 flex-shrink-0 cursor-pointer">
+					<label x-show="selectedCategory !== 'cat_attack'" class="flex items-center gap-1 flex-shrink-0 cursor-pointer">
 						<span class="text-[0.65rem] text-indigo-500">高价优先</span>
 						<input type="checkbox" x-model="highPriceFirst" class="w-3.5 h-3.5 text-indigo-500 rounded border-indigo-300 focus:ring-indigo-400 cursor-pointer">
 					</label>
@@ -1105,7 +1105,7 @@ function farmCalculator() {
 			if (this.focusMode && this.selectedCropId) {
 				crops = crops.filter(c => c.id === this.selectedCropId);
 			}
-			if (this.highPriceFirst) {
+			if (this.highPriceFirst && this.selectedCategory !== 'cat_attack') {
 				// 勾选高价优先: 按果实在最大重量时的价格从高到低
 				return crops.sort((a, b) => this.cropMaxPrice(b) - this.cropMaxPrice(a));
 			}
@@ -1952,7 +1952,7 @@ function farmCalculator() {
 			
 			let html  = renderGroup(level0, '基础突变', false);
 			html     += renderGroup(level1, '专属突变', false);
-			html     += renderGroup(normalLevel2, '常规突变', true);
+			html     += renderGroup(normalLevel2, '战斗突变', true);
 			if (activityTags.length > 0) {
 				html += renderGroup(activityTags, '活动突变', false);
 			}
@@ -1968,6 +1968,7 @@ function farmCalculator() {
 			});
 		},
 		
+
 		quickSelectLevel2() {
 			const lib = this.activeTagLibrary;
 			const allTags = this.getAllTags();
@@ -2158,7 +2159,6 @@ function farmCalculator() {
 			this.renderUnselectedTags();
 			this.recordPriceChange();
 		},
-		
 
 		loadHistory() {
 			try {

@@ -133,7 +133,9 @@ const exclusiveGroups = [
 // 作物数据
 const itemsData = [
 	// 幻彩
-	{ id: 'item_xuelian', name: '雪莲', basePrice: 56996.64, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_xuelian', name: '雪莲', basePrice: 56996.64, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
+		story:{body:'疑似幻月花的改良版'},
+	},
 	{ id: 'item_yinxing', name: '银杏', basePrice: 93750.6, maxWeight: 5.1, growthSpeed: 0, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority, },
 	{ id: 'item_chenjingdefengxiangnangua', name: '沉静的疯象南瓜', basePrice: 8781.526, maxWeight: 45.2, growthSpeed: 799.12, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	
@@ -147,14 +149,18 @@ const itemsData = [
 		guowangInfo:{lines:[{date:'2026-07-26', t1:'54.6亿', t2:'33亿'}]},
 		story:{body:'曾经的常驻种子，于 2026.10.29 下线，据说后来能在种子合成概率获得'},
 	},
-	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10881.881, maxWeight: 34, growthSpeed: 990, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_huolonggou', name: '火龙狗', basePrice: 10881.881, maxWeight: 34, growthSpeed: 990, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
+		story:{body:'是挺值钱的，但非的非完了，欧的欧麻了，这**合成爆率'},
+	},
 	
 	{ id: 'item_yuechanchu', name: '月蟾蜍', basePrice: 9797.8, maxWeight: 34, growthSpeed: 990, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
 	{ id: 'item_bianhua', name: '彼岸花', basePrice: 49684.72, maxWeight: 10.2, growthSpeed: 2908.5, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-08-02', t1:'66.9亿', t2:'36.2亿'}]}},
 	{ id: 'item_yuetu', name: '月兔', basePrice: 11154.54, maxWeight: 23.8, growthSpeed: 1523, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		story:{body:'第2届果王争霸赛奖励种子'} },
-	{ id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 5125, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority },
+	{ id: 'item_hongbaoguo', name: '红包果', basePrice: 80883.11, maxWeight: 5.1, growthSpeed: 5125, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
+		story:{body:'2026年春节活动种子，估计下一次春节会返场'},
+	},
 	{ id: 'item_xingkongmeigui', name: '星空玫瑰', basePrice: 33134.09, maxWeight: 10.2, growthSpeed: 2966.6, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-08-09', t1:'47.9亿', t2:'27.9亿'}]}},
 	{ id: 'item_huanyuehua', name: '幻月花', basePrice: 8368.833, maxWeight: 23.8, growthSpeed: 1142, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
@@ -166,7 +172,9 @@ const itemsData = [
 	{ id: 'item_pantao', name: '蟠桃', basePrice: 8780.9359, maxWeight: 20.4, growthSpeed: 1332.353, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-01-25', t1:'19.4亿', t2:'12.3亿'}]}},
 	{ id: 'item_xianrenzhangxiang', name: '仙人掌象', basePrice: 9525.0487, maxWeight: 34, growthSpeed: 720, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
-		guowangInfo:{lines:[{date:'2026-03-22', t1:'49.2亿', t2:'38亿'}]}},
+		guowangInfo:{lines:[{date:'2026-03-22', t1:'49.2亿', t2:'38亿'}]},
+		story:{body:'谁敢闻'},
+	},
 	{ id: 'item_jingqigu', name: '惊奇菇', basePrice: 49659, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines:[{date:'2026-03-15', t1:'44.5亿', t2:'31.4亿'}]}},
 	{ id: 'item_putao', name: '葡萄', basePrice: 24836.8915, maxWeight: 10.2, growthSpeed: 2400, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
@@ -177,6 +185,7 @@ const itemsData = [
 		guowangInfo:{lines:[{date:'2026-01-11', t1:'8.1亿', t2:'4.9亿'}]}},
 	{ id: 'item_xiangrikui', name: '向日葵', basePrice: 370.3206, maxWeight: 51, growthSpeed: 80, categories: ['cat_putong'], tagGroups: ['group_basic', 'group_xiangrikui', 'group_activity'], fillColor: FC.HYH.color, priority: FC.HYH.priority,
 		guowangInfo:{lines: [{ date: '2026-01-18', t1: '12.9亿', t2: '3.8亿' }, { date: '2026-08-16', t1: '24.7亿', t2: '6.9亿' }]},
+		story:{body:'获得笑日葵突变后价值高于月兔，否则是至臻作物中价值最低的'},
 	},
 
 	// 橙
@@ -526,32 +535,7 @@ const battleItemsData = [
 		}
 	},
 ];
-/*
-// ==================== 怪物配置库 ====================
-// 每种怪物的基础模板
-const monsterTemplates = {
-    'slime': { name: '史莱姆', hp: 100, speed: 30, color: '#ef4444' },
-    'golem': { name: '石像鬼', hp: 300, speed: 20, color: '#6b7280' },
-    'wisp':  { name: '幽灵', hp: 150, speed: 50, color: '#a78bfa' }
-};
 
-// 关卡配置
-// priority 越小越靠前（越早出现在地图上），spacing 表示与前一个怪物的 x 坐标间距
-const levelConfigs = {
-    1: [
-        { type: 'slime', count: 3, spacing: 120, priority: 1 }
-    ],
-    2: [
-        { type: 'slime', count: 4, spacing: 100, priority: 1 },
-        { type: 'wisp', count: 1, spacing: 150, priority: 2 }
-    ],
-    // ... 你可以一直写到 15 关
-    5: [
-        { type: 'golem', count: 2, spacing: 200, priority: 1 },
-        { type: 'slime', count: 5, spacing: 80, priority: 2 }
-    ]
-};
-*/
 const categories = [
 	{ id: 'cat_putong', name: '经济作物' },
 	{ id: 'cat_attack', name: '攻击作物' },

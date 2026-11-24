@@ -507,14 +507,14 @@
 				<div x-cloak x-show="currentCrop?.guowangInfo"
 					class="absolute top-2.5 left-1/2 -translate-x-1/2 sm:left-2.5 sm:translate-x-0 z-30 w-fit"
 					:class="guowangNameOverflow ? 'visible' : 'invisible sm:visible'">
-					<button type="button" @click="guowangOpen = !guowangOpen; introOpen = false"
+					<button type="button" data-guowang-btn @click="guowangOpen = !guowangOpen; introOpen = false"
 						class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-semibold text-amber-700 bg-amber-50 border border-amber-200 shadow-sm hover:bg-amber-100 transition-colors">
 						<span class="sm:hidden">果王历史</span>
 						<span class="hidden sm:inline">果王参赛 <span x-text="currentCrop?.guowangInfo?.lines?.length ?? 0"></span> 次</span>
 						<span class="text-[0.55rem]" x-text="guowangOpen ? '▲' : '▼'"></span>
 					</button>
-					<div x-cloak x-show="guowangOpen" x-transition
-						class="absolute top-full mt-1 left-1/2 -translate-x-1/2 w-fit max-w-[70vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left sm:static sm:translate-x-0">
+					<div x-cloak x-show="guowangOpen" x-transition data-guowang-pop
+						class="absolute top-full mt-1 left-1/2 -translate-x-1/2 w-fit max-w-[70vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left sm:static sm:translate-x-0">
 					<template x-if="currentCrop?.guowangInfo">
 						<div class="space-y-1">
 							<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] font-bold text-amber-700 whitespace-nowrap"><span>截止日期</span><span class="ml-2.5">国1</span><span class="ml-2.5">国100</span></div>
@@ -567,7 +567,7 @@
 					<div x-ref="nameBox" class="flex-1 min-w-0 text-left" :class="hasTimeRow ? 'sm:flex-none' : 'md:flex-none'">
 						<div class="relative w-full max-w-full flex items-center gap-1 sm:w-fit">
 							<template x-if="hasCropIntro">
-								<button type="button" @click="toggleIntro()"
+								<button type="button" data-intro-btn @click="toggleIntro()"
 										class="min-w-0 flex-1 sm:flex-none inline-flex items-center gap-1 max-w-full text-base font-bold text-gray-800 hover:text-indigo-600 transition-colors">
 									<span x-ref="cropNameEl" class="truncate" x-text="currentCrop ? currentCrop.name : '未选择作物'"></span>
 									<span class="text-[0.6rem] flex-shrink-0" x-text="introOpen ? '▲' : '▼'"></span>
@@ -579,19 +579,20 @@
 
 							<!-- 流内果王按钮: 仅手机端, 名称未溢出时显示 -->
 							<button type="button" x-cloak x-show="currentCrop?.guowangInfo && !guowangNameOverflow"
-								x-ref="guowangInlineBtn" @click="guowangOpen = !guowangOpen; introOpen = false"
+								data-guowang-btn x-ref="guowangInlineBtn" @click="guowangOpen = !guowangOpen; introOpen = false"
 								class="sm:hidden flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-semibold text-amber-700 bg-amber-50 border border-amber-200 shadow-sm hover:bg-amber-100 transition-colors">
 								果王历史 <span class="text-[0.55rem]" x-text="guowangOpen ? '▲' : '▼'"></span>
 							</button>
 
-							<div x-cloak x-show="introOpen && hasCropIntro" x-transition x-ref="introPop" @resize.window="if (introOpen) fitIntroBox()" class="absolute top-full left-0 mt-1 w-64 max-w-[75vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-indigo-200 shadow-lg z-30 text-left">
+							<div x-cloak x-show="introOpen && hasCropIntro" x-transition x-ref="introPop" data-intro-pop @resize.window="if (introOpen) fitIntroBox()" class="absolute top-full left-0 mt-1 w-64 max-w-[75vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-indigo-200 shadow-lg z-30 text-left">
 								<div x-cloak x-show="cropIntroTitle" class="font-semibold text-indigo-600 mb-0.5" x-text="cropIntroTitle"></div>
 								<div class="text-xs text-slate-600 leading-relaxed" x-text="cropIntroBody"></div>
 							</div>
 
 							<!-- 流内果王面板: 仅手机端, 名称未溢出时展开 -->
 							<div x-cloak x-show="guowangOpen && currentCrop?.guowangInfo && !guowangNameOverflow" x-transition
-								class="sm:hidden absolute top-full left-0 mt-1 w-fit max-w-[70vw] px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left z-40">
+								data-guowang-pop
+								class="sm:hidden absolute top-full left-0 mt-1 w-fit max-w-[70vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left z-40">
 								<template x-if="currentCrop?.guowangInfo">
 									<div class="space-y-1">
 										<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] font-bold text-amber-700 whitespace-nowrap"><span>截止日期</span><span class="ml-2.5">国1</span><span class="ml-2.5">国100</span></div>
@@ -680,10 +681,10 @@
 							<div class="combat-card-head">
 								<img class="combat-icon" src="img/icons/icon_jian.png" alt="">
 								<span class="combat-name">攻击</span>
-								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细" @click="toggleAllDetails()">
+								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细" data-detail-btn @click="toggleAllDetails()">
 							</div>
 							<div class="combat-card-body" x-text="formattedAttack"></div>
-							<div x-cloak x-show="detailOpenAll" x-transition class="combat-detail-pop">
+							<div x-cloak x-show="detailOpenAll" x-transition data-detail-pop class="combat-detail-pop">
 								<div class="combat-detail-row">
 									<span class="combat-detail-label">基础</span>
 									<span class="combat-detail-value" x-text="attackBaseDisplay"></span>
@@ -712,10 +713,10 @@
 							<div class="combat-card-head">
 								<img class="combat-icon" src="img/icons/icon_shandian.png" alt="">
 								<span class="combat-name">冷却</span>
-								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细" @click="toggleAllDetails()">
+								<img class="combat-detail-btn" src="img/icons/icon_wenhao.png" alt="明细" data-detail-btn @click="toggleAllDetails()">
 							</div>
 							<div class="combat-card-body" x-text="formattedCooldown"></div>
-							<div x-cloak x-show="detailOpenAll" x-transition class="combat-detail-pop">
+							<div x-cloak x-show="detailOpenAll" x-transition data-detail-pop class="combat-detail-pop">
 								<div class="combat-detail-row">
 									<span class="combat-detail-label">基础</span>
 									<span class="combat-detail-value" x-text="cooldownBaseDisplay"></span>
@@ -1009,9 +1010,61 @@ function farmCalculator() {
 			box.style.maxHeight = Math.max(60, availH) + 'px';
 		},
 
+		// 果王框尺寸自适应: 与介绍框一致, 限制在价格卡片内, 超出则滚动
+		fitGuowangBox() {
+			if (window.innerWidth >= 640) return; // 桌面端为流内静态展示, 无需限制
+			const card = document.getElementById('priceCardPlaceholder');
+			if (!card) return;
+			const pops = Array.from(this.$el.querySelectorAll('[data-guowang-pop]'));
+			const box = pops.find(el => el.offsetHeight > 0);
+			if (!box) return;
+			// 先清空旧限制, 让面板按自然尺寸渲染后测量
+			box.style.maxHeight = '';
+			box.style.maxWidth = '';
+			void box.offsetHeight; // 强制回流, 使读取的尺寸是重置后的
+			const safe = 8;
+			const cardRect = card.getBoundingClientRect();
+			let boxRect = box.getBoundingClientRect();
+			const overflowLeft = Math.max(0, cardRect.left + safe - boxRect.left);
+			const overflowRight = Math.max(0, boxRect.right - (cardRect.right - safe));
+			const overflowW = Math.max(overflowLeft, overflowRight);
+			if (overflowW > 0) {
+				box.style.maxWidth = Math.max(120, boxRect.width - overflowW) + 'px';
+				void box.offsetHeight;
+				boxRect = box.getBoundingClientRect();
+			}
+			const availH = cardRect.bottom - boxRect.top - safe;
+			if (boxRect.height > availH) {
+				box.style.maxHeight = Math.max(60, availH) + 'px';
+			}
+		},
+
 		toggleAllDetails() {
 			this.detailOpenAll = !this.detailOpenAll;
-			if (this.detailOpenAll) this.introOpen = false;
+			if (this.detailOpenAll) {
+				this.introOpen = false;
+				this.guowangOpen = false;
+			}
+		},
+
+		// 点击弹窗/面板区域外、或滚动/滑动时自动关闭: 果王 / 作物介绍 / 作战属性明细
+		bindOutsideClose() {
+			const isInsidePopOrBtn = (t) => {
+				if (!(t instanceof Element)) return false;
+				return !!(t.closest('[data-guowang-pop]') || t.closest('[data-guowang-btn]') ||
+				          t.closest('[data-intro-pop]') || t.closest('[data-intro-btn]') ||
+				          t.closest('[data-detail-pop]') || t.closest('[data-detail-btn]'));
+			};
+			const closeAll = (e) => {
+				// 点击/滚动源在弹窗或触发按钮内部时不关闭(允许在弹窗内点击和滚动)
+				if (isInsidePopOrBtn(e && e.target)) return;
+				if (this.guowangOpen) this.guowangOpen = false;
+				if (this.introOpen) this.introOpen = false;
+				if (this.detailOpenAll) this.detailOpenAll = false;
+			};
+			document.addEventListener('click', closeAll, false);
+			// 滚动事件不冒泡, 使用捕获阶段: 任意元素(页面或滚动容器)滚动、手指滑动导致滚动时都能捕获
+			document.addEventListener('scroll', closeAll, true);
 		},
 		// ========== 作战属性展开状态结束 ==========
 
@@ -1374,6 +1427,8 @@ function farmCalculator() {
 			this.renderUnselectedTags();
 			this.loadHistory();
 			this.loadStars();
+			// 点击/滚动/滑动弹窗之外区域时自动关闭
+			this.bindOutsideClose();
 			// 清空任意输入框 → 查看按钮与提示回到默认状态(不提示、不可查看)
 			['weightInput', 'percentInput', 'timeInput'].forEach(key => {
 				this.$watch(key, () => {
@@ -1381,9 +1436,18 @@ function farmCalculator() {
 				});
 			});
 			this.$nextTick(() => this.fitCropScrollArea());
-			window.addEventListener('resize', () => { this.fitCropScrollArea(); this.checkNameOverflow(); });
+			window.addEventListener('resize', () => {
+				this.fitCropScrollArea();
+				this.checkNameOverflow();
+				if (this.guowangOpen) this.fitGuowangBox();
+				if (this.introOpen) this.fitIntroBox();
+			});
 			// 切换作物后重新判断名称是否放得下"果王历史"
 			this.$watch('currentCrop', () => this.$nextTick(() => this.checkNameOverflow()));
+			// 果王面板打开后限制尺寸, 不超出价格卡片
+			this.$watch('guowangOpen', (nv) => {
+				if (nv) this.$nextTick(() => this.fitGuowangBox());
+			});
 			// 字体加载完成后宽度可能变化, 再测一次
 			if (document.fonts && document.fonts.ready) {
 				document.fonts.ready.then(() => this.checkNameOverflow());

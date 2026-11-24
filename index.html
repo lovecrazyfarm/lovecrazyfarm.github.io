@@ -325,18 +325,86 @@
 				0 2px 6px rgba(99, 102, 241, 0.08),
 				0 8px 18px rgba(99, 102, 241, 0.16);
 		}
-		/* 评级框: 与作战属性卡片同视觉语言(靛蓝描边/圆角/白底), 固定尺寸按最宽文案预留, 评级变化不抖动 */
+		/* 评级框: 复古电视机造型(靛蓝玻璃外壳与价格卡同色系 + 右侧旋钮 + 扫描线显像管), 固定尺寸按最宽文案预留, 评级变化不抖动 */
 		.rating-region {
-			border: 1px solid #dfe6fd;
-			border-radius: 0.9rem;
-			background: #fff;
-			padding: 0.4rem 0.5rem 0.45rem;
+			border: 1px solid #c7d2fe;
+			border-radius: 0.75rem;
+			background: linear-gradient(180deg, #ffffff, #eef2ff);
+			padding: 3px 16px 3px 3px; /* 右侧给旋钮留位 */
 			width: 6rem;
 			height: 2.4rem;
+			position: relative;
+			box-shadow:
+				0 3px 0 0 #c7d2fe,
+				0 2px 6px rgba(99, 102, 241, 0.08),
+				0 8px 18px rgba(99, 102, 241, 0.16);
+		}
+		/* 显像管屏幕: 靛蓝雾面玻璃屏, 内阴影压出凹面感, 底角放大圆角模拟CRT弧面 */
+		.rating-screen {
+			width: 100%;
+			height: 100%;
+			border-radius: 0.55rem 0.55rem 0.9rem 0.9rem;
+			border: 1px solid rgba(99, 102, 241, 0.30);
+			background: linear-gradient(180deg, #f8faff, #eef2ff);
+			box-shadow: inset 0 1px 3px rgba(99, 102, 241, 0.18);
 			display: flex;
-			flex-direction: column;
 			align-items: center;
 			justify-content: center;
+			position: relative;
+			overflow: hidden;
+		}
+		/* 扫描线: 叠在文字上方的细横纹, 靛蓝调质感, 不改字色 */
+		.rating-screen::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: repeating-linear-gradient(0deg, rgba(99, 102, 241, 0.06) 0 1px, transparent 1px 3px);
+			border-radius: inherit;
+			pointer-events: none;
+		}
+		/* 右侧旋钮: 靛蓝玻璃圆钮 */
+		.rating-knob {
+			position: absolute;
+			right: 4px;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			border: 1px solid #a5b4fc;
+			background: radial-gradient(circle at 35% 30%, #ffffff, #c7d2fe 75%);
+			box-shadow: 0 1px 1px rgba(99, 102, 241, 0.35);
+		}
+		.rating-knob-1 { top: 5px; }
+		.rating-knob-2 { bottom: 5px; }
+		/* 老虎机滚动: 评级升(如 拉完了→夯) 向上滚; 评级降 向下滚 */
+		.rating-roll-current { display: inline-block; }
+		.rating-roll-in { animation: ratingRollUp 0.32s cubic-bezier(0.25, 0.8, 0.35, 1) both; }
+		.rating-roll-in-down { animation: ratingRollDown 0.32s cubic-bezier(0.25, 0.8, 0.35, 1) both; }
+		@keyframes ratingRollUp {
+			from { transform: translateY(105%); opacity: 0.35; }
+			to { transform: translateY(0); opacity: 1; }
+		}
+		@keyframes ratingRollDown {
+			from { transform: translateY(-105%); opacity: 0.35; }
+			to { transform: translateY(0); opacity: 1; }
+		}
+		/* 滚出的旧文案: 绝对定位叠在屏幕中心 */
+		.rating-roll-out {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			pointer-events: none;
+		}
+		.rating-roll-out-up { animation: ratingRollOutUp 0.32s ease-in both; }
+		.rating-roll-out-down { animation: ratingRollOutDown 0.32s ease-in both; }
+		@keyframes ratingRollOutUp {
+			from { transform: translateY(0); opacity: 1; }
+			to { transform: translateY(-105%); opacity: 0.35; }
+		}
+		@keyframes ratingRollOutDown {
+			from { transform: translateY(0); opacity: 1; }
+			to { transform: translateY(105%); opacity: 0.35; }
 		}
 		
 		/* ========== 按钮轮廓 ========== */
@@ -633,11 +701,19 @@
 						<!-- 重量评级(仅攻击作物): 评级框只包字母; 介绍已移入作物名称的展开面板 -->
 						<div x-show="currentCrop?.combat" class="w-fit mt-1">
 							<div class="rating-region">
-								<template x-if="weightRating">
-									<span :class="weightRatingClass"
-										class="text-2xl font-black italic leading-none select-none transition-all duration-300"
-									x-text="weightRatingLabel"></span>
-								</template>
+								<div class="rating-screen">
+									<template x-if="weightRating">
+										<span :class="[weightRatingClass, rollAnim ? (rollDir === 'down' ? 'rating-roll-in-down' : 'rating-roll-in') : '']"
+											class="rating-roll-current text-xl font-black italic leading-none select-none"
+										x-text="weightRatingLabel"></span>
+									</template>
+									<span x-show="rollPrevLabel"
+										:class="[rollPrevClass, 'rating-roll-out-' + (rollDir === 'down' ? 'down' : 'up')]"
+										class="rating-roll-out text-xl font-black italic leading-none select-none"
+									x-text="rollPrevLabel"></span>
+								</div>
+								<span class="rating-knob rating-knob-1"></span>
+								<span class="rating-knob rating-knob-2"></span>
 							</div>
 						</div>
 					</div>
@@ -1018,7 +1094,13 @@ function farmCalculator() {
 		// ========== 作战属性展开状态 ==========
 		introOpen: false,
 		detailOpenAll: false,
-
+		
+				// ========== 评级电视机(老虎机滚动)状态 ==========
+				rollAnim: false,        // 滚动动画进行中(控制新文案的动画类)
+				rollDir: 'up',          // 滚动方向: 评级升=向上, 评级降=向下
+				rollPrevLabel: '',      // 滚出中的旧文案
+				rollPrevClass: '',      // 滚出中旧文案的颜色类
+				_rollTimer: null,
 		toggleIntro() {
 			this.introOpen = !this.introOpen;
 			if (this.introOpen) {
@@ -1418,6 +1500,29 @@ function farmCalculator() {
 			});
 			this.$nextTick(() => this.fitCropScrollArea());
 			window.addEventListener('resize', () => this.fitCropScrollArea());
+				// 评级变化 → 电视机屏幕内老虎机式滚动(评级升如 拉完了→夯: 向上滚; 降则向下滚)
+				// 方向依据评级序 D<B<A<A+<S; 此处映射需与 weightRatingLabel / weightRatingClass 保持同步
+				this.$watch('weightRating', (nv, ov) => {
+					if (!nv || !ov || nv === ov) return; // 首次出现或无变化不滚动
+					const order = { 'D': 0, 'B': 1, 'A': 2, 'A+': 3, 'S': 4 };
+					this.rollDir = (order[nv] ?? 0) >= (order[ov] ?? 0) ? 'up' : 'down';
+					this.rollPrevLabel = ({ 'S': '夯', 'A+': '顶级', 'A': '人上人', 'B': 'NPC', 'D': '拉完了' })[ov] || '';
+					this.rollPrevClass = ({
+						'S': 'text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.55)]',
+						'A+': 'text-orange-500 drop-shadow-[0_0_7px_rgba(249,115,22,0.40)]',
+						'A': 'text-yellow-500 drop-shadow-[0_0_6px_rgba(234,179,8,0.35)]',
+						'B': 'text-violet-500 drop-shadow-[0_0_6px_rgba(139,92,246,0.35)]',
+						'D': 'text-stone-400 drop-shadow-[0_0_5px_rgba(168,162,158,0.30)]'
+					})[ov] || '';
+					this.rollAnim = false; // 先摘掉再下一帧重挂, 确保动画可重复触发
+					requestAnimationFrame(() => { this.rollAnim = true; });
+					clearTimeout(this._rollTimer);
+					this._rollTimer = setTimeout(() => {
+						this.rollAnim = false;
+						this.rollPrevLabel = '';
+						this.rollPrevClass = '';
+					}, 340);
+				});
 			
 
 			

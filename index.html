@@ -594,7 +594,7 @@
 							<button type="button" x-cloak x-show="currentCrop?.guowangInfo && !guowangNameOverflow"
 								data-guowang-btn x-ref="guowangInlineBtn" @click="guowangOpen = !guowangOpen; introOpen = false"
 								class="sm:hidden flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-semibold text-amber-700 bg-amber-50 border border-amber-200 shadow-sm hover:bg-amber-100 transition-colors">
-								果王历史 <span class="text-[0.55rem]" x-text="guowangOpen ? '▲' : '▼'"></span>
+								果王 <span class="text-[0.55rem]" x-text="guowangOpen ? '▲' : '▼'"></span>
 							</button>
 
 							<div x-cloak x-show="introOpen && hasCropIntro" x-transition x-ref="introPop" data-intro-pop @resize.window="if (introOpen) fitIntroBox()" class="absolute top-full left-0 mt-1 w-64 max-w-[75vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-indigo-200 shadow-lg z-30 text-left">
@@ -608,17 +608,17 @@
 								class="sm:hidden absolute top-full left-0 mt-1 w-fit max-w-[70vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left z-40">
 								<template x-if="currentCrop?.guowangInfo">
 									<div class="space-y-1">
-										<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] font-bold text-amber-700 whitespace-nowrap"><span>截止日期</span><span class="ml-2.5">国1</span><span class="ml-2.5">国100</span></div>
+										<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] font-bold text-amber-700 whitespace-nowrap"><span>截止日期</span><span class="ml-2.5">国100</span><span class="ml-2.5">国1</span></div>
 										<template x-for="(line, idx) in currentCrop.guowangInfo.lines" :key="idx">
 											<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] text-amber-800 leading-snug items-center whitespace-nowrap">
 												<span x-text="line.date"></span>
 												<span class="inline-flex items-center flex-shrink-0">
 													<img :src="guowangImgSrc(line)" class="w-5 h-5 object-contain" @error="$event.target.style.display='none'">
-													<span class="-ml-0.5" x-text="line.t1"></span>
+													<span class="-ml-0.5" x-text="line.t100"></span>
 												</span>
 												<span class="inline-flex items-center flex-shrink-0">
 													<img :src="guowangImgSrc(line)" class="w-5 h-5 object-contain" @error="$event.target.style.display='none'">
-													<span class="-ml-0.5" x-text="line.t2"></span>
+													<span class="-ml-0.5" x-text="line.t1"></span>
 												</span>
 											</div>
 										</template>

@@ -530,17 +530,17 @@
 						class="absolute top-full mt-1 left-1/2 -translate-x-1/2 w-fit max-w-[70vw] overflow-y-auto px-3 py-2 rounded-xl bg-white/95 backdrop-blur-sm border border-amber-200 shadow-lg space-y-1 text-left sm:static sm:translate-x-0">
 					<template x-if="currentCrop?.guowangInfo">
 						<div class="space-y-1">
-							<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] font-bold text-amber-700 whitespace-nowrap"><span>截止日期</span><span class="ml-2.5">国1</span><span class="ml-2.5">国100</span></div>
+							<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] font-bold text-amber-700 whitespace-nowrap"><span>截止日期</span><span class="ml-2.5">国100</span><span class="ml-2.5">国1</span></div>
 							<template x-for="(line, idx) in currentCrop.guowangInfo.lines" :key="idx">
 								<div class="grid grid-cols-[4rem_3.5rem_3.5rem] gap-x-2 text-[0.65rem] text-amber-800 leading-snug items-center whitespace-nowrap">
 									<span x-text="line.date"></span>
 									<span class="inline-flex items-center flex-shrink-0">
 										<img :src="guowangImgSrc(line)" class="w-5 h-5 object-contain" @error="$event.target.style.display='none'">
-										<span class="-ml-0.5" x-text="line.t1"></span>
+										<span class="-ml-0.5" x-text="line.t100"></span>
 									</span>
 									<span class="inline-flex items-center flex-shrink-0">
 										<img :src="guowangImgSrc(line)" class="w-5 h-5 object-contain" @error="$event.target.style.display='none'">
-										<span class="-ml-0.5" x-text="line.t2"></span>
+										<span class="-ml-0.5" x-text="line.t1"></span>
 									</span>
 								</div>
 							</template>

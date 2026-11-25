@@ -330,7 +330,7 @@
 	<!-- 页面轮廓开始 -->
 	<div class="rounded-3xl shadow-[0_25px_45px_rgba(0,0,0,0.2),0_0_0_1px_rgba(200,220,240,0.5)]">
 		<!-- 页面顶部标题区 -->
-		<div class="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-5 px-7 text-center border-b border-white/20">
+		<div class="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-2 px-7 text-center border-b border-white/20">
 			<div class="absolute inset-0 overflow-hidden pointer-events-none">
 				<div class="meteor" style="top: -10%; left: 10%; animation-delay: 0s;"></div>
 				<div class="meteor" style="top: -20%; left: 40%; animation-delay: 1.2s;"></div>
@@ -393,11 +393,13 @@
 						<path d="M4 6h16M4 12h16M4 18h16"/>
 					</svg>
 				</button>
-				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1 whitespace-nowrap">
-					不烧心的提醒群
+				<button @click="openModal('trend')" class="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1 whitespace-nowrap">
+					趋势
 				</button>
-				<button @click="openModal('support')"
-						class="relative bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline inline-flex items-center whitespace-nowrap">
+				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1 whitespace-nowrap">
+					提醒群
+				</button>
+				<button @click="openModal('support')"  class="relative bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline inline-flex items-center whitespace-nowrap">
 					请我吃薯片
 					<img src="img/misc/shupian.png" alt="" style="position:absolute; width:48px; height:48px; border-radius:8px; object-fit:cover; right:-24px; top:60%; transform:translateY(-50%); pointer-events:none;">
 				</button>

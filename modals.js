@@ -258,9 +258,13 @@ const modals = {
 		title: '支持一下 (微信赞赏)',
 		content: '<div style="text-align: center;"><img src="support.jpg" alt="支持作者" style="max-width: 100%; height: auto; border-radius: 12px;"></div>',
 	},
+	trend: {
+		title: '趋势 (施工中...)',
+		content: '可视化"提醒群"中各类提醒的每日出现次数，你可以一眼看出哪些提醒最近变多了、哪些变少了。',
+	},
 	reminder: {
-		title: '不烧心的提醒群(QQ群, 8:00-23:59提醒)',
-		content: `秒进，禁言，自动化 (扫描小组件)。<br>---------------- 注意 ----------------<br>存在种子疏漏：由于小组件的种子只显示最贵的一个，因此若同一轮中同时出现蟠桃和大王菊，则忽略大王菊。<br>--------------------------------------
+		title: '提醒群 (QQ群, 8:00-23:59提醒)',
+		content: `秒进，禁言，自动化 (扫描小组件)。<br>------------------ 注意 ------------------<br>存在种子疏漏：由于小组件的种子只显示最贵的一个，因此若同一轮中同时出现蟠桃和大王菊，则忽略大王菊。<br>------------------------------------------
 		<br><br>当种子有
 			<span style="display:inline-flex; align-items:center; gap:4px; vertical-align:middle;">
 				<img src="img/misc/xuelian.png" alt="" style="max-width:20%; height:auto; border-radius:12px;">
@@ -278,7 +282,7 @@ const modals = {
 				<img src="img/misc/yinghuayu.png" alt="" style="max-width:15%; height:auto; border-radius:12px;">
 				<img src="img/misc/taiyangyaoban.png" alt="" style="max-width:15%; height:auto; border-radius:12px;">
 			</span>
-			时，群号为 939466297 的群内有提醒消息。<br>--------------------------------------
+			时，群 939466297 内有提醒消息。<br>------------------------------------------
 		<br><br>当种子有
 			<span style="display:inline-flex; align-items:center; gap:4px; vertical-align:middle;">
 				<img src="img/misc/dawangju.png" alt="" style="max-width:20%; height:auto; border-radius:12px;">
@@ -293,6 +297,6 @@ const modals = {
 				<img src="img/misc/leiyu.png" alt="" style="max-width:15%; height:auto; border-radius:12px;">
 				<img src="img/misc/shachenbao.png" alt="" style="max-width:15%; height:auto; border-radius:12px;">
 			</span>
-			时，<br>群号为 104732228 的群内有提醒消息。<br><br>`,
+			时，群 104732228 内有提醒消息。<br><br>`,
 	},
 };

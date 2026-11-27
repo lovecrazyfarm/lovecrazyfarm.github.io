@@ -86,6 +86,7 @@ const tagLibrary = {
 	'yingguang2': { id: 'yingguang2', name: '荧光', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.4, synthesis: [], synDel: [] },
 	'anwu2': { id: 'anwu2', name: '暗雾', times: 6, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.51, synthesis: [], synDel: [] },
 	
+	'huoshaoyun2': { id: 'huoshaoyun2', name: '火烧云', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.908, synthesis: [], synDel: [] },
 	'youyounangua2': { id: 'youyounangua2', name: '幽幽南瓜', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.91, synthesis: [], synDel: [] },
 	'guzhang2': { id: 'guzhang2', name: '故障', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.7, synthesis: [], synDel: [] },
 	'hajimi2': { id: 'hajimi2', name: '哈基咪', times: 5, level: 2, fillColor: FC.JIN.color, priority: FC.JIN.priority+0.9, synthesis: [], synDel: [] },
@@ -111,6 +112,7 @@ const tagGroups = {
 	'group_xiangrikui': { tags: ['xiaorikui1'] },
 	
 	'group_activity': { tags: [
+	    'huoshaoyun2',
 		'youyounangua2',
 		'xinghuan2',
 		'caichen2',

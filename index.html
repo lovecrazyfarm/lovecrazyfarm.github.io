@@ -394,15 +394,12 @@
 		<!-- 内容区域开始 -->
 		<div class="p-6 md:p-8 content-bg">
 			<!-- 内容区域顶部按钮栏 -->
-			<div class="flex flex-nowrap gap-2 mb-4">
+			<div class="flex flex-nowrap gap-2 mb-3">
 				<button @click="sideMenuOpen = true"
 					class="relative bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline inline-flex items-center whitespace-nowrap">
 					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
 						<path d="M4 6h16M4 12h16M4 18h16"/>
 					</svg>
-				</button>
-				<button @click="openModal('trend')" class="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1 whitespace-nowrap">
-					趋势
 				</button>
 				<button @click="openModal('reminder')" class="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-3xl text-sm text-indigo-700 shadow-sm hover:bg-white hover:shadow-md transition-all btn-outline flex items-center gap-1 whitespace-nowrap">
 					提醒群
@@ -439,7 +436,7 @@
 			</div>
 
 			<!-- 星标作物栏 -->
-			<div x-cloak x-show="selectedCropId === null && starredCrops.length > 0" class="mb-3">
+			<div x-cloak x-show="selectedCropId === null && starredCrops.length > 0" class="mb-2">
 				<button type="button" @click="toggleStarredOpen()"
 						class="text-xs font-semibold uppercase tracking-wider text-indigo-500 flex items-center gap-1.5 hover:text-indigo-600 transition-colors">
 					<span>星标作物</span>
@@ -463,9 +460,9 @@
 			</div>
 
 			<!-- 固定栏: 选择作物后 版本按钮(不含"版本"标题)+价格卡 吸附视口顶部 -->
-			<div :class="selectedCropId !== null ? 'sticky top-0 z-30 bg-[#fefef7] pt-2' : ''">
-			<div class="mb-4 pb-2">
-				<div x-show="selectedCropId === null" class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3">版本</div>
+			<div :class="selectedCropId !== null ? 'sticky top-0 z-30 bg-[#fefef7] pt-1.5' : ''">
+			<div class="mb-2 pb-1">
+				<div x-show="selectedCropId === null" class="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-1.5">版本</div>
 
 				<div class="flex flex-wrap items-center gap-3">
 					<div class="flex flex-wrap items-center gap-3 flex-1 min-w-0">
@@ -485,9 +482,9 @@
 				</div>
 			</div>
 
-			<div x-show="selectedCropId === null" class="mb-4 pb-2">
+			<div x-show="selectedCropId === null" class="mb-2 pb-1">
 				<div x-ref="cropScroll" class="no-scrollbar max-h-96 overflow-y-auto">
-					<div class="sticky top-0 z-10 bg-[#fefef7] py-2 text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-3 flex items-center justify-start gap-3">
+					<div class="sticky top-0 z-10 bg-[#fefef7] py-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-2 flex items-center justify-start gap-3">
 					<span x-text="selectedCategory === 'cat_attack' ? '攻击作物' : '经济作物'"></span>
 					<div class="relative">
 						<input type="text" 
